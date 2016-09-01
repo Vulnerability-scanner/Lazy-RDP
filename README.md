@@ -17,9 +17,10 @@
 	d. rdp_brute.sh - сам скрипт 
 7. Запуск из папки со скриптом через терминал
   
-a. chmod +x rdp_brute.sh
+        a. chmod +x rdp_brute.sh
 
-b. ./rdp_brute.sh
+        b. ./rdp_brute.sh
+
 
 Google translate.
 
