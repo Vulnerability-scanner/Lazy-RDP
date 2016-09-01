@@ -48,7 +48,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -58,7 +58,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -68,7 +68,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -77,7 +77,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -112,7 +112,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -122,7 +122,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -132,7 +132,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -141,7 +141,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -169,7 +169,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -179,7 +179,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -189,7 +189,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -198,7 +198,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -447,7 +447,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -457,7 +457,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -467,7 +467,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -476,7 +476,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -519,7 +519,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -529,7 +529,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -539,7 +539,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -548,7 +548,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -592,7 +592,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -602,7 +602,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -612,7 +612,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -621,7 +621,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -665,7 +665,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -675,7 +675,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -685,7 +685,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -694,7 +694,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -736,7 +736,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -746,7 +746,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -756,7 +756,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -765,7 +765,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -808,7 +808,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -818,7 +818,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -828,7 +828,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -837,7 +837,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -879,7 +879,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -889,7 +889,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -899,7 +899,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -908,7 +908,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -949,7 +949,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -959,7 +959,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -969,7 +969,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -978,7 +978,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1020,7 +1020,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1030,7 +1030,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1040,7 +1040,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1049,7 +1049,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1092,7 +1092,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1102,7 +1102,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1112,7 +1112,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1121,7 +1121,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1164,7 +1164,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1174,7 +1174,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1184,7 +1184,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1193,7 +1193,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1236,7 +1236,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1246,7 +1246,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1256,7 +1256,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1265,7 +1265,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1309,7 +1309,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1319,7 +1319,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1329,7 +1329,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1338,7 +1338,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1382,7 +1382,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1392,7 +1392,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1402,7 +1402,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1411,7 +1411,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1455,7 +1455,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1465,7 +1465,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1475,7 +1475,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1484,7 +1484,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1528,7 +1528,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1538,7 +1538,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1548,7 +1548,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1557,7 +1557,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1601,7 +1601,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1611,7 +1611,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1621,7 +1621,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1630,7 +1630,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1674,7 +1674,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1684,7 +1684,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1694,7 +1694,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1703,7 +1703,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1747,7 +1747,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1757,7 +1757,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1767,7 +1767,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1776,7 +1776,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1820,7 +1820,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1830,7 +1830,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1840,7 +1840,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1849,7 +1849,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1893,7 +1893,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1903,7 +1903,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1913,7 +1913,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1922,7 +1922,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1965,7 +1965,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1975,7 +1975,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1985,7 +1985,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -1994,7 +1994,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2037,7 +2037,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2047,7 +2047,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2057,7 +2057,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2066,7 +2066,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2109,7 +2109,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2119,7 +2119,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2129,7 +2129,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2138,7 +2138,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2182,7 +2182,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2192,7 +2192,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2202,7 +2202,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2211,7 +2211,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2254,7 +2254,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2264,7 +2264,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2274,7 +2274,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2283,7 +2283,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2327,7 +2327,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2337,7 +2337,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2347,7 +2347,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2356,7 +2356,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2400,7 +2400,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2410,7 +2410,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2420,7 +2420,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2429,7 +2429,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2473,7 +2473,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2483,7 +2483,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2493,7 +2493,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2502,7 +2502,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2546,7 +2546,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2556,7 +2556,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2566,7 +2566,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2575,7 +2575,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2619,7 +2619,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2629,7 +2629,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2639,7 +2639,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2648,7 +2648,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2692,7 +2692,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2702,7 +2702,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2712,7 +2712,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2721,7 +2721,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2764,7 +2764,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2774,7 +2774,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2784,7 +2784,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2793,7 +2793,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2837,7 +2837,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2847,7 +2847,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2857,7 +2857,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2866,7 +2866,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2909,7 +2909,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2919,7 +2919,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2929,7 +2929,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2938,7 +2938,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2981,7 +2981,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -2991,7 +2991,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3001,7 +3001,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3010,7 +3010,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3052,7 +3052,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3062,7 +3062,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3072,7 +3072,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3081,7 +3081,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3125,7 +3125,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3135,7 +3135,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3145,7 +3145,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3154,7 +3154,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3198,7 +3198,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3208,7 +3208,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3218,7 +3218,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3227,7 +3227,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3271,7 +3271,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3281,7 +3281,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3291,7 +3291,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3300,7 +3300,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3344,7 +3344,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3354,7 +3354,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3364,7 +3364,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3373,7 +3373,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3417,7 +3417,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3427,7 +3427,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3437,7 +3437,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3446,7 +3446,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3490,7 +3490,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3500,7 +3500,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3510,7 +3510,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3519,7 +3519,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3563,7 +3563,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3573,7 +3573,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3583,7 +3583,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3592,7 +3592,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3636,7 +3636,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3646,7 +3646,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3656,7 +3656,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3665,7 +3665,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3709,7 +3709,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3719,7 +3719,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3729,7 +3729,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3738,7 +3738,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3782,7 +3782,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3792,7 +3792,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3802,7 +3802,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3811,7 +3811,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3855,7 +3855,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3865,7 +3865,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3875,7 +3875,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3884,7 +3884,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3928,7 +3928,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3938,7 +3938,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3948,7 +3948,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -3957,7 +3957,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4001,7 +4001,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4011,7 +4011,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4021,7 +4021,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4030,7 +4030,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4074,7 +4074,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4084,7 +4084,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4094,7 +4094,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4103,7 +4103,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4147,7 +4147,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4157,7 +4157,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4167,7 +4167,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4176,7 +4176,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4220,7 +4220,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4230,7 +4230,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4240,7 +4240,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4249,7 +4249,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4293,7 +4293,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4303,7 +4303,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4313,7 +4313,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4322,7 +4322,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4366,7 +4366,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4376,7 +4376,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4386,7 +4386,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4395,7 +4395,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4439,7 +4439,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4449,7 +4449,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4459,7 +4459,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4468,7 +4468,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4512,7 +4512,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4522,7 +4522,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4532,7 +4532,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4541,7 +4541,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4585,7 +4585,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4595,7 +4595,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4605,7 +4605,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4614,7 +4614,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4658,7 +4658,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4668,7 +4668,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4678,7 +4678,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4687,7 +4687,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4731,7 +4731,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4741,7 +4741,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4751,7 +4751,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4760,7 +4760,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4804,7 +4804,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4814,7 +4814,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4824,7 +4824,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4833,7 +4833,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4877,7 +4877,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4887,7 +4887,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4897,7 +4897,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4906,7 +4906,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4950,7 +4950,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4960,7 +4960,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4970,7 +4970,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -4979,7 +4979,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5022,7 +5022,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5032,7 +5032,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5042,7 +5042,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5051,7 +5051,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5095,7 +5095,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5105,7 +5105,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5115,7 +5115,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5124,7 +5124,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5168,7 +5168,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5178,7 +5178,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5188,7 +5188,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5197,7 +5197,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5241,7 +5241,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5251,7 +5251,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5261,7 +5261,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5270,7 +5270,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5314,7 +5314,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5324,7 +5324,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5334,7 +5334,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5343,7 +5343,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5387,7 +5387,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5397,7 +5397,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5407,7 +5407,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5416,7 +5416,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5460,7 +5460,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5470,7 +5470,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5480,7 +5480,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5489,7 +5489,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5533,7 +5533,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5543,7 +5543,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5553,7 +5553,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5562,7 +5562,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5606,7 +5606,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5616,7 +5616,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5626,7 +5626,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5635,7 +5635,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5679,7 +5679,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5689,7 +5689,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5699,7 +5699,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5708,7 +5708,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5752,7 +5752,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5762,7 +5762,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5772,7 +5772,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5781,7 +5781,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5825,7 +5825,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5835,7 +5835,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5845,7 +5845,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5854,7 +5854,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5898,7 +5898,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5908,7 +5908,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5918,7 +5918,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5927,7 +5927,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5971,7 +5971,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5981,7 +5981,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -5991,7 +5991,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6000,7 +6000,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6044,7 +6044,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6054,7 +6054,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6064,7 +6064,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6073,7 +6073,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6117,7 +6117,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6127,7 +6127,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6137,7 +6137,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6146,7 +6146,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6190,7 +6190,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6200,7 +6200,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6210,7 +6210,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6219,7 +6219,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6262,7 +6262,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6272,7 +6272,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6282,7 +6282,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6291,7 +6291,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6334,7 +6334,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6344,7 +6344,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6354,7 +6354,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6363,7 +6363,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6407,7 +6407,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6417,7 +6417,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6427,7 +6427,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6436,7 +6436,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6480,7 +6480,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6490,7 +6490,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6500,7 +6500,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6509,7 +6509,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6553,7 +6553,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6563,7 +6563,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6573,7 +6573,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6582,7 +6582,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6626,7 +6626,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6636,7 +6636,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6646,7 +6646,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6655,7 +6655,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6699,7 +6699,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6709,7 +6709,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6719,7 +6719,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6728,7 +6728,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6772,7 +6772,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6782,7 +6782,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6792,7 +6792,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6801,7 +6801,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6845,7 +6845,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6855,7 +6855,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6865,7 +6865,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6874,7 +6874,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6918,7 +6918,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6928,7 +6928,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6938,7 +6938,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6947,7 +6947,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -6991,7 +6991,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7001,7 +7001,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7011,7 +7011,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7020,7 +7020,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7065,7 +7065,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7075,7 +7075,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7085,7 +7085,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7094,7 +7094,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7135,7 +7135,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7145,7 +7145,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7155,7 +7155,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7164,7 +7164,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7207,7 +7207,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7217,7 +7217,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7227,7 +7227,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7236,7 +7236,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7280,7 +7280,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7290,7 +7290,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7300,7 +7300,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7309,7 +7309,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7353,7 +7353,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7363,7 +7363,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7373,7 +7373,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7382,7 +7382,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7426,7 +7426,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7436,7 +7436,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7446,7 +7446,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7455,7 +7455,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7499,7 +7499,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7509,7 +7509,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7519,7 +7519,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7528,7 +7528,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7572,7 +7572,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7582,7 +7582,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7592,7 +7592,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7601,7 +7601,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7645,7 +7645,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7655,7 +7655,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7665,7 +7665,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7674,7 +7674,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7718,7 +7718,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7728,7 +7728,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7738,7 +7738,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7747,7 +7747,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7791,7 +7791,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7801,7 +7801,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7811,7 +7811,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7820,7 +7820,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7864,7 +7864,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7874,7 +7874,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7884,7 +7884,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7893,7 +7893,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7937,7 +7937,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7947,7 +7947,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7957,7 +7957,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -7966,7 +7966,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8010,7 +8010,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8020,7 +8020,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8030,7 +8030,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8039,7 +8039,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8083,7 +8083,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8093,7 +8093,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8103,7 +8103,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8112,7 +8112,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8156,7 +8156,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8166,7 +8166,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8176,7 +8176,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8185,7 +8185,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8229,7 +8229,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8239,7 +8239,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8249,7 +8249,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8258,7 +8258,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8302,7 +8302,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8312,7 +8312,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8322,7 +8322,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8331,7 +8331,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8375,7 +8375,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8385,7 +8385,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8395,7 +8395,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8404,7 +8404,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8447,7 +8447,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8457,7 +8457,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8467,7 +8467,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8476,7 +8476,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8520,7 +8520,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8530,7 +8530,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8540,7 +8540,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8549,7 +8549,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8593,7 +8593,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8603,7 +8603,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8613,7 +8613,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8622,7 +8622,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8666,7 +8666,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8676,7 +8676,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8686,7 +8686,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8695,7 +8695,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8739,7 +8739,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8749,7 +8749,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8759,7 +8759,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8768,7 +8768,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8812,7 +8812,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8822,7 +8822,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8832,7 +8832,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8841,7 +8841,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8885,7 +8885,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8895,7 +8895,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8905,7 +8905,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8914,7 +8914,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8957,7 +8957,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8967,7 +8967,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8977,7 +8977,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -8986,7 +8986,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9030,7 +9030,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9040,7 +9040,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9050,7 +9050,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9059,7 +9059,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9103,7 +9103,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9113,7 +9113,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9123,7 +9123,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9132,7 +9132,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9176,7 +9176,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9186,7 +9186,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9196,7 +9196,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9205,7 +9205,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9249,7 +9249,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9259,7 +9259,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9269,7 +9269,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9278,7 +9278,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9322,7 +9322,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9332,7 +9332,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9342,7 +9342,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9351,7 +9351,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9395,7 +9395,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9405,7 +9405,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9415,7 +9415,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9424,7 +9424,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9468,7 +9468,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9478,7 +9478,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9488,7 +9488,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9497,7 +9497,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9540,7 +9540,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9550,7 +9550,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9560,7 +9560,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9569,7 +9569,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9613,7 +9613,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9623,7 +9623,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9633,7 +9633,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9642,7 +9642,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9686,7 +9686,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9696,7 +9696,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9706,7 +9706,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9715,7 +9715,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9759,7 +9759,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9769,7 +9769,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9779,7 +9779,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9788,7 +9788,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9832,7 +9832,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9842,7 +9842,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9852,7 +9852,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9861,7 +9861,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9905,7 +9905,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9915,7 +9915,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9925,7 +9925,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9934,7 +9934,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9978,7 +9978,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9988,7 +9988,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -9998,7 +9998,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10007,7 +10007,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10051,7 +10051,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10061,7 +10061,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10071,7 +10071,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10080,7 +10080,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10124,7 +10124,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10134,7 +10134,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10144,7 +10144,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10153,7 +10153,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10197,7 +10197,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10207,7 +10207,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10217,7 +10217,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10226,7 +10226,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10270,7 +10270,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10280,7 +10280,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10290,7 +10290,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10299,7 +10299,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10343,7 +10343,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10353,7 +10353,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10363,7 +10363,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10372,7 +10372,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10416,7 +10416,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10426,7 +10426,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10436,7 +10436,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10445,7 +10445,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10489,7 +10489,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10499,7 +10499,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10509,7 +10509,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10518,7 +10518,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10562,7 +10562,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10572,7 +10572,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10582,7 +10582,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10591,7 +10591,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10635,7 +10635,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10645,7 +10645,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10655,7 +10655,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10664,7 +10664,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10706,7 +10706,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10716,7 +10716,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10726,7 +10726,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10735,7 +10735,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10779,7 +10779,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10789,7 +10789,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10799,7 +10799,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10808,7 +10808,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10851,7 +10851,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10861,7 +10861,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10871,7 +10871,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10880,7 +10880,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10924,7 +10924,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10934,7 +10934,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10944,7 +10944,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10953,7 +10953,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -10997,7 +10997,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11007,7 +11007,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11017,7 +11017,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11026,7 +11026,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11070,7 +11070,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11080,7 +11080,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11090,7 +11090,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11099,7 +11099,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11143,7 +11143,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11153,7 +11153,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11163,7 +11163,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11172,7 +11172,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11216,7 +11216,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11226,7 +11226,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11236,7 +11236,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11245,7 +11245,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11289,7 +11289,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11299,7 +11299,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11309,7 +11309,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11318,7 +11318,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11362,7 +11362,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11372,7 +11372,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11382,7 +11382,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11391,7 +11391,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11435,7 +11435,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11445,7 +11445,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11455,7 +11455,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11464,7 +11464,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11508,7 +11508,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11518,7 +11518,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11528,7 +11528,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11537,7 +11537,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11581,7 +11581,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11591,7 +11591,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11601,7 +11601,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11610,7 +11610,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11654,7 +11654,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11664,7 +11664,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11674,7 +11674,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11683,7 +11683,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11727,7 +11727,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11737,7 +11737,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11747,7 +11747,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11756,7 +11756,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11800,7 +11800,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11810,7 +11810,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11820,7 +11820,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11829,7 +11829,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11873,7 +11873,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11883,7 +11883,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11893,7 +11893,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11902,7 +11902,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11946,7 +11946,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11956,7 +11956,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11966,7 +11966,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -11975,7 +11975,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12019,7 +12019,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12029,7 +12029,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12039,7 +12039,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12048,7 +12048,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12092,7 +12092,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12102,7 +12102,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12112,7 +12112,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12121,7 +12121,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12165,7 +12165,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12175,7 +12175,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12185,7 +12185,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12194,7 +12194,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12238,7 +12238,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12248,7 +12248,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12258,7 +12258,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12267,7 +12267,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12311,7 +12311,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12321,7 +12321,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12331,7 +12331,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12340,7 +12340,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12384,7 +12384,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12394,7 +12394,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12404,7 +12404,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12413,7 +12413,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12457,7 +12457,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12467,7 +12467,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12477,7 +12477,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12486,7 +12486,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12530,7 +12530,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12540,7 +12540,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12550,7 +12550,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12559,7 +12559,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12601,7 +12601,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12611,7 +12611,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12621,7 +12621,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12630,7 +12630,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12673,7 +12673,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12683,7 +12683,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12693,7 +12693,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12702,7 +12702,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12745,7 +12745,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12755,7 +12755,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12765,7 +12765,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12774,7 +12774,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12817,7 +12817,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12827,7 +12827,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12837,7 +12837,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12846,7 +12846,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12889,7 +12889,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12899,7 +12899,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12909,7 +12909,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12918,7 +12918,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12961,7 +12961,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12971,7 +12971,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12981,7 +12981,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -12990,7 +12990,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13033,7 +13033,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13043,7 +13043,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13053,7 +13053,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13062,7 +13062,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13105,7 +13105,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13115,7 +13115,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13125,7 +13125,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13134,7 +13134,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13178,7 +13178,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13188,7 +13188,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13198,7 +13198,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13207,7 +13207,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13251,7 +13251,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13261,7 +13261,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13271,7 +13271,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13280,7 +13280,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13323,7 +13323,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13333,7 +13333,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13343,7 +13343,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13352,7 +13352,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13395,7 +13395,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13405,7 +13405,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13415,7 +13415,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13424,7 +13424,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13467,7 +13467,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13477,7 +13477,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13487,7 +13487,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13496,7 +13496,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13540,7 +13540,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13550,7 +13550,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13560,7 +13560,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13569,7 +13569,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13612,7 +13612,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13622,7 +13622,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13632,7 +13632,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13641,7 +13641,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13685,7 +13685,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13695,7 +13695,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13705,7 +13705,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13714,7 +13714,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13758,7 +13758,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13768,7 +13768,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13778,7 +13778,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13787,7 +13787,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13830,7 +13830,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13840,7 +13840,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13850,7 +13850,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13859,7 +13859,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13903,7 +13903,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13913,7 +13913,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13923,7 +13923,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13932,7 +13932,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13976,7 +13976,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13986,7 +13986,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -13996,7 +13996,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14005,7 +14005,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14049,7 +14049,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14059,7 +14059,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14069,7 +14069,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14078,7 +14078,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14122,7 +14122,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14132,7 +14132,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14142,7 +14142,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14151,7 +14151,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14195,7 +14195,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14205,7 +14205,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14215,7 +14215,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14224,7 +14224,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14268,7 +14268,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14278,7 +14278,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14288,7 +14288,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14297,7 +14297,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14340,7 +14340,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14350,7 +14350,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14360,7 +14360,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14369,7 +14369,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14412,7 +14412,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14422,7 +14422,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14432,7 +14432,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14441,7 +14441,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14485,7 +14485,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14495,7 +14495,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14505,7 +14505,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14514,7 +14514,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14557,7 +14557,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14567,7 +14567,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14577,7 +14577,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14586,7 +14586,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14629,7 +14629,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14639,7 +14639,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14649,7 +14649,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14658,7 +14658,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14701,7 +14701,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14711,7 +14711,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14721,7 +14721,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14730,7 +14730,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14773,7 +14773,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14783,7 +14783,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14793,7 +14793,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14802,7 +14802,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14845,7 +14845,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14855,7 +14855,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14865,7 +14865,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14874,7 +14874,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14918,7 +14918,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14928,7 +14928,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14938,7 +14938,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14947,7 +14947,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -14990,7 +14990,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -15000,7 +15000,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -15010,7 +15010,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -15019,7 +15019,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -15063,7 +15063,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -15073,7 +15073,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -15083,7 +15083,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -15092,7 +15092,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -15137,7 +15137,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -15147,7 +15147,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -15157,7 +15157,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -15166,7 +15166,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -15208,7 +15208,7 @@ read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -15218,7 +15218,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -15228,7 +15228,7 @@ read -p "Укажите путь к файлу со списком логино�
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
@@ -15237,7 +15237,7 @@ if [ $brutmenu = "4" ]; then
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
-cd /home/admin/opt/web/rdp_brute
+cd $PWD
 ./rdp_brute.sh
 fi
 
