@@ -44,7 +44,7 @@ Google translate.
 
 5. So if you have any others, do in a word processor search and replace on your own.
 
-6. The current version is 1.02. Added ability to select the method of sorting the pair login / password. Fixed a crash bug when selecting a script of some countries from the list. Fixed a bug with paths.
+6. The current version is 1.02. Added ability to select the method of sorting the pair login / password. Fixed a crash bug when selecting a script of some countries from the list. Fixed a bug with incorrect paths.
 
 7. Starting from the folder with the script through the terminal  
 
