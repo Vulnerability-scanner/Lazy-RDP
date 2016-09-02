@@ -18,8 +18,12 @@
 	с. open3389 - временный файл, содержащий списки IP с открытыми 3389 портами. Перезаписывается при каждом сканировании.
 
 	d. rdp_brute.sh - сам скрипт 
-	
-8. Запуск из папки со скриптом через терминал
+
+8. Установка
+
+         git clone https://github.com/getdrive/Lazy-RDP
+
+9. Запуск из папки со скриптом через терминал
   
         a. chmod +x rdp_brute.sh
 
@@ -46,8 +50,12 @@ Google translate.
 
 6. The current version is 1.02. Added ability to select the method of sorting the pair login / password. Fixed a crash bug when selecting a script of some countries from the list. Fixed a bug with incorrect paths.
 
-7. Starting from the folder with the script through the terminal  
+9. Setting
 
-  a. chmod + x rdp_brute.sh
+     git clone https://github.com/getdrive/Lazy-RDP 
 
-  b. ./rdp_brute.sh
+8. Starting from the folder with the script through the terminal  
+
+     a. chmod + x rdp_brute.sh
+
+     b. ./rdp_brute.sh
