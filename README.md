@@ -21,7 +21,7 @@
 
 8. Установка
 
-         git clone https://github.com/getdrive/Lazy-RDP
+        git clone https://github.com/getdrive/Lazy-RDP
 
 9. Запуск из папки со скриптом через терминал
   
