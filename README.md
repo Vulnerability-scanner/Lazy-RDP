@@ -52,10 +52,10 @@ Google translate.
 
 9. Setting
 
-       git clone https://github.com/getdrive/Lazy-RDP 
+        git clone https://github.com/getdrive/Lazy-RDP 
 
 8. Starting from the folder with the script through the terminal  
 
-       a. chmod + x rdp_brute.sh
+        a. chmod + x rdp_brute.sh
 
-       b. ./rdp_brute.sh
+        b. ./rdp_brute.sh
