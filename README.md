@@ -40,11 +40,11 @@ Google translate.
 
 4. The default path is registered in the script:
 
-  a. /home/admin/opt/web/rdp_brute/open3389
+       a. /home/admin/opt/web/rdp_brute/open3389
 
-  b. /home/admin/opt/web/rdp_brute/users
+       b. /home/admin/opt/web/rdp_brute/users
 
-  c. /home/admin/opt/web/rdp_brute/dictionary/pass
+       c. /home/admin/opt/web/rdp_brute/dictionary/pass
 
 5. So if you have any others, do in a word processor search and replace on your own.
 
@@ -52,10 +52,10 @@ Google translate.
 
 9. Setting
 
-     git clone https://github.com/getdrive/Lazy-RDP 
+       git clone https://github.com/getdrive/Lazy-RDP 
 
 8. Starting from the folder with the script through the terminal  
 
-     a. chmod + x rdp_brute.sh
+       a. chmod + x rdp_brute.sh
 
-     b. ./rdp_brute.sh
+       b. ./rdp_brute.sh
