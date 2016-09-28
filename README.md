@@ -44,7 +44,7 @@
   Используйте его только на собственных сетях.<br/>
   Автор не несет ответственности за его использование.<br/>
 
-  This script must be used only for educational purposes and Pen testing.<br/>
+  This script must be used only for educational purposes and Pentesting.<br/>
   Use it only on your own networks.<br/>
   Author is not responsible of its use.<br/>
 
