@@ -37,16 +37,16 @@
         chmod + x rdp_brute.sh
 
         ./rdp_brute.sh
+        
 # Disclaimer
 
-Этот сценарий должен использоваться только для образовательных целей и тестирования.<br/>
-Используйте его только на собственных сетях.<br/>
-Автор не несет ответственности за его использование.<br/>
+  Этот сценарий должен использоваться только для образовательных целей и тестирования.<br/>
+  Используйте его только на собственных сетях.<br/>
+  Автор не несет ответственности за его использование.<br/>
 
-This script must be used only for educational purposes and Pen testing.<br/>
-Use it only on your own networks.<br/>
-Author is not responsible of its use.<br/>
-
+  This script must be used only for educational purposes and Pen testing.<br/>
+  Use it only on your own networks.<br/>
+  Author is not responsible of its use.<br/>
 
 # Supported Languages
 
