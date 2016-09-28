@@ -13,9 +13,9 @@
 
 - Запуск из папки со скриптом через терминал <br/>
   
-        a. chmod +x rdp_brute.sh
+        chmod +x rdp_brute.sh
 
-        b. ./rdp_brute.sh
+        ./rdp_brute.sh
 
 
 # Google translate
@@ -34,9 +34,9 @@
 
 - Starting from the folder with the script through the terminal <br/>
 
-        a. chmod + x rdp_brute.sh
+        chmod + x rdp_brute.sh
 
-        b. ./rdp_brute.sh
+        ./rdp_brute.sh
 
 # Supported Languages
 
