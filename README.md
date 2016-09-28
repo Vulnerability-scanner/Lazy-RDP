@@ -37,6 +37,7 @@
         a. chmod + x rdp_brute.sh
 
         b. ./rdp_brute.sh
+
 # Supported Languages
 
  Russian & English.
