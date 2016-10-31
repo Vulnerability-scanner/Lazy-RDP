@@ -22,27 +22,18 @@ if [ $lang = "ru" ];
 	MENUENG
 fi
 }
-#######################################CHECKFILE######################################
-CHECKFILE ()
-{
-if [ -s open3389 ]
-	then
- echo ""
-	else
- echo "No open RDP"
-exit;
-fi
-}
-######################################################################################
+
 #####################################MAINBRUTEMENURU##################################
 MAINBRUTEMENURU ()
 {
 echo ""
 echo "         Выбрать метод перебора.."
-echo "1. Ввести 1 логин и указать путь к файлу с паролями: "; 
-echo "2. Указать путь к файлу с логинами и ввести 1 пароль: ";
-echo "3. Указать путь к файлам с логинами и паролями: ";
-echo "4. Приступить к перебору методом по умолчанию: ";
+echo "1. Ввести 1 логин и указать путь к файлу с паролями. "; 
+echo "2. Указать путь к файлу с логинами и ввести 1 пароль. ";
+echo "3. Указать путь к файлам с логинами и паролями. ";
+echo "4. Приступить к перебору методом по умолчанию. ";
+echo "5. Перейти в Главное меню. ";
+echo "Нажмите Enter для выхода из скрипта"
 read -p "   Выбор из меню : " brutmenu
 
 if [ "$brutmenu" = "1" ]; then
@@ -82,6 +73,13 @@ read -p " Нажмите enter для перехода в Главное мен�
 
 ./rdp_brute.sh
 fi
+
+if [ "$brutmenu" = "5" ]; then
+echo ""
+./rdp_brute.sh
+exit;
+./rdp_brute.sh
+fi
 }
 ######################################################################################
 #####################################MAINBRUTEMENUEN##################################
@@ -89,10 +87,12 @@ MAINBRUTEMENUEN ()
 {
 echo ""
 echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
+echo "1. Enter your login and specify the path to the file list passwords. "; 
+echo "2. Specify the path to the file list with the login and password to enter. ";
+echo "3. Specify the path to the file list with login and password. ";
+echo "4. Proceed to the brute force method by default. ";
+echo "5. Return to Main menu. ";
+echo "Press Enter to exit the script"
 read -p "   Сhoose from a menu : " brutmenu
 
 if [ "$brutmenu" = "1" ]; then
@@ -132,7 +132,15 @@ read -p " Press enter to return to the Main menu "
 
 ./rdp_brute.sh
 fi
+
+if [ "$brutmenu" = "5" ]; then
+echo ""
+./rdp_brute.sh
+exit;
+./rdp_brute.sh
+fi
 }
+
 ########################################MENURU########################################
 MENURU ()
 {
@@ -6061,7 +6069,7 @@ fi
 MAINBRUTEMENURU
 if [ "$menuoption" = "5" ]; then
  
-exit
+exit;
 fi
 fi
 fi
@@ -12245,7 +12253,7 @@ fi
 else
 if [ "$menuoption" = "5" ]; then
 
-exit
+exit;
 
 fi
 fi
@@ -12458,6 +12466,21 @@ fi
 fi
 }
 ####################################################################################
-
+#######################################CHECKFILE######################################
+CHECKFILE ()
+{
+if [ -s open3389 ]
+	then
+ echo ""
+	else
+ echo ""
+ echo "No open RDP";
+sleep 3
+./rdp_brute.sh
+exit;
+./rdp_brute.sh
+fi
+}
+######################################################################################
 #####################################################################################
 CHECKLANGUAGE
