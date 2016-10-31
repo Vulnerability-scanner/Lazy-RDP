@@ -423,7 +423,7 @@ echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-RU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -452,7 +452,7 @@ echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-RU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -480,7 +480,7 @@ echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-RU
+
 
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
@@ -510,7 +510,7 @@ echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-RU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -538,7 +538,7 @@ echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-RU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -567,7 +567,7 @@ echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-RU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -595,7 +595,7 @@ echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-RU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -623,7 +623,7 @@ echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-RU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -650,7 +650,7 @@ echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-RU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
