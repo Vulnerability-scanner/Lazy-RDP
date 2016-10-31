@@ -155,7 +155,7 @@ echo "5. Выход ";
 read -p "   Выбор из меню : " menuoption
 
 if [ "$menuoption" = "1" ]; then
-read -p " Введите диапазон или одиночный IP {x.x.x.x/24,x.x.x.0-x.x.x.255} : " target
+read -p " Введите диапазон или одиночный IP {x.x.x.0/24,x.x.x.0-x.x.x.255} : " target
 masscan $target -p3389 --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
