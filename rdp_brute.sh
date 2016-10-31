@@ -157,7 +157,7 @@ read -p "   Выбор из меню : " menuoption
 if [ "$menuoption" = "1" ]; then
 read -p " Введите диапазон IP {192.168.0.0/24,192.168.0.0-192.168.0.255} : " target
 masscan $target -p3389 --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
 
 echo ""
 echo "Адреса с открытым 3389 портом:"
@@ -177,7 +177,7 @@ if [ "$menuoption" = "2" ]; then
 
 read -p " Введите путь к файлу {list.txt,list..& etc.} : " listname
 masscan -p3389 -iL $listname --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
 echo ""
 echo "Адреса с открытым 3389 портом:"
 cat open3389
@@ -422,7 +422,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+RU
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -450,7 +451,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+RU
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -477,7 +479,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+RU
 
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
@@ -506,7 +509,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+RU
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -533,7 +537,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+RU
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -561,7 +566,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+RU
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -588,7 +594,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+RU
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -615,7 +622,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+RU
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -641,7 +649,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+RU
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -668,7 +677,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -695,7 +705,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -722,7 +733,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -750,7 +762,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -778,7 +791,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -806,7 +820,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -834,7 +849,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -862,7 +878,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -890,7 +907,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -918,7 +936,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -946,7 +965,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -974,7 +994,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1001,7 +1022,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1028,7 +1050,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1055,7 +1078,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1083,7 +1107,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1110,7 +1135,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1138,7 +1164,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1166,7 +1193,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1194,7 +1222,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1222,7 +1251,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1250,7 +1280,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1278,7 +1309,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1305,7 +1337,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1333,7 +1366,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1360,7 +1394,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1387,7 +1422,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1413,7 +1449,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1441,7 +1478,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1469,7 +1507,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1497,7 +1536,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1525,7 +1565,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1553,7 +1594,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1581,7 +1623,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1609,7 +1652,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1637,7 +1681,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1665,7 +1710,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1693,7 +1739,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1721,7 +1768,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1749,7 +1797,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1777,7 +1826,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1805,7 +1855,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1833,7 +1884,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1861,7 +1913,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1889,7 +1942,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1917,7 +1971,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1945,7 +2000,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -1973,7 +2029,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2001,7 +2058,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2029,7 +2087,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2057,7 +2116,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2085,7 +2145,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2113,7 +2174,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2141,7 +2203,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2168,7 +2231,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2196,7 +2260,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2224,7 +2289,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2252,7 +2318,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2280,7 +2347,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2308,7 +2376,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2336,7 +2405,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2364,7 +2434,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2392,7 +2463,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2420,7 +2492,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2448,7 +2521,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2476,7 +2550,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2504,7 +2579,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2532,7 +2608,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2560,7 +2637,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2588,7 +2666,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2616,7 +2695,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2643,7 +2723,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2670,7 +2751,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2698,7 +2780,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2726,7 +2809,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2754,7 +2838,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2782,7 +2867,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2810,7 +2896,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2838,7 +2925,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2866,7 +2954,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2894,7 +2983,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2922,7 +3012,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2950,7 +3041,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -2977,7 +3069,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3004,7 +3097,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3032,7 +3126,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3060,7 +3155,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3088,7 +3184,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3116,7 +3213,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3144,7 +3242,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3172,7 +3271,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3200,7 +3300,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3228,7 +3329,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3256,7 +3358,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3284,7 +3387,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3312,7 +3416,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3340,7 +3445,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3368,7 +3474,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3396,7 +3503,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3424,7 +3532,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3452,7 +3561,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3479,7 +3589,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3507,7 +3618,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3535,7 +3647,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3563,7 +3676,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3591,7 +3705,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3619,7 +3734,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3647,7 +3763,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3674,7 +3791,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3702,7 +3820,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3730,7 +3849,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3758,7 +3878,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3786,7 +3907,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3814,7 +3936,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3842,7 +3965,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3870,7 +3994,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3897,7 +4022,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3925,7 +4051,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3953,7 +4080,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -3981,7 +4109,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4009,7 +4138,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4037,7 +4167,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4065,7 +4196,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4093,7 +4225,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4121,7 +4254,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4149,7 +4283,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4177,7 +4312,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4205,7 +4341,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4233,7 +4370,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4261,7 +4399,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4289,7 +4428,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4317,7 +4457,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4343,7 +4484,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4371,7 +4513,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4398,7 +4541,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4426,7 +4570,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4454,7 +4599,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4482,7 +4628,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4510,7 +4657,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4538,7 +4686,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4566,7 +4715,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4594,7 +4744,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4622,7 +4773,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4650,7 +4802,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4678,7 +4831,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4706,7 +4860,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4734,7 +4889,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4762,7 +4918,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4790,7 +4947,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4818,7 +4976,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4846,7 +5005,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4874,7 +5034,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4902,7 +5063,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4930,7 +5092,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4958,7 +5121,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -4986,7 +5150,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5014,7 +5179,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5042,7 +5208,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5068,7 +5235,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5095,7 +5263,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5122,7 +5291,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5149,7 +5319,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5176,7 +5347,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5203,7 +5375,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5230,7 +5403,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5257,7 +5431,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5285,7 +5460,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5313,7 +5489,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5340,7 +5517,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5367,7 +5545,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5394,7 +5573,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5422,7 +5602,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5449,7 +5630,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5477,7 +5659,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5505,7 +5688,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5532,7 +5716,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5560,7 +5745,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5588,7 +5774,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5616,7 +5803,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5644,7 +5832,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5672,7 +5861,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5700,7 +5890,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5727,7 +5918,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5754,7 +5946,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5782,7 +5975,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5809,7 +6003,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5836,7 +6031,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5863,7 +6059,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5890,7 +6087,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5917,7 +6115,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5945,7 +6144,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -5972,7 +6172,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -6000,7 +6201,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -6028,7 +6230,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -6055,7 +6258,8 @@ echo ""
 echo "Для выхода из режима сканирования 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILERU
+
 
 echo "Хосты с открытым 3389 портом записаны в файл $PWD/open3389"
 
@@ -6296,7 +6500,7 @@ read -p "   Сhoose from a menu : " menuoption
 if [ "$menuoption" = "1" ]; then
 read -p " Enter the IP range {192.168.0.0/24,192.168.0.0-192.168.0.255} : " target
 masscan $target -p3389 --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
 echo ""
 echo "Addresses open port 3389:"
 cat open3389
@@ -6315,7 +6519,7 @@ if [ "$menuoption" = "2" ]; then
 
 read -p " Enter the path to the file {list.txt,list..& etc.} : " listname
 masscan -p3389 -iL $listname --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
 echo ""
 echo "
 Addresses open port 3389:"
@@ -6561,7 +6765,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -6589,7 +6794,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -6616,7 +6822,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
@@ -6645,7 +6852,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -6672,7 +6880,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -6700,7 +6909,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -6727,7 +6937,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -6754,7 +6965,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -6780,7 +6992,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -6807,7 +7020,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -6834,7 +7048,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -6861,7 +7076,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -6889,7 +7105,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -6917,7 +7134,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -6945,7 +7163,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -6973,7 +7192,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -7001,7 +7221,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -7029,7 +7250,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -7057,7 +7279,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -7085,7 +7308,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -7113,7 +7337,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -7140,7 +7365,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -7167,7 +7393,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -7194,7 +7421,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -7222,7 +7450,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -7249,7 +7478,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -7277,7 +7507,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -7305,7 +7536,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -7333,7 +7565,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -7361,7 +7594,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -7389,7 +7623,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -7417,7 +7652,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -7444,7 +7680,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -7472,7 +7709,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -7499,7 +7737,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -7526,7 +7765,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -7552,7 +7792,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -7580,7 +7821,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -7608,7 +7850,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -7636,7 +7879,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -7664,7 +7908,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -7692,7 +7937,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -7720,7 +7966,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -7748,7 +7995,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -7776,7 +8024,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -7804,7 +8053,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -7832,7 +8082,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -7860,7 +8111,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -7888,7 +8140,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -7916,7 +8169,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -7944,7 +8198,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -7972,7 +8227,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -8000,7 +8256,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -8028,7 +8285,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -8056,7 +8314,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -8084,7 +8343,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -8112,7 +8372,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -8140,7 +8401,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -8168,7 +8430,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -8196,7 +8459,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -8224,7 +8488,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -8252,7 +8517,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -8280,7 +8546,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -8307,7 +8574,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -8335,7 +8603,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -8363,7 +8632,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -8391,7 +8661,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -8419,7 +8690,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -8447,7 +8719,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -8475,7 +8748,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -8503,7 +8777,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -8531,7 +8806,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -8559,7 +8835,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -8587,7 +8864,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -8615,7 +8893,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -8643,7 +8922,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -8671,7 +8951,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -8699,7 +8980,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -8727,7 +9009,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -8755,7 +9038,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -8782,7 +9066,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -8809,7 +9094,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -8837,7 +9123,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -8865,7 +9152,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -8893,7 +9181,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -8921,7 +9210,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -8949,7 +9239,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -8977,7 +9268,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -9005,7 +9297,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -9033,7 +9326,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -9061,7 +9355,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -9089,7 +9384,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -9116,7 +9412,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -9143,7 +9440,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -9171,7 +9469,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -9199,7 +9498,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -9227,7 +9527,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -9255,7 +9556,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -9283,7 +9585,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -9311,7 +9614,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -9339,7 +9643,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -9367,7 +9672,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -9395,7 +9701,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -9423,7 +9730,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -9451,7 +9759,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -9479,7 +9788,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -9507,7 +9817,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -9535,7 +9846,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -9563,7 +9875,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -9591,7 +9904,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -9618,7 +9932,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -9646,7 +9961,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -9674,7 +9990,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -9702,7 +10019,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -9730,7 +10048,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -9758,7 +10077,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -9786,7 +10106,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -9813,7 +10134,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -9841,7 +10163,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -9869,7 +10192,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -9897,7 +10221,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -9925,7 +10250,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -9953,7 +10279,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -9981,7 +10308,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -10009,7 +10337,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -10036,7 +10365,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -10064,7 +10394,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -10092,7 +10423,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -10120,7 +10452,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -10148,7 +10481,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -10176,7 +10510,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -10204,7 +10539,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -10232,7 +10568,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -10260,7 +10597,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -10288,7 +10626,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -10316,7 +10655,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -10344,7 +10684,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -10372,7 +10713,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -10400,7 +10742,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -10428,7 +10771,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -10456,7 +10800,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -10482,7 +10827,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -10510,7 +10856,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -10537,7 +10884,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -10565,7 +10913,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -10593,7 +10942,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -10621,7 +10971,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -10649,7 +11000,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -10677,7 +11029,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -10705,7 +11058,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -10733,7 +11087,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -10761,7 +11116,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -10789,7 +11145,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -10817,7 +11174,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -10845,7 +11203,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -10873,7 +11232,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -10901,7 +11261,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -10929,7 +11290,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -10957,7 +11319,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -10985,7 +11348,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -11013,7 +11377,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -11041,7 +11406,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -11069,7 +11435,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -11097,7 +11464,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -11125,7 +11493,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -11153,7 +11522,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -11181,7 +11551,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -11207,7 +11578,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -11234,7 +11606,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -11261,7 +11634,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -11288,7 +11662,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -11315,7 +11690,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -11342,7 +11718,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -11369,7 +11746,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -11396,7 +11774,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -11424,7 +11803,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -11452,7 +11832,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -11479,7 +11860,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -11506,7 +11888,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -11533,7 +11916,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -11561,7 +11945,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -11588,7 +11973,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -11616,7 +12002,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -11644,7 +12031,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -11671,7 +12059,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -11699,7 +12088,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -11727,7 +12117,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -11755,7 +12146,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -11783,7 +12175,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -11811,7 +12204,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -11839,7 +12233,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -11866,7 +12261,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -11893,7 +12289,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -11921,7 +12318,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -11948,7 +12346,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -11975,7 +12374,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -12002,7 +12402,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -12029,7 +12430,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -12056,7 +12458,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -12084,7 +12487,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -12111,7 +12515,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -12139,7 +12544,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -12167,7 +12573,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -12194,7 +12601,8 @@ echo ""
 echo "To exit scan mode 'CTRL+C'"
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-CHECKFILE
+CHECKFILEEN
+
 
 echo "Hosts open port 3389 written to the file $PWD/open3389"
 
@@ -12466,8 +12874,25 @@ fi
 fi
 }
 ####################################################################################
-#######################################CHECKFILE######################################
-CHECKFILE ()
+#######################################CHECKFILERU######################################
+CHECKFILERU ()
+{
+if [ -s open3389 ]
+	then
+ echo ""
+	else
+ echo ""
+ echo "Нет открытых RDP";
+ echo ""
+read -p "Нажмите enter для перехода в Главное меню "
+./rdp_brute.sh
+exit;
+./rdp_brute.sh
+fi
+}
+######################################################################################
+#######################################CHECKFILEEN######################################
+CHECKFILEEN ()
 {
 if [ -s open3389 ]
 	then
@@ -12475,12 +12900,12 @@ if [ -s open3389 ]
 	else
  echo ""
  echo "No open RDP";
-sleep 3
+ echo ""
+read -p "Press enter to return to the Main menu "
 ./rdp_brute.sh
 exit;
 ./rdp_brute.sh
 fi
 }
-######################################################################################
 #####################################################################################
 CHECKLANGUAGE
