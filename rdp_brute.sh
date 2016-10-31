@@ -6498,7 +6498,7 @@ echo "5. Exit ";
 read -p "   Сhoose from a menu : " menuoption
 
 if [ "$menuoption" = "1" ]; then
-read -p " Enter the range or single IP {x.x.x.0/24,x.x.x.x-x.x.x.255} : " target
+read -p " Enter the range or single IP {x.x.x.0/24,x.x.x.0-x.x.x.255} : " target
 masscan $target -p3389 --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 echo ""
