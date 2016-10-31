@@ -130,7 +130,7 @@ echo "**********************************Главное меню*****************
 echo ""
 echo "1. Сканировать диапазон на наличие открытого 3389 порта (ввод вручную) ";
 echo "2. Сканировать диапазон на наличие открытого 3389 порта (из файла) ";
-echo "3. Брутфорс Логин/Пароль ";
+echo "3. Брутфорс Логин/Пароль (последнее сканирование) ";
 echo "4. Выбор диапазона IP по стране ";
 echo "5. Выход ";
 read -p "   Выбор из меню : " menuoption
@@ -6270,7 +6270,7 @@ echo "**********************************Main menu*******************************
 echo ""
 echo "1. Scan range for the presence of the open port 3389 (manual entry) ";
 echo "2. Scan range for the presence of the open port 3389 (from a file) ";
-echo "3. Bruteforce Username/Password ";
+echo "3. Bruteforce Username/Password (last scan) ";
 echo "4. Selecting the range of IP for the country ";
 echo "5. Exit ";
 read -p "   Сhoose from a menu : " menuoption
