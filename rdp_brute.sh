@@ -16,6 +16,7 @@ TESTROOT()
 if [ $(id -u) -ne 0 ]; then
 	clear
 	echo -e "                      $red[This script must be run as ROOT]$colorbase"
+	echo ""
 	exit 1
 fi
 }
