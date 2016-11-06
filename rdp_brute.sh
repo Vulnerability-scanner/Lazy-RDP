@@ -10,7 +10,20 @@ blue="\033[1;34m"
 violet="\033[1;35m"
 aquamarine="\033[1;36m"
 grey="\033[1;37m"
+########################################TESTROOT######################################
+TESTROOT()
+{
+if [ $(id -u) -ne 0 ]; then
+	clear
+	echo -e "                      $red[This script must be run as ROOT]$colorbase"
+	exit 1
+fi
+}
 ######################################################################################
+echo -e "                      $yellow*Проверяем права ... *Detect ROOT$colorbase"
+sleep 1
+TESTROOT
+
 echo -e "                      $yellow*Определяем язык...*Detect language"
 sleep 1
 clear
@@ -18,7 +31,7 @@ clear
 echo -e       "$grey                     +-------------------------------------+"
 echo -e       "$grey                     |            Auto  Script             |"
 echo -e "$aquamarine                     |    by GetDrive & hackers Union      |" 
-echo -e        "$red                     |            Version 1.07             |"
+echo -e        "$red                     |            Version 1.08             |"
 echo -e        "$red                     +-------------------------------------+ $colorbase"
 #####################################CHECKLANGUAGE####################################
 CHECKLANGUAGE ()
