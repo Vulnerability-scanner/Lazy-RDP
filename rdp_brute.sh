@@ -10463,7 +10463,7 @@ echo -e "   |        $grey 1.$yellow Scan range to find an open RDP port (manual
 echo -e "   |        $grey 2.$yellow Scan range to find an open RDP port (from a file)$colorbase          | ";
 echo -e "   |        $grey 3.$yellow Bruteforce Username/Password (last scan)$colorbase                   | ";
 echo -e "   |        $grey 4.$yellow Selecting the range of IP for the country $colorbase                 | ";
-echo -e "   |        $grey 5.$yellow Exit ($red ENTER $yellow) $colorbase                                            | ";
+echo -e "   |        $grey 5.$yellow Exit ($red[ENTER]$yellow) $colorbase                                            | ";
 echo -e "   +-----------------------------------------------------------------------+"
 read -p "                              Сhoose from a menu : " menuoption
 
