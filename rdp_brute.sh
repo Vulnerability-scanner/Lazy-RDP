@@ -21,11 +21,17 @@ if [ $(id -u) -ne 0 ]; then
 fi
 }
 ######################################################################################
-echo -e "                      $yellow*Проверяем права ... *Detect ROOT$colorbase"
+echo -e "                    $yellow*Проверяем права ... *Detect ROOT$colorbase"
 sleep 1
 TESTROOT
-
-echo -e "                      $yellow*Определяем язык...*Detect language"
+clear
+echo -e "                    $yellow*Проверяем права ... *Detect ROOT$colorbase..OK"
+sleep 1
+clear
+echo -e "                    $yellow*Определяем язык...*Detect language"
+sleep 1
+clear
+echo -e "                    $yellow*Определяем язык...*Detect language$colorbase..OK"
 sleep 1
 clear
                   
