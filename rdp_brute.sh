@@ -271,7 +271,7 @@ echo -e "   |        $grey 2.$yellow Указать путь к файлу с л
 echo -e "   |        $grey 3.$yellow Указать путь к файлам с логинами и паролями.$colorbase               |";
 echo -e "   |        $grey 4.$yellow Приступить к перебору методом по умолчанию.$colorbase                |";
 echo -e "   |        $grey 5.$yellow Перейти в Главное меню.$colorbase                                    |";
-echo -e "   |        $red         Нажмите $aquamarine Enter $red для выхода из скрипта$colorbase                 |"
+echo -e "   |        $red         Нажмите $aquamarine[Enter]$red для выхода из скрипта$colorbase                 |"
 echo -e "   +-----------------------------------------------------------------------+"
 read -p "                               Выбор из меню : " brutmenu
 
