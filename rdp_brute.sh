@@ -285,7 +285,7 @@ echo -e "                               $green Запуск брутфорса"
 echo ""
 hydra -l $loginbrute -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 echo -e "\n$red***ОШИБКА! Неверно указан логин или файл с паролями"
-echo -e "\n$aquamarine*Нажмите $red ENTER $aquamarine для перехода в Главное меню $colorbase "
+echo -e "\n$aquamarine*Нажмите $red[ENTER]$aquamarine для перехода в Главное меню $colorbase "
 read -p ""
 
 ./rdp_brute.sh
@@ -301,7 +301,7 @@ echo -e "                               $green Запуск брутфорса"
 echo ""
 hydra -L $loginlist -p $passbrute -t 4 -W 3 -M $PWD/open3389 rdp
 echo -e "\n$red***ОШИБКА! Неверно указан файл с логинами или не указан пароль"
-echo -e "\n$aquamarine*Нажмите $red ENTER $aquamarine для перехода в Главное меню $colorbase "
+echo -e "\n$aquamarine*Нажмите $red[ENTER]$aquamarine для перехода в Главное меню $colorbase "
 read -p ""
 
 ./rdp_brute.sh
@@ -317,7 +317,7 @@ echo -e "                               $green Запуск брутфорса"
 echo ""
 hydra -L $loginlist -P $passlist -t 4 -W 3 -M $PWD/open3389 rdp
 echo -e "\n$red***ОШИБКА! Неверно указан файл с логинами или файл с паролями"
-echo -e "\n$aquamarine*Нажмите $red ENTER $aquamarine для перехода в Главное меню $colorbase "
+echo -e "\n$aquamarine*Нажмите $red[ENTER]$aquamarine для перехода в Главное меню $colorbase "
 read -p ""
 
 ./rdp_brute.sh
@@ -331,7 +331,7 @@ echo -e "                               $green Запуск брутфорса"
 echo ""
 hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -M $PWD/open3389 rdp
 echo -e "\n$red***ОШИБКА! Файл с целями пустой"
-echo -e "\n$aquamarine*Нажмите $red ENTER $aquamarine для перехода в Главное меню $colorbase "
+echo -e "\n$aquamarine*Нажмите $red[ENTER]$aquamarine для перехода в Главное меню $colorbase "
 read -p ""
 
 ./rdp_brute.sh
@@ -440,7 +440,7 @@ echo -e "   |$grey 1.$yellow Сканировать диапазон на нал
 echo -e "   |$grey 2.$yellow Сканировать диапазон на наличие открытого RDP порта (из файла)$colorbase     | ";
 echo -e "   |$grey 3.$yellow Брутфорс Логин/Пароль (последнее сканирование)$colorbase                     | ";
 echo -e "   |$grey 4.$yellow Выбор диапазона IP по стране $colorbase                                      | ";
-echo -e "   |$grey 5.$yellow Выход ($red ENTER $yellow) $colorbase                                                   | ";
+echo -e "   |$grey 5.$yellow Выход ($red[ENTER]$yellow) $colorbase                                                   | ";
 echo -e "   +-----------------------------------------------------------------------+"
 echo " "
 read -p "                                Выбор из меню : " menuoption
