@@ -475,10 +475,10 @@ masscan $target -p3389 --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" 
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 CHECKFILERU                              
 echo ""                                  
-echo "$aquamarine                            Адреса с открытым RDP портом:$green"    
+echo -e "$aquamarine                            Адреса с открытым RDP портом:$green"    
 cat open3389                             
 echo ""
-echo "$red Хосты с открытым RDP портом записаны в файл $PWD/open3389"
+echo -e "$red Хосты с открытым RDP портом записаны в файл $PWD/open3389"
 sleep 2
 clear
 echo -e "$red-------------------------------------------------------------------------------$colorbase"    
