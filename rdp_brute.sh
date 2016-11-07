@@ -44,7 +44,7 @@ echo -e        "$red                     +-------------------------------------+
 CHECKLANGUAGE ()
 {
 lang=$(locale | grep LANG | cut -d= -f2 | cut -d_ -f1)
-if [ $lang = "ru" ];
+if [ "$lang" = "ru" ];
 	then MENURU
 		else 
 	MENUENG
