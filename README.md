@@ -5,7 +5,7 @@
 
 - Для корректной работы скрипта требуются установленные: masscan, curl и hydra by van Hauser. <br/>
 
-- Текущая версия 1.09. Добавлена возможность выбора метода перебора пары логин/пароль. Исправлена ошибка вылета из скрипта при выборе некоторых стран из списка. Исправлена ошибка с путями. Добавлен английский язык. Исправлен баг с брутфорсом. Добавлена функция автоматического определения языка ОС. Оптимизирован код скрипта. <br/>
+- Текущая версия 1.10. Добавлена возможность выбора метода перебора пары логин/пароль. Исправлена ошибка вылета из скрипта при выборе некоторых стран из списка. Исправлена ошибка с путями. Добавлен английский язык. Исправлен баг с брутфорсом. Добавлена функция автоматического определения языка ОС. Оптимизирован код скрипта. <br/>
 
 - Установка <br/>
 
@@ -26,7 +26,7 @@
 
 - To work correctly, the script requires the establishment: masscan, curl and hydra by van Hauser.<br/>
 
-- The current version is 1.09. Added ability to select the method of sorting the pair login / password. Fixed a crash bug when selecting a script of some countries from the list. Fixed a bug with incorrect paths. Added English. Fixed a bug with brute force menu. Added function to automatically detect the operating system language. Optimized script code. <br/>
+- The current version is 1.10. Added ability to select the method of sorting the pair login / password. Fixed a crash bug when selecting a script of some countries from the list. Fixed a bug with incorrect paths. Added English. Fixed a bug with brute force menu. Added function to automatically detect the operating system language. Optimized script code. <br/>
 
 - Setting <br/>
 
