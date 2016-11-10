@@ -6,8 +6,6 @@ black="\033[1;30m"
 red="\033[1;31m"
 green="\033[1;32m"
 yellow="\033[1;33m"
-blue="\033[1;34m"
-violet="\033[1;35m"
 aquamarine="\033[1;36m"
 grey="\033[1;37m"
 ##########################################CLEAR#######################################
@@ -26,13 +24,56 @@ if [ $(id -u) -ne 0 ]; then
 fi
 }
 ######################################################################################
+CHECKDISTR ()
+{
+distr=$(cat /etc/*-release | grep DISTRIB_CODENAME | awk -F'=' '/DISTRIB_CODENAME=/ {print $2}')
+	if [ "$distr" = "sana" ]; then
+	cat /etc/apt/sources.list>>/etc/apt/sources.list_lazybak
+		echo "deb http://old.kali.org/kali sana main non-free contrib" > /etc/apt/sources.list
+	elif [ "$distr" = "rolling" ]; then
+	cat /etc/apt/sources.list>>/etc/apt/sources.list_lazybak
+		echo "deb http://http.kali.org/kali kali-rolling main contrib non-free" > /etc/apt/sources.list
+	else
+		echo -e "$aquamarine[Скрипт тестировался только для $red[Kali Linux2]$aquamarine. Вы можете самостоятельно изменить код скрита для своей ОС.]$colorbase"
+		echo -e "$aquamarine[The script was tested only for $red[Kali Linux2]$aquamarine. You are free to modify the code for your operating system]$colorbase"
+	exit 1
+fi
+
+}
+######################################################################################
+CHECKDEPEND ()
+{
+echo -e "                    $yellow*Проверяем зависимости.. Check dependencies"
+depend=$(dpkg -s freerdp-x11 | grep 'Status' | awk -F':' '/Status: / {print $2}')
+	if [ "$depend" = " install ok installed" ]; then
+		clear FreeRDP не установлен. Установить?/FreeRDP not installed. Install? [Y] [N]" yn
+			case $yn in
+			[Yy]* ) apt-get update -y && apt-get upgrade -y && apt-get install freerdp-x11 libfreerdp-plugins-standard; break;;
+		echo -e "                    $yellow*Проверяем зависимости.. Check dependencies$colorbase..OK"
+			else
+			echo ""
+		while true; do
+		read -p "Требующийся пакет FreeRDP не установлен. Установить?/The required package FreeRDP is not installed Install?[Y][N]" yn
+			case $yn in
+			[Yy]* ) apt-get update -y && apt-get upgrade -y && apt-get install freerdp-x11 libfreerdp-plugins-standard; break;;
+			[Nn]* ) exit;;
+			* ) echo "Enter answer [Y] or [N] ";;
+		esac
+	done
+fi
+
+}
+######################################################################################
+######################################################################################
 CLEARALL
 TESTROOT
+CHECKDISTR
 echo -e "                    $yellow*Определяем язык...*Detect language"
 sleep 1
 clear
 echo -e "                    $yellow*Определяем язык...*Detect language$colorbase..OK"
 sleep 1
+CHECKDEPEND
 clear
                   
 echo -e       "$grey                     +-------------------------------------+"
