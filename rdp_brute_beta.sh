@@ -30,7 +30,7 @@ distr=$(cat /etc/*-release | grep DISTRIB_CODENAME | awk -F'=' '/DISTRIB_CODENAM
 	if [ "$distr" = "sana" ]; then
 	cat /etc/apt/sources.list>>/etc/apt/sources.list_lazybak
 		echo "deb http://old.kali.org/kali sana main non-free contrib" > /etc/apt/sources.list
-	elif [ "$distr" = "rolling" ]; then
+	elif [ "$distr" = "kali-rolling" ]; then
 	cat /etc/apt/sources.list>>/etc/apt/sources.list_lazybak
 		echo "deb http://http.kali.org/kali kali-rolling main contrib non-free" > /etc/apt/sources.list
 	else
