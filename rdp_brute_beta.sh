@@ -46,9 +46,7 @@ CHECKDEPEND ()
 echo -e "                    $yellow*Проверяем зависимости.. Check dependencies"
 depend=$(dpkg -s freerdp-x11 | grep 'Status' | awk -F':' '/Status: / {print $2}')
 	if [ "$depend" = " install ok installed" ]; then
-		clear FreeRDP не установлен. Установить?/FreeRDP not installed. Install? [Y] [N]" yn
-			case $yn in
-			[Yy]* ) apt-get update -y && apt-get upgrade -y && apt-get install freerdp-x11 libfreerdp-plugins-standard; break;;
+		clear
 		echo -e "                    $yellow*Проверяем зависимости.. Check dependencies$colorbase..OK"
 			else
 			echo ""
