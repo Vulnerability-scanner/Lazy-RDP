@@ -11,7 +11,7 @@ grey="\033[1;37m"
 ##########################################CLEAR#######################################
 CLEARALL ()
 {
-rm -rf Results/ paused.conf 2 list> /dev/null
+rm -rf Results/ paused.conf list 2> /dev/null
 }
 ########################################TESTROOT######################################
 TESTROOT()
