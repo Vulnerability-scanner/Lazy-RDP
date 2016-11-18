@@ -28,10 +28,10 @@ CHECKDISTR ()
 {
 distr=$(cat /etc/*-release | grep DISTRIB_CODENAME | awk -F'=' '/DISTRIB_CODENAME=/ {print $2}')
 	if [ "$distr" = "sana" ]; then
-	
+	cat /etc/apt/sources.list > /etc/apt/sources.list_lazybak
 		echo "deb http://old.kali.org/kali sana main non-free contrib" > /etc/apt/sources.list
 	elif [ "$distr" = "kali-rolling" ]; then
-	cat /etc/apt/sources.list>/etc/apt/sources.list_lazybak
+	cat /etc/apt/sources.list > /etc/apt/sources.list_lazybak
 		echo "deb http://http.kali.org/kali kali-rolling main contrib non-free" > /etc/apt/sources.list
 	else
 		echo -e "$aquamarine[Скрипт тестировался только для $red[Kali Linux2]$aquamarine. Вы можете самостоятельно изменить код скрита для своей ОС.]$colorbase"
