@@ -7,6 +7,10 @@
 
 - Текущая версия 1.11 beta. Добавлена возможность выбора метода перебора пары логин/пароль. Исправлена ошибка вылета из скрипта при выборе некоторых стран из списка. Исправлена ошибка с путями. Добавлен английский язык. <s>Исправлен баг с брутфорсом.</s> Полностью поменял инструмент для брутфорса. Добавлена функция автоматического определения языка ОС. Оптимизирован код скрипта. Добавил автоматическую установку и настройку зависимостей (freerdp-X11) для работы в "SANA" и "ROLLING"  <br/>
 
+- Установка зависимостей вручную <br/>
+        
+        sudo apt-get update -y && apt-get upgrade -y && apt-get install freerdp-x11 libfreerdp-plugins-standard
+
 - Установка <br/>
 
         git clone https://github.com/getdrive/Lazy-RDP
@@ -27,6 +31,10 @@
 - To work correctly, the script requires the establishment: masscan, curl and <s>hydra by van Hauser</s> FreeRDP.<br/>
 
 - The current version is 1.11beta. Added ability to select the method of sorting the pair login / password. Fixed a crash bug when selecting a script of some countries from the list. Fixed a bug with incorrect paths. Added English. <s>Fixed a bug with brute force menu.</s> Completely changed the tool to brute force. Added function to automatically detect the operating system language. Optimized script code. Added automatic installation and configuration dependencies (freerdp-X11) to work correctly in the "SANA" and "ROLLING" <br/>
+
+- Installing dependencies manually <br/>
+        
+        sudo apt-get update -y && apt-get upgrade -y && apt-get install freerdp-x11 libfreerdp-plugins-standard
 
 - Setting <br/>
 
