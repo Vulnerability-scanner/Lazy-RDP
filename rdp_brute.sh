@@ -20403,7 +20403,9 @@ if grep -Eo '([0-9]{1,3}[\.]){3}[0-9]{1,3}[:]{1,2}(\S){0,30}' all_results | sed 
  echo -e "$colorbase                          +---------------------------+"
  echo -e "$colorbase                          |$red   Логин/Пароль найден!    $colorbase|";
  echo -e           "                          +---------------------------+$red"
-	echo ""	
+	echo ""
+	echo -e "$yellow*Логин/Пароль записаны в файл $red $PWD/good"
+	echo ""
 	echo -e "Нажмите$aquamarine [ENTER]$red для перехода в Главное меню"
 read -p ""
 ./rdp_brute.sh
@@ -20413,8 +20415,7 @@ exit;
  echo -e "$colorbase                          +---------------------------+"
  echo -e "$colorbase                          |$red Логин/Пароль не найден :( $colorbase|";
  echo -e           "                          +---------------------------+$red"
- echo -e ""
- echo -e "$yellow*Логин/Пароль записаны в файл $red $PWD/good"
+ 
  echo -e ""
  echo -e "Нажмите$aquamarine [ENTER]$red для перехода в Главное меню"
 read -p ""
