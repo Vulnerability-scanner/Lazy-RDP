@@ -24,9 +24,9 @@
 
 - The script is tuned for Kali linux 2.0 and Kali linux 2016.2 systems. <br/>
 
-- To work correctly, the script requires the establishment: masscan, curl and <s>hydra by van Hauser</s> patator.<br/>
+- To work correctly, the script requires the establishment: masscan, curl and <s>hydra by van Hauser</s> Patator.<br/>
 
-- The current version is 1.11. Added ability to select the method of sorting the pair login / password. Fixed a crash bug when selecting a script of some countries from the list. Fixed a bug with incorrect paths. Added English. <s>Fixed a bug with brute force menu.</s> Completely changed the tool to brute force. Added function to automatically detect the operating system language. Optimized script code. Added automatic installation and configuration dependencies (freerdp-X11) to work correctly in the "SANA" and "ROLLING" <br/>
+- The current version is 1.11beta. Added ability to select the method of sorting the pair login / password. Fixed a crash bug when selecting a script of some countries from the list. Fixed a bug with incorrect paths. Added English. <s>Fixed a bug with brute force menu.</s> Completely changed the tool to brute force. Added function to automatically detect the operating system language. Optimized script code. Added automatic installation and configuration dependencies (freerdp-X11) to work correctly in the "SANA" and "ROLLING" <br/>
 
 - Setting <br/>
 
