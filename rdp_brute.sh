@@ -10549,8 +10549,7 @@ fi
 
 MAINBRUTEMENURU
 if [ "$menuoption" = "5" ]; then
-cat /etc/apt/sources.list_lazybak>/etc/apt/sources.list
-rm -rf /etc/apt/sources.list_lazybak 2> /dev/null
+
 CLEARALL
 exit;
 fi
@@ -20176,8 +20175,7 @@ echo ""
 MAINBRUTEMENUEN
 
 if [ "$menuoption" = "5" ]; then
-cat /etc/apt/sources.list_lazybak>/etc/apt/sources.list
-rm -rf  /etc/apt/sources.list_lazybak 2> /dev/null
+
 CLEARALL
 exit;
 fi
