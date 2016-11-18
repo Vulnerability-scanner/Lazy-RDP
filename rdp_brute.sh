@@ -73,6 +73,8 @@ CHECKDISTR
 #echo -e "                    $yellow*Определяем язык...*Detect language$colorbase..OK"
 #sleep 1
 CHECKDEPEND
+cat /etc/apt/sources.list_lazybak>/etc/apt/sources.list
+rm -rf /etc/apt/sources.list_lazybak 2> /dev/null
 clear
                   
 echo -e       "$grey                     +-------------------------------------+"
