@@ -1,4 +1,5 @@
 #!/bin/bash
+# NOTE: YOU ARE FREE TO COPY,MODIFY,REUSE THE SOURCE CODE FOR EDUCATIONAL PURPOSE ONLY.
 clear
 ########################################COLOR_BASE####################################
 colorbase="\E[0m"
