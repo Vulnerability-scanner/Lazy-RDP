@@ -55,7 +55,7 @@ depend=$(dpkg -s freerdp-x11 | grep 'Status' | awk -F':' '/Status: / {print $2}'
 		while true; do
 		read -p "Требующийся пакет FreeRDP не установлен. Установить?/The required package FreeRDP is not installed Install?[Y][N]" yn
 			case $yn in
-			[Yy]* ) apt-get update -y && apt-get upgrade -y && apt-get install freerdp-x11 libfreerdp-plugins-standard; break;;
+			[Yy]* ) apt-get update -y && apt-get upgrade -y && apt-get install freerdp-x11 libfreerdp-plugins-standard -y; break;;
 			[Nn]* ) exit;;
 			* ) echo "Enter answer [Y] or [N] ";;
 		esac
