@@ -17,7 +17,7 @@
 
 - Запуск из папки со скриптом через терминал <br/>
   
-        chmod +x rdp_brute.sh
+        chmod +x rdp_brute.sh && chmod +x patator.py
 
         ./rdp_brute.sh
 
@@ -42,7 +42,7 @@
 
 - Starting from the folder with the script through the terminal <br/>
 
-        chmod + x rdp_brute.sh
+        chmod +x rdp_brute.sh && chmod +x patator.py
 
         ./rdp_brute.sh
         
