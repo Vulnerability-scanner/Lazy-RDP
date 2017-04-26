@@ -42,6 +42,28 @@ fi
 
 }
 ######################################################################################
+CHECKDEPEND0 ()
+{
+#echo -e "                    $yellow*Проверяем зависимости.. Check dependencies"
+depend=$(dpkg -s masscan  | grep 'Status' | awk -F':' '/Status: / {print $2}')
+	if [ "$depend" = " install ok installed" ]; then
+		clear 
+			
+		#echo -e "                    $yellow*Проверяем зависимости.. Check dependencies$colorbase..OK"
+			else
+			echo ""
+		while true; do
+		read -p "Требующийся пакет MASSCAN не установлен. Установить?/The required package MASSCAN is not installed Install?[Y][N]" yn
+			case $yn in
+			[Yy]* ) apt-get update -y && apt-get upgrade -y && apt-get install masscan -y; break;;
+			[Nn]* ) exit;;
+			* ) echo "Enter answer [Y] or [N] ";;
+		esac
+	done
+fi
+
+}
+######################################################################################
 CHECKDEPEND ()
 {
 #echo -e "                    $yellow*Проверяем зависимости.. Check dependencies"
@@ -73,6 +95,7 @@ CHECKDISTR
 #clear
 #echo -e "                    $yellow*Определяем язык...*Detect language$colorbase..OK"
 #sleep 1
+CHECKDEPEND0
 CHECKDEPEND
 cat /etc/apt/sources.list_lazybak>/etc/apt/sources.list
 rm -rf /etc/apt/sources.list_lazybak 2> /dev/null
