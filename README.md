@@ -10,6 +10,7 @@
 - Установка зависимостей вручную <br/>
         
         sudo apt-get update -y && apt-get upgrade -y && apt-get install freerdp-x11 libfreerdp-plugins-standard
+        sudo apt-get install masscan -y
 
 - Установка <br/>
 
@@ -35,6 +36,7 @@
 - Installing dependencies manually <br/>
         
         sudo apt-get update -y && apt-get upgrade -y && apt-get install freerdp-x11 libfreerdp-plugins-standard
+        sudo apt-get install masscan -y
 
 - Setting <br/>
 
