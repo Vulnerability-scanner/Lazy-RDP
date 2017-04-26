@@ -27,7 +27,7 @@
 
 - The script automatically scans the address list, and then selecting the method and starting busting pair login / password. <br/>
 
-- The script is tuned for Kali linux 2.0 and Kali linux 2016.2 systems. <br/>
+- The script is tuned for Kali linux 2.0, Kali linux 2016.2 и Kali linux 2017.1 systems. <br/>
 
 - To work correctly, the script requires the establishment: masscan, curl and <s>hydra by van Hauser</s> FreeRDP.<br/>
 
