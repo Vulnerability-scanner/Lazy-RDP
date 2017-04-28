@@ -1,5 +1,5 @@
 # Lazy-RDP
-- Скрипт для автоматического сканирования списка адресов, с последующим выбором метода и запуском перебора пары логин/пароль. <br/>
+- Скрипт для автоматического сканирования списка адресов на наличие открытых 3389-портов, с последующим выбором метода и запуском перебора пары логин/пароль. <br/>
 
 - Скрипт  настраивался для систем Kali linux 2.0, Kali linux 2016.2 и Kali linux 2017.1. <br/>
 
@@ -25,7 +25,7 @@
 
 # Google translate
 
-- The script automatically scans the address list, and then selecting the method and starting busting pair login / password. <br/>
+- Script for automatic scanning of the address list for the presence of open 3389 ports, and then selecting the method and starting busting pair login / password. <br/>
 
 - The script is tuned for Kali linux 2.0, Kali linux 2016.2 и Kali linux 2017.1 systems. <br/>
 
