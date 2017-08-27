@@ -1,11 +1,11 @@
 # Lazy-RDP
-- Скрипт для автоматического сканирования списка адресов на наличие открытых 3389-портов, с последующим выбором метода и запуском перебора пары логин/пароль. <br/>
+- Скрипт для автоматического сканирования списка адресов на наличие открытых RDP-портов, с последующим выбором метода и запуском перебора пары логин/пароль. <br/>
 
 - Скрипт  настраивался для систем Kali linux 2.0, Kali linux 2016.2 и Kali linux 2017.1. <br/>
 
 - Для корректной работы скрипта требуются установленные: masscan, curl и <s>hydra by van Hauser</s> FreeRDP. <br/>
 
-- Текущая версия 1.14. Добавлена возможность указания сканируемого порта. Исправлена ошибка вылета из скрипта при выборе некоторых стран из списка. Исправлена ошибка с путями. Добавлен английский язык. <s>Исправлен баг с брутфорсом.</s> Полностью поменял инструмент для брутфорса. Добавлена функция автоматического определения языка ОС. Оптимизирован код скрипта. Добавил автоматическую установку и настройку зависимостей (freerdp-X11, masscan) для работы в "SANA" и "ROLLING"  <br/>
+- Текущая версия 1.14. Добавлена возможность указания сканируемого порта (можно указать один или несколько портов через запятую или дефис). Исправлена ошибка вылета из скрипта при выборе некоторых стран из списка. Добавлен английский язык. <s>Исправлен баг с брутфорсом.</s> Полностью поменял инструмент для брутфорса. Добавлена функция автоматического определения языка ОС. Оптимизирован код скрипта. Добавил автоматическую установку и настройку зависимостей (freerdp-X11, masscan) для работы в "SANA" и "ROLLING"  <br/>
 
 - Установка зависимостей вручную <br/>
         
@@ -31,7 +31,7 @@
 
 - To work correctly, the script requires the establishment: masscan, curl and <s>hydra by van Hauser</s> FreeRDP.<br/>
 
-- The current version is 1.14. The ability to specify a scanned port. Fixed a crash bug when selecting a script of some countries from the list. Fixed a bug with incorrect paths. Added English. <s>Fixed a bug with brute force menu.</s> Completely changed the tool to brute force. Added function to automatically detect the operating system language. Optimized script code. Added automatic installation and configuration dependencies (freerdp-X11, masscan) to work correctly in the "SANA" and "ROLLING" <br/>
+- The current version is 1.14. The ability to specify a scanned port (you can specify one or more ports separated by a comma or a hyphen). Fixed a crash bug when selecting a script of some countries from the list. Fixed a bug with incorrect paths. Added English. <s>Fixed a bug with brute force menu.</s> Completely changed the tool to brute force. Added function to automatically detect the operating system language. Optimized script code. Added automatic installation and configuration dependencies (freerdp-X11, masscan) to work correctly in the "SANA" and "ROLLING" <br/>
 
 - Installing dependencies manually <br/>
         
