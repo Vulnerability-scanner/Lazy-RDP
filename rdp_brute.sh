@@ -35,7 +35,7 @@ distr=$(cat /etc/*-release | grep DISTRIB_CODENAME | awk -F'=' '/DISTRIB_CODENAM
 	cat /etc/apt/sources.list > /etc/apt/sources.list_lazybak
 		echo "deb http://http.kali.org/kali kali-rolling main contrib non-free" > /etc/apt/sources.list
 	else
-		echo -e "$aquamarine[Скрипт тестировался только для $red[Kali Linux2]$aquamarine. Вы можете самостоятельно изменить код скрита для своей ОС.]$colorbase"
+		echo -e "$aquamarine[Скрипт тестировался только для $red[Kali Linux2]$aquamarine. Вы можете самостоятельно изменить код скрипта для своей ОС.]$colorbase"
 		echo -e "$aquamarine[The script was tested only for $red[Kali Linux2]$aquamarine. You are free to modify the code for your operating system]$colorbase"
 	exit 1
 fi
@@ -129,13 +129,11 @@ echo -e $red"                        Значение порта должно б
 exit;
 
 fi
-MENURU
 		else 
 read -p "                      Enter the port number RDP {3389} : " portn
 port=$(echo $portn | sed 's/ //g')
 if [[ -z $port ]]
-	then
-port=3389 
+	then port=3389 
 echo "                      The default port value was set 3389"
 	else
 echo ""
@@ -146,7 +144,7 @@ if  [[ $port >=1 && $port <=65535 ]]
 echo -e $red"The port value must be 1-65535"$colorbase
 exit;
 fi	
-MENUENG
+#MENUENG
 fi
 }
 ######################################################################################
