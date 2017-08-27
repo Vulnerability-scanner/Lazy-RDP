@@ -42,7 +42,7 @@
 
         git clone https://github.com/getdrive/Lazy-RDP 
 
-- Starting the script <br/>
+- Running the script <br/>
 
         chmod +x rdp_brute.sh patator.py
 
