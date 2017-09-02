@@ -113,7 +113,7 @@ CHECKLANGUAGE ()
 lang=$(locale | grep LANG | cut -d= -f2 | cut -d_ -f1)
 if [ "$lang" = "ru" ];
 	then 
-read -p "                      Введите номер порта RDP {3389} : " portn
+read -p "                  Введите номер порта RDP {3389,3390-3399} : " portn
 port=$(echo $portn | sed 's/ //g')
 if [[ -z $port ]]
 	then
@@ -130,7 +130,7 @@ exit;
 
 fi
 		else 
-read -p "                      Enter the port number RDP {3389} : " portn
+read -p "                 Enter the port number RDP {3389,3390-3399} : " portn
 port=$(echo $portn | sed 's/ //g')
 if [[ -z $port ]]
 	then port=3389 
@@ -375,7 +375,7 @@ read -p "                               Выбор из меню : " brutmenu
 if [ "$brutmenu" = "1" ]; then
 echo -e "$aquamarine*******************************************************************************$green"
 read -p "*Введите логин {administrator, admin & etc.} : " loginbrute
-read -p "*Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
+read -p "*Укажите путь к файлу со списком паролей {dict/john}: " passlist
 if [ -s $passlist ]; then
 echo ""
 else
@@ -406,7 +406,7 @@ fi
 
 if [ "$brutmenu" = "2" ]; then
 echo -e "$aquamarine*******************************************************************************$green"
-read -p "*Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
+read -p "*Укажите путь к файлу со списком логинов {dict/users}: " loginlist
 read -p "*Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
 if [ -s $passbrute ]; then
 echo ""
@@ -435,8 +435,8 @@ fi
 
 if [ "$brutmenu" = "3" ]; then
 echo -e "$aquamarine*******************************************************************************$green"
-read -p "*Укажите путь к файлу со списком логинов {'/home/dictionary/users'}: " loginlist
-read -p "*Укажите путь к файлу со списком паролей {'/home/dictionary/pass'}: " passlist
+read -p "*Укажите путь к файлу со списком логинов {dict/users}: " loginlist
+read -p "*Укажите путь к файлу со списком паролей {dict/john}: " passlist
 if [ -s $passlist -a -s $loginlist ]; then
 echo ""
 else
@@ -512,7 +512,7 @@ read -p "                               Сhoose from a menu : " brutmenu
 if [ "$brutmenu" = "1" ]; then
 echo -e "$aquamarine*******************************************************************************$green"
 read -p "*Enter username {administrator, admin & etc.} : " loginbrute
-read -p "*Enter the path to the file with a list of passwords {'/home/dictionary/pass'}: " passlist
+read -p "*Enter the path to the file with a list of passwords {dict/john}: " passlist
 if [ -s $passlist ]; then
 echo ""
 else
@@ -540,7 +540,7 @@ fi
 
 if [ "$brutmenu" = "2" ]; then
 echo -e "$aquamarine*******************************************************************************$green"
-read -p "*Enter the path to username dictionary {'/home/dictionary/users'}: " loginlist
+read -p "*Enter the path to username dictionary {dict/users}: " loginlist
 read -p "*Enter the password {administrator, admin, 123456 & etc.} : " passbrute
 if [ -s $loginlist ];
 then
@@ -571,8 +571,8 @@ fi
 
 if [ "$brutmenu" = "3" ]; then
 echo -e "$aquamarine*******************************************************************************$green"
-read -p "*Enter the path to username dictionary {'/home/dictionary/users'}: " loginlist
-read -p "*Enter the path to passwords dictionary {'/home/dictionary/pass'}: " passlist
+read -p "*Enter the path to username dictionary {dict/users}: " loginlist
+read -p "*Enter the path to passwords dictionary {dict/john}: " passlist
 if [ -s $loginlist -a -s $passlist ]; then
 echo ""
 else
