@@ -105,7 +105,7 @@ clear
 echo -e       "$grey                     +-------------------------------------+"
 echo -e       "$grey                     |            Auto  Script             |"
 echo -e "$aquamarine                     |    by GetDrive & hackers Union      |" 
-echo -e        "$red                     |            Version 1.14             |"
+echo -e        "$red                     |            Version 1.15             |"
 echo -e        "$red                     +-------------------------------------+ $colorbase"
 #####################################CHECKLANGUAGE####################################
 CHECKLANGUAGE ()
@@ -122,7 +122,7 @@ echo "                   Установлено дефолтное значен�
 	else
 echo ""
 fi
-if  [[ $port >=1 && $port <=65535 ]]
+if  [[ $port=>1 && $port <=65535 ]]
 	then MENURU
         else
 echo -e $red"                        Значение порта должно быть 1-65535"$colorbase
@@ -138,10 +138,10 @@ echo "                      The default port value was set 3389"
 	else
 echo ""
 fi
-if  [[ $port >=1 && $port <=65535 ]]
+if  [[ $port=>1 && $port <=65535 ]]
 	then MENUENG
         else
-echo -e $red"The port value must be 1-65535"$colorbase
+echo -e $red"                        The port value must be 1-65535"$colorbase
 exit;
 fi	
 #MENUENG
@@ -645,13 +645,21 @@ read -p "                                Выбор из меню : " menuoption
 if [ "$menuoption" = "1" ]; then
 echo -e "$red-------------------------------------------------------------------------------$aquamarine"
 read -p "Введите диапазон или одиночный IP {x.x.x.x/24,x.x.x.0-x.x.x.255} : " target
-
+echo -e " $colorbase  +-----------------------------------------------------------------------+"   
+echo -e "   |   $grey                            1.$yellow Nmap$colorbase                                 |";
+echo -e "   |   $grey                            2.$yellow Masscan$colorbase                              |";
+echo -e "   +-----------------------------------------------------------------------+"
+read -p "                                Выберите сканер : " scan
 echo -e "$red-------------------------------------------------------------------------------"
 clear
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 echo -e "$aquamarine                     Идет поиск открытых RDP. Ожидайте.$colorbase"
 echo -e "$red-------------------------------------------------------------------------------$green"
+if [ "$scan" = "1" ]; then
+nmap -Pn $target -p $port --open  | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+	else
 masscan $target -p $port --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+fi
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 CHECKFILERU
 
@@ -676,14 +684,22 @@ else
 if [ "$menuoption" = "2" ]; then
 echo -e "$aquamarine*******************************************************************************$green"
 read -p "*Введите путь к файлу с диапазонами IP {list.txt,list..& etc.} : " listname
-
+echo -e " $colorbase  +-----------------------------------------------------------------------+"   
+echo -e "   |   $grey                            1.$yellow Nmap$colorbase                                 |";
+echo -e "   |   $grey                            2.$yellow Masscan$colorbase                              |";
+echo -e "   +-----------------------------------------------------------------------+"
+read -p "                                Выберите сканер : " scan
 
 clear
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 echo -e "$aquamarine                     Идет поиск открытых RDP. Ожидайте.$colorbase"
 echo -e "$red-------------------------------------------------------------------------------$green"
 echo -e "$yellow*Для выхода из режима сканирования $red'CTRL+C'$green"
-masscan -p $port -iL $listname --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+if [ "$scan" = "1" ]; then
+nmap -Pn $target -p $port -iL $listname --open  | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+	else
+masscan $target -p $port -iL $listname --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+fi
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 CHECKFILERU
 
@@ -10880,12 +10896,21 @@ if [ "$menuoption" = "1" ]; then
 echo -e "$red-------------------------------------------------------------------------------$aquamarine"
 read -p "Enter the range or single IP {x.x.x.x/24,x.x.x.0-x.x.x.255} : " target
 echo -e "$red-------------------------------------------------------------------------------"
+echo -e " $colorbase  +-----------------------------------------------------------------------+"   
+echo -e "   |   $grey                            1.$yellow Nmap$colorbase                                 |";
+echo -e "   |   $grey                            2.$yellow Masscan$colorbase                              |";
+echo -e "   +-----------------------------------------------------------------------+"
+read -p "                                Select scanner : " scan
 clear
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 echo -e "$aquamarine                             Search open RDP. Wait$colorbase"
 echo -e "$red-------------------------------------------------------------------------------$green"
 echo -e "$yellow*To exit the scan mode $red'CTRL+C'$green"
+if [ "$scan" = "1" ]; then
+nmap -Pn $target -p $port --open  | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+	else
 masscan $target -p $port --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+fi
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 CHECKFILEEN
 
@@ -10910,12 +10935,21 @@ else
 if [ "$menuoption" = "2" ]; then
 echo -e "$aquamarine*******************************************************************************$green"
 read -p "*Enter the path to the file {list.txt,list..& etc.} : " listname
+echo -e " $colorbase  +-----------------------------------------------------------------------+"   
+echo -e "   |   $grey                            1.$yellow Nmap$colorbase                                 |";
+echo -e "   |   $grey                            2.$yellow Masscan$colorbase                              |";
+echo -e "   +-----------------------------------------------------------------------+"
+read -p "                                Select scanner : " scan
 clear
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 echo -e "$aquamarine                            Search open RDP. Wait$colorbase"
 echo -e "$red-------------------------------------------------------------------------------$green"
 echo -e "$yellow*To exit the scan mode $red'CTRL+C'$green"
-masscan -p $port -iL $listname --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+if [ "$scan" = "1" ]; then
+nmap -Pn $target -p $port -iL $listname --open  | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+	else
+masscan $target -p $port -iL $listname --open-only | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+fi
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 CHECKFILEEN
 
