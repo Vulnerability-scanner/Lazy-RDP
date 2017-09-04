@@ -113,8 +113,8 @@ CHECKLANGUAGE ()
 lang=$(locale | grep LANG | cut -d= -f2 | cut -d_ -f1)
 if [ "$lang" = "ru" ];
 	then 
-read -p "                    Введите номер порта RDP {3389,3390-3399} : " portn
-port=$(echo $portn | sed -e 's/[^0-9]//g')
+read -p "                    Введите номер порта RDP {3389} : " portn
+port=$(echo $portn | sed  's/ //g')
 if [[ -z $port ]]
 	then
 port=3389 
@@ -132,8 +132,8 @@ exit;
 
 fi
 		else 
-read -p "                   Enter the port number RDP {3389,3390-3399} : " portn
-port=$(echo $portn | sed -e 's/[^0-9]//g')
+read -p "                   Enter the port number RDP {3389} : " portn
+port=$(echo $portn | sed 's/ //g')   #sed -e 's/[^0-9]//g'
 if [[ -z $port ]]
 	then port=3389 
 echo ""
