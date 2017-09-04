@@ -113,7 +113,7 @@ CHECKLANGUAGE ()
 lang=$(locale | grep LANG | cut -d= -f2 | cut -d_ -f1)
 if [ "$lang" = "ru" ];
 	then 
-read -p "                    Введите номер порта RDP {3389} : " portn
+read -p "                        Введите номер порта RDP {3389} : " portn
 port=$(echo $portn | sed  's/ //g')
 if [[ -z $port ]]
 	then
@@ -132,7 +132,7 @@ exit;
 
 fi
 		else 
-read -p "                   Enter the port number RDP {3389} : " portn
+read -p "                       Enter the port number RDP {3389} : " portn
 port=$(echo $portn | sed 's/ //g')   #sed -e 's/[^0-9]//g'
 if [[ -z $port ]]
 	then port=3389 
@@ -142,7 +142,7 @@ echo ""
 fi
 if  [[ $port -gt -1 && $port -lt 65536 ]]
 	then
-echo "                          The port value was set $port"
+echo "                           The port value was set $port"
  MENUENG
         else
 echo -e $red"                        The port value must be 0-65535"$colorbase
