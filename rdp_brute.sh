@@ -113,35 +113,39 @@ CHECKLANGUAGE ()
 lang=$(locale | grep LANG | cut -d= -f2 | cut -d_ -f1)
 if [ "$lang" = "ru" ];
 	then 
-read -p "                  Введите номер порта RDP {3389,3390-3399} : " portn
-port=$(echo $portn | sed 's/ //g')
+read -p "                    Введите номер порта RDP {3389,3390-3399} : " portn
+port=$(echo $portn | sed -e 's/[^0-9]//g')
 if [[ -z $port ]]
 	then
 port=3389 
-echo "                    Установлено дефолтное значение порта 3389"
+
 	else
 echo ""
 fi
-if  [[ $port=>1 && $port <=65535 ]]
-	then MENURU
+if  [[ $port=>0 && $port<=65535 ]]
+	then 
+echo "                         Установлено значение порта $port"
+ MENURU
         else
-echo -e $red"                        Значение порта должно быть 1-65535"$colorbase
+echo -e $red"                        Значение порта должно быть 0-65535"$colorbase
 exit;
 
 fi
 		else 
 read -p "                 Enter the port number RDP {3389,3390-3399} : " portn
-port=$(echo $portn | sed 's/ //g')
+port=$(echo $portn | sed -e 's/[^0-9]//g')
 if [[ -z $port ]]
 	then port=3389 
-echo "                      The default port value was set 3389"
+
 	else
 echo ""
 fi
-if  [[ $port=>1 && $port <=65535 ]]
-	then MENUENG
+if  [[ $port=>0 && $port<=65535 ]]
+	then
+echo "                          The port value was set $port"
+ MENUENG
         else
-echo -e $red"                        The port value must be 1-65535"$colorbase
+echo -e $red"                        The port value must be 0-65535"$colorbase
 exit;
 fi	
 #MENUENG
@@ -180,7 +184,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                     Идет поиск открытых RDP. Ожидайте.$colorbase"
 echo -e "$red-------------------------------------------------------------------------------$green"
 if [ "$scan" = "1" ]; then
-nmap -Pn -sS $target -p $port --open -vv | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+nmap -Pn -sS $target -p $port --open | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 CHECKFILERU
 	else
