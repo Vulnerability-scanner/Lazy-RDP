@@ -118,7 +118,7 @@ port=$(echo $portn | sed -e 's/[^0-9]//g')
 if [[ -z $port ]]
 	then
 port=3389 
-
+echo ""
 	else
 echo ""
 fi
@@ -132,11 +132,11 @@ exit;
 
 fi
 		else 
-read -p "                 Enter the port number RDP {3389,3390-3399} : " portn
+read -p "                   Enter the port number RDP {3389,3390-3399} : " portn
 port=$(echo $portn | sed -e 's/[^0-9]//g')
 if [[ -z $port ]]
 	then port=3389 
-
+echo ""
 	else
 echo ""
 fi
