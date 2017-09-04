@@ -122,7 +122,7 @@ echo ""
 	else
 echo ""
 fi
-if  [[ $port=>0 && $port<=65535 ]]
+if  [[ $port -gt -1 && $port -lt 65536 ]]
 	then 
 echo "                         Установлено значение порта $port"
  MENURU
@@ -140,7 +140,7 @@ echo ""
 	else
 echo ""
 fi
-if  [[ $port=>0 && $port<=65535 ]]
+if  [[ $port -gt -1 && $port -lt 65536 ]]
 	then
 echo "                          The port value was set $port"
  MENUENG
