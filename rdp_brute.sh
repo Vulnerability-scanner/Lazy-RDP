@@ -390,13 +390,36 @@ echo -e "$red-------------------------------------------------------------------
 clear
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 echo -e "$aquamarine                     Идет поиск открытых RDP. Ожидайте.$colorbase"
-echo -e "$red-------------------------------------------------------------------------------$green"
+echo -e "$red-------------------------------------------------------------------------------$colorbase"
 if [ "$scan" = "1" ]; then
 nmap -Pn -sS $target -p $port --open | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 CHECKFILERU
 	else
-masscan $target -p $port --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+
+masscan $target -p $port --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 fi
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 CHECKFILERU
@@ -432,16 +455,32 @@ clear
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 echo -e "$aquamarine                     Идет поиск открытых RDP. Ожидайте.$colorbase"
 echo -e "$red-------------------------------------------------------------------------------$green"
-echo -e "$yellow*Для выхода из режима сканирования $red'CTRL+C'$green"
-#if [ "$scan" = "1" ]; then
-#nmap -Pn -sS -p $port -iL $listname --open -vv  | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-#trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
-#CHECKFILERU	
+echo -e "$yellow*Для выхода из режима сканирования $red'CTRL+C'$colorbase"
 
-#else
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
 
-masscan -p $port -iL $listname --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-#fi
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL listname --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 CHECKFILERU
 
@@ -484,7 +523,7 @@ clear
 echo -e "$aquamarine                              Получаем список IP"
 echo ""
 if [ "$country"  = "1" ]; then
-curl http://ipdiapazon.16mb.com/Afghanistan.html |grep -E  "([0-9]{1,3}[\.]){3}[0-9]{1,3}" |sed "s/ //g">list
+curl http://ipdiapazon.16mb.com/Afghanistan.html |grep -E  "([0-9]{1,3}[\.]){3}[0-9]{1,3}" |sed "s/ //g" > list
 echo -e "$red-------------------------------------------------------------------------------$green"
 cat list
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
@@ -499,7 +538,29 @@ echo -e "$yellow*Для выхода из режима сканирования$
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -iL list -p $port --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -545,7 +606,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -593,7 +677,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -643,7 +750,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -691,7 +821,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -740,7 +893,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -788,7 +964,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -836,7 +1035,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -883,7 +1105,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -931,7 +1176,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -979,7 +1247,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -1027,7 +1318,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -1076,7 +1390,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -1125,7 +1462,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -1174,7 +1534,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -1223,7 +1606,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -1272,7 +1678,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -1321,7 +1750,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -1370,7 +1822,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -1419,7 +1894,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -1468,7 +1966,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -1516,7 +2037,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -1564,7 +2108,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -1612,7 +2179,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -1661,7 +2251,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -1709,7 +2322,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -1758,7 +2394,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -1807,7 +2466,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -1856,7 +2538,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -1905,7 +2610,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -1954,7 +2682,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -2003,7 +2754,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -2051,7 +2825,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -2100,7 +2897,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -2148,7 +2968,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -2196,7 +3039,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -2243,7 +3109,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -2292,7 +3181,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -2341,7 +3253,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -2390,7 +3325,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -2439,7 +3397,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -2488,7 +3469,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -2537,7 +3541,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -2586,7 +3613,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -2635,7 +3685,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -2684,7 +3757,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -2733,7 +3829,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -2782,7 +3901,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -2831,7 +3973,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -2880,7 +4045,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -2929,7 +4117,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -2978,7 +4189,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -3027,7 +4261,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -3076,7 +4333,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -3125,7 +4405,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -3174,7 +4477,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -3223,7 +4549,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -3272,7 +4621,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -3321,7 +4693,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -3370,7 +4765,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -3419,7 +4837,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -3468,7 +4909,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -3517,7 +4981,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -3565,7 +5052,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -3614,7 +5124,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -3663,7 +5196,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -3712,7 +5268,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -3761,7 +5340,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -3810,7 +5412,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -3859,7 +5484,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -3908,7 +5556,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -3957,7 +5628,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -4006,7 +5700,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -4055,7 +5772,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -4104,7 +5844,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -4153,7 +5916,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -4202,7 +5988,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -4251,7 +6060,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -4300,7 +6132,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -4349,7 +6204,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -4397,7 +6275,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -4445,7 +6346,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -4494,7 +6418,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -4543,7 +6490,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -4592,7 +6562,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -4641,7 +6634,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -4690,7 +6706,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -4739,7 +6778,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -4788,7 +6850,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -4837,7 +6922,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -4886,7 +6994,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -4935,7 +7066,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -4983,7 +7137,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -5031,7 +7208,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -5080,7 +7280,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -5129,7 +7352,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -5178,7 +7424,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -5227,7 +7496,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -5276,7 +7568,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -5325,7 +7640,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -5374,7 +7712,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -5423,7 +7784,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -5472,7 +7856,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -5521,7 +7928,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -5570,7 +8000,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -5619,7 +8072,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -5668,7 +8144,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -5717,7 +8216,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -5766,7 +8288,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -5815,7 +8360,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -5863,7 +8431,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -5912,7 +8503,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -5961,7 +8575,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -6010,7 +8647,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -6059,7 +8719,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -6108,7 +8791,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -6157,7 +8863,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -6205,7 +8934,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -6254,7 +9006,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -6303,7 +9078,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -6352,7 +9150,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -6401,7 +9222,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -6450,7 +9294,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -6499,7 +9366,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -6548,7 +9438,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -6596,7 +9509,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -6645,7 +9581,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -6694,7 +9653,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -6743,7 +9725,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -6792,7 +9797,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -6841,7 +9869,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -6890,7 +9941,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -6939,7 +10013,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -6988,7 +10085,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -7037,7 +10157,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -7086,7 +10229,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -7135,7 +10301,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -7184,7 +10373,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -7233,7 +10445,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -7282,7 +10517,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -7331,7 +10589,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -7378,7 +10659,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -7427,7 +10731,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -7475,7 +10802,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -7524,7 +10874,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -7573,7 +10946,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -7622,7 +11018,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -7671,7 +11090,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -7720,7 +11162,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -7769,7 +11234,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -7818,7 +11306,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -7867,7 +11378,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -7916,7 +11450,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -7965,7 +11522,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -8014,7 +11594,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -8063,7 +11666,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -8112,7 +11738,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -8161,7 +11810,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -8210,7 +11882,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -8259,7 +11954,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -8308,7 +12026,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -8357,7 +12098,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -8406,7 +12170,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -8455,7 +12242,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -8504,7 +12314,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -8553,7 +12386,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -8602,7 +12458,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -8649,7 +12528,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -8697,7 +12599,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -8745,7 +12670,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -8793,7 +12741,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -8841,7 +12812,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -8889,7 +12883,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -8937,7 +12954,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -8985,7 +13025,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -9034,7 +13097,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -9083,7 +13169,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -9131,7 +13240,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -9179,7 +13311,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -9227,7 +13382,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -9276,7 +13454,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -9324,7 +13525,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -9373,7 +13597,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -9422,7 +13669,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -9470,7 +13740,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -9519,7 +13812,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -9568,7 +13884,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -9617,7 +13956,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -9666,7 +14028,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -9715,7 +14100,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -9764,7 +14172,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -9812,7 +14243,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -9860,7 +14314,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -9909,7 +14386,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -9957,7 +14457,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -10005,7 +14528,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -10053,7 +14599,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -10101,7 +14670,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -10149,7 +14741,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -10198,7 +14813,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -10246,7 +14884,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -10273,7 +14934,7 @@ echo ""
 
 
 if [ "$country"  = "202" ]; then
-curl http://ipdiapazon.16mb.com/Yemen.html |grep -E  "([0-9]{1,3}[\.]){3}[0-9]{1,3}" |sed "s/ //g">list
+curl http://ipdiapazon.16mb.com/Yemen.html |grep -E  "([0-9]{1,3}[\.]){3}[0-9]{1,3}" |sed "s/ //g" > list
 echo -e "$red-------------------------------------------------------------------------------$green"
 cat list
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
@@ -10295,7 +14956,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list  --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -10344,7 +15028,30 @@ echo ""
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -10385,7 +15092,30 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$yellow*Для выхода из режима сканирования$red'CTRL+C' $green"
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Масимальное количество запросов в секунду {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       Значение rate установлено $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    Значение должно быть от 120 до 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILERU
 
 
@@ -10618,8 +15348,6 @@ fi
 fi
 fi
 }
-
-
 ###########################################MENUENG####################################
 MENUENG ()
 {
@@ -10639,10 +15367,10 @@ echo -e "$red-------------------------------------------------------------------
 read -p "Enter the range or single IP {x.x.x.x/24,x.x.x.0-x.x.x.255} : " target
 echo -e "$red-------------------------------------------------------------------------------"
 echo -e " $colorbase  +-----------------------------------------------------------------------+"   
-echo -e "   |   $grey                            1.$yellow Nmap (Single IP)$colorbase                                 |";
-echo -e "   |   $grey                            2.$yellow Masscan$colorbase                              |";
+echo -e "   |   $grey                      1.$yellow Nmap (Single IP)$colorbase                           |";
+echo -e "   |   $grey                      2.$yellow Masscan$colorbase                                    |";
 echo -e "   +-----------------------------------------------------------------------+"
-read -p "                                Select scanner : " scan
+read -p "                               Select scanner : " scan
 clear
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 echo -e "$aquamarine                             Search open RDP. Wait$colorbase"
@@ -10654,8 +15382,30 @@ trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 CHECKFILEEN
 
 	else
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
 
-masscan $target -p $port --open-only  --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+
+masscan $target -p $port --open-only  --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 fi
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 CHECKFILEEN
@@ -10691,13 +15441,31 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                            Search open RDP. Wait$colorbase"
 echo -e "$red-------------------------------------------------------------------------------$green"
 echo -e "$yellow*To exit the scan mode $red'CTRL+C'$green"
-#if [ "$scan" = "1" ]; then
-#nmap -Pn -p $port -iL $listname --open  | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-#trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
-#CHECKFILEEN
 
-#	else
-masscan -p $port -iL $listname --open-only --max-rate 120| grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+
+masscan -p $port -iL listname --open-only --max-rate $rate| grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 
 #fi
 
@@ -10758,7 +15526,28 @@ echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -10801,7 +15590,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -10846,7 +15656,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -10893,7 +15724,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -10938,7 +15790,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -10984,7 +15857,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -11029,7 +15923,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -11074,7 +15989,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -11118,7 +16054,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -11163,7 +16120,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -11208,7 +16186,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -11253,7 +16252,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -11299,7 +16319,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -11345,7 +16386,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -11391,7 +16453,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -11437,7 +16520,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -11483,7 +16587,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -11529,7 +16654,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -11575,7 +16721,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -11621,7 +16788,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -11667,7 +16855,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -11712,7 +16921,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -11757,7 +16987,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -11802,7 +17053,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -11848,7 +17120,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -11893,7 +17186,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -11939,7 +17253,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -11985,7 +17320,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -12031,7 +17387,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -12077,7 +17454,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -12123,7 +17521,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -12169,7 +17588,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -12214,7 +17654,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -12260,7 +17721,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -12305,7 +17787,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -12350,7 +17853,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -12394,7 +17918,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -12440,7 +17985,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -12486,7 +18052,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -12532,7 +18119,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -12578,7 +18186,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -12624,7 +18253,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -12670,7 +18320,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -12716,7 +18387,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -12762,7 +18454,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -12808,7 +18521,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -12854,7 +18588,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -12900,7 +18655,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -12946,7 +18722,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -12992,7 +18789,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -13038,7 +18856,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -13084,7 +18923,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -13130,7 +18990,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -13176,7 +19057,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -13222,7 +19124,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -13268,7 +19191,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -13314,7 +19258,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -13360,7 +19325,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -13406,7 +19392,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -13452,7 +19459,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -13498,7 +19526,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -13544,7 +19593,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -13590,7 +19660,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -13635,7 +19726,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -13681,7 +19793,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -13727,7 +19860,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -13773,7 +19927,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -13819,7 +19994,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -13865,7 +20061,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -13911,7 +20128,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -13957,7 +20195,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -14003,7 +20262,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -14049,7 +20329,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -14095,7 +20396,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -14141,7 +20463,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -14187,7 +20530,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -14233,7 +20597,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -14279,7 +20664,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -14325,7 +20731,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -14371,7 +20798,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -14416,7 +20864,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -14461,7 +20930,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -14507,7 +20997,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -14553,7 +21064,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -14599,7 +21131,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -14645,7 +21198,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -14691,7 +21265,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -14737,7 +21332,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -14783,7 +21399,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -14829,7 +21466,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -14875,7 +21533,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -14921,7 +21600,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -14966,7 +21666,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -15011,7 +21732,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -15057,7 +21799,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -15103,7 +21866,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -15149,7 +21933,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -15195,7 +22000,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -15241,7 +22067,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -15287,7 +22134,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -15333,7 +22201,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -15379,7 +22268,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -15425,7 +22335,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -15471,7 +22402,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -15517,7 +22469,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -15563,7 +22536,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -15609,7 +22603,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -15655,7 +22670,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -15701,7 +22737,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -15747,7 +22804,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -15792,7 +22870,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -15838,7 +22937,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -15884,7 +23004,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -15930,7 +23071,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -15976,7 +23138,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -16022,7 +23205,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -16068,7 +23272,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -16113,7 +23338,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -16159,7 +23405,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -16205,7 +23472,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -16251,7 +23539,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -16297,7 +23606,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -16343,7 +23673,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -16389,7 +23740,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -16435,7 +23807,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -16480,7 +23873,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -16526,7 +23940,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -16572,7 +24007,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -16618,7 +24074,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -16664,7 +24141,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -16710,7 +24208,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -16756,7 +24275,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -16802,7 +24342,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -16848,7 +24409,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -16894,7 +24476,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -16940,7 +24543,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -16986,7 +24610,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -17032,7 +24677,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -17078,7 +24744,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -17124,7 +24811,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -17170,7 +24878,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -17214,7 +24943,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -17260,7 +25010,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -17305,7 +25076,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -17351,7 +25143,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -17397,7 +25210,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -17443,7 +25277,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -17489,7 +25344,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -17535,7 +25411,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -17581,7 +25478,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -17627,7 +25545,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -17673,7 +25612,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -17719,7 +25679,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -17765,7 +25746,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -17811,7 +25813,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -17857,7 +25880,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -17903,7 +25947,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -17949,7 +26014,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -17995,7 +26081,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -18041,7 +26148,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -18087,7 +26215,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -18133,7 +26282,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -18179,7 +26349,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -18225,7 +26416,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -18271,7 +26483,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -18317,7 +26550,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -18363,7 +26617,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -18407,7 +26682,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -18452,7 +26748,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -18497,7 +26814,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -18542,7 +26880,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -18587,7 +26946,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -18632,7 +27012,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -18677,7 +27078,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -18722,7 +27144,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -18768,7 +27211,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -18814,7 +27278,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -18859,7 +27344,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -18904,7 +27410,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -18949,7 +27476,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -18995,7 +27543,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -19040,7 +27609,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -19086,7 +27676,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -19132,7 +27743,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -19177,7 +27809,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -19223,7 +27876,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -19269,7 +27943,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -19315,7 +28010,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -19361,7 +28077,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -19407,7 +28144,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -19453,7 +28211,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -19498,7 +28277,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -19543,7 +28343,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -19589,7 +28410,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -19634,7 +28476,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -19679,7 +28542,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -19724,7 +28608,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -19769,7 +28674,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -19814,7 +28740,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -19860,7 +28807,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -19905,7 +28873,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -19951,7 +28940,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -19997,7 +29007,28 @@ echo ""
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -20035,7 +29066,28 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$yellow*To exit the scan mode$red'CTRL+C' $green"
 trap 'echo "Return to Main Menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
 echo ""
-masscan -p $port -iL list --open-only --max-rate 120 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+rate_f () {
+read -p "          Maximum number of requests per second {120-30000} : " raten
+echo ""
+rate=$(echo $raten | sed -e 's/[^0-9]//g')
+}
+while rate_f
+do
+	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+		then
+echo -e "                       The rate is set to $rate$green"
+echo ""
+
+break
+		
+		else		
+echo -e "$red                    The value must be between 120 and 30000$colorbase"
+echo ""
+sleep 1.7
+clear
+fi
+done
+masscan -p $port -iL list --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
 CHECKFILEEN
 
 
@@ -20273,6 +29325,8 @@ fi
 }
 
 ########################################################################################
+
+
 #####################################MAINBRUTEMENURU##################################
 MAINBRUTEMENURU ()
 {
