@@ -83,11 +83,12 @@ rm -rf /etc/apt/sources.list_lazybak 2> /dev/null
 clear
 
                   
-echo -e       "$grey                                 +-------------------------------------+"
-echo -e       "$grey                                 |            Auto  Script             |"
-echo -e "$aquamarine                                 |    by GetDrive & hackers Union      |" 
-echo -e        "$red                                 |            Version 1.17             |"
-echo -e        "$red                                 +-------------------------------------+ $colorbase"
+echo -e       "$grey                                 +--------------------------------------+" 
+echo -e       "$grey                                 |             Auto  Script             |"
+echo -e "$aquamarine                                 |     by GetDrive & hackers Union      |" 
+echo -e        "$red                                 |             Version 1.17             |"
+echo -e        "$red                                 |$colorbase https://github.com/getdrive/Lazy-RDP$red |"
+echo -e        "$red                                 +--------------------------------------+ $colorbase"
 #####################################CHECKLANGUAGE####################################
 CHECKLANGUAGE ()
 {
