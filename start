@@ -1,16 +1,16 @@
 #!/bin/bash
-ver=1.18
+ver=1.17
 echo -e "Checking for updates..."
 	TESTINTERNETCONNECTION=$(curl -s checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//')
 	if [[ "$TESTINTERNETCONNECTION" != "" ]]
 	then
-		version=$(timeout -s SIGTERM 20 curl "https://raw.githubusercontent.com/getdrive/Lazy-RDP/master/start" | grep "ver" | cut -d= -f2 2>/dev/null)
-		if [[ "$ver" != "$version" ]]
+		updated=$(timeout -s SIGTERM 20 curl "https://raw.githubusercontent.com/getdrive/Lazy-RDP/master/start" | grep "ver" | cut -d= -f2 2>/dev/null)
+		if [[ "$ver" != "$updated" ]]
 		then
 			clear
 			echo -e "There is an update available."
 			echo -e "Current version: $ver"
-			echo -e "Updated version: $version"
+			echo -e "Updated version: $updated"
 while true; do
 		read -p "Update? [Y][N]" yn
 			case $yn in
