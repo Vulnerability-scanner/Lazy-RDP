@@ -18,8 +18,9 @@ while true; do
 		esac
 	done
 		fi
+	else
 echo "It seems there is no internet connection "
-	else exit;
+	 exit;
 fi
 if [ $(id -u) -ne 0 ]; then
 	clear
