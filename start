@@ -1,5 +1,5 @@
 #!/bin/bash
-ver=1.17
+
 if [ $(id -u) -ne 0 ]; then
 	clear
 	echo -e "                      \033[1;31m[This script must be run as ROOT]\E[0m"
