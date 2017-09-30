@@ -19,7 +19,7 @@ rm -rf Results/ paused.conf list all_results 2> /dev/null
 ######################################################################################
 CHECKDISTR ()
 {
-distr=$(cat /etc/*-release | grep DISTRIB_CODENAME | awk -F'=' '/DISTRIB_CODENAME=/ {print $2}')
+distr=$(cat /etc/*-release | awk -F'=' '/DISTRIB_CODENAME=/ {print $2}')
 	if [ "$distr" = "sana" ]; then
 	cat /etc/apt/sources.list > /etc/apt/sources.list_lazybak
 		echo "deb http://old.kali.org/kali sana main non-free contrib" > /etc/apt/sources.list
