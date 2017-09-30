@@ -1,5 +1,5 @@
 #!/bin/bash
-ver=$(cat src/rdp_brute.sh | grep ver | awk -F'=' '/ver=/ {print $2}' 2> /dev/null)
+ver=$(cat src/rdp_brute.sh | awk -F'=' '/ver=/ {print $2}' 2> /dev/null)
 clear
 echo "Checking for updates..."
 	TESTINTERNETCONNECTION=$(curl -s checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//')
