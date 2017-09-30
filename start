@@ -1,10 +1,9 @@
 #!/bin/bash
-ver=1.18
 echo "Checking for updates..."
 	TESTINTERNETCONNECTION=$(curl -s checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//')
 	if [[ "$TESTINTERNETCONNECTION" != "" ]]
 	then
-		updated=$(timeout -s SIGTERM 20 curl "https://raw.githubusercontent.com/getdrive/Lazy-RDP/master/start" | grep "ver" | awk -F'=' '/ver=/ {print $2}' 2> /dev/null)
+		updated=$(timeout -s SIGTERM 20 curl "https://raw.githubusercontent.com/getdrive/Lazy-RDP/master/src/rdp_brute.sh" | grep "ver" | awk -F'=' '/ver=/ {print $2}' 2> /dev/null)
 		if [[ "$ver" != "$updated" ]]
 		then
 			clear
