@@ -33,7 +33,7 @@
 - To work correctly, the script requires the establishment: masscan, curl and <s>hydra by van Hauser</s> FreeRDP.<br/>
 
 - The current version is 1.18.
-- Added: auto-update, scanner selection (Nmap) from the list, to scan local addresses from the range of 127.0.0.1/8, the ability to specify the scanned portt. Fixed a crash bug when selecting a script of some countries from the list. Fixed a bug with incorrect paths. Added English. <s>Fixed a bug with brute force menu.</s> Completely changed the tool to brute force. Added function to automatically detect the operating system language. Optimized script code. Added automatic installation and configuration dependencies (freerdp-X11, masscan) to work correctly in the "SANA" and "ROLLING" <br/>
+- Added: auto-update, scanner selection (Nmap) from the list, to scan local addresses from the range of 127.0.0.1/8, the ability to specify the scanned port. Fixed a crash bug when selecting a script of some countries from the list. Fixed a bug with incorrect paths. Added English. <s>Fixed a bug with brute force menu.</s> Completely changed the tool to brute force. Added function to automatically detect the operating system language. Optimized script code. Added automatic installation and configuration dependencies (freerdp-X11, masscan) to work correctly in the "SANA" and "ROLLING" <br/>
 
 - Installing dependencies manually <br/>
         
