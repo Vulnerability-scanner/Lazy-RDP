@@ -1,6 +1,6 @@
 #!/bin/bash
 ver=1.18
-echo -e "Checking for updates..."
+echo "Checking for updates..."
 	TESTINTERNETCONNECTION=$(curl -s checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//')
 	if [[ "$TESTINTERNETCONNECTION" != "" ]]
 	then
@@ -8,9 +8,9 @@ echo -e "Checking for updates..."
 		if [[ "$ver" != "$updated" ]]
 		then
 			clear
-			echo -e "There is an update available."
-			echo -e "Current version: $ver"
-			echo -e "Updated version: $updated"
+			echo  "There is an update available."
+			echo  "Current version: $ver"
+			echo  "Updated version: $updated"
 while true; do
 		read -p "Update? [Y][N]" yn
 			case $yn in
