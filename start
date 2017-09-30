@@ -8,8 +8,7 @@ echo "Checking for updates..."
 		then
 			clear
 			echo  "There is an update available."
-			echo  "Current version: $ver"
-			echo  "Updated version: $updated"
+			echo  "New version: $updated"
 while true; do
 		read -p "Update? [Y][N]" yn
 			case $yn in
