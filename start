@@ -1,9 +1,10 @@
 #!/bin/bash
+ver=$(cat src/rdp_brute.sh | grep ver | awk -F'=' '/ver=/ {print $2}' 2> /dev/null)
 echo "Checking for updates..."
 	TESTINTERNETCONNECTION=$(curl -s checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//')
 	if [[ "$TESTINTERNETCONNECTION" != "" ]]
 	then
-		updated=$(timeout -s SIGTERM 20 curl "https://raw.githubusercontent.com/getdrive/Lazy-RDP/master/src/rdp_brute.sh" | grep "ver" | awk -F'=' '/ver=/ {print $2}' 2> /dev/null)
+		updated=$(timeout -s SIGTERM 20 curl -s "https://raw.githubusercontent.com/getdrive/Lazy-RDP/master/src/rdp_brute.sh" | grep "ver" | awk -F'=' '/ver=/ {print $2}' 2> /dev/null)
 		if [[ "$ver" != "$updated" ]]
 		then
 			clear
@@ -13,16 +14,17 @@ while true; do
 		read -p "Update? [Y][N]" yn
 			case $yn in
 			[Yy]* ) wget -O src/rdp_brute.sh https://raw.githubusercontent.com/getdrive/Lazy-RDP/master/src/rdp_brute.sh && wget -O start https://raw.githubusercontent.com/getdrive/Lazy-RDP/master/start; break;;
-			[Nn]* ) exit;;
+			[Nn]* ) clear;break;;
 			* ) echo "Enter answer [Y] or [N] ";;
 		esac
 	done
 		fi
-	else
+else
 echo "It seems there is no internet connection "
 	 exit;
 fi
-if [ $(id -u) -ne 0 ]; then
+if [[ $(id -u) -ne 0 ]]
+	then
 	clear
 	echo -e "                      \033[1;31m[This script must be run as ROOT]\E[0m"
 	echo ""
