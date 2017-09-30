@@ -13,7 +13,7 @@ echo "Checking for updates..."
 while true; do
 		read -p "Update? [Y][N]" yn
 			case $yn in
-			[Yy]* ) wget -O src/rdp_brute.sh https://raw.githubusercontent.com/getdrive/Lazy-RDP/master/src/rdp_brute.sh && wget -O start https://raw.githubusercontent.com/getdrive/Lazy-RDP/master/start; break;;
+			[Yy]* ) wget -O src/rdp_brute.sh https://raw.githubusercontent.com/getdrive/Lazy-RDP/master/src/rdp_brute.sh && wget -O start https://raw.githubusercontent.com/getdrive/Lazy-RDP/master/start && clear; break;;
 			[Nn]* ) clear;break;;
 			* ) echo "Enter answer [Y] or [N] ";;
 		esac
@@ -30,7 +30,7 @@ if [[ $(id -u) -ne 0 ]]
 	echo ""
 	else	
 
-gnome-terminal --geometry=105x24 --hide-menubar -e ./src/rdp_brute.sh
+gnome-terminal --geometry=105x24 --hide-menubar -e ./src/rdp_brute.sh 2> /dev/null
 fi 
 exit 1;
 
