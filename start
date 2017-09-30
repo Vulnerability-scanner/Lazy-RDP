@@ -1,5 +1,6 @@
 #!/bin/bash
 ver=$(cat src/rdp_brute.sh | grep ver | awk -F'=' '/ver=/ {print $2}' 2> /dev/null)
+clear
 echo "Checking for updates..."
 	TESTINTERNETCONNECTION=$(curl -s checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//')
 	if [[ "$TESTINTERNETCONNECTION" != "" ]]
@@ -9,7 +10,9 @@ echo "Checking for updates..."
 		then
 			clear
 			echo  "There is an update available."
+			echo  "Current version: $ver"
 			echo  "New version: $updated"
+
 while true; do
 		read -p "Update? [Y][N]" yn
 			case $yn in
