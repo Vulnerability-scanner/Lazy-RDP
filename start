@@ -1,4 +1,5 @@
 #!/bin/bash
+ver=1.17
 if [ $(id -u) -ne 0 ]; then
 	clear
 	echo -e "                      \033[1;31m[This script must be run as ROOT]\E[0m"
@@ -8,6 +9,3 @@ if [ $(id -u) -ne 0 ]; then
 gnome-terminal --geometry=105x24 --hide-menubar -e ./src/rdp_brute.sh
 fi 
 exit 1;
-
-
-
