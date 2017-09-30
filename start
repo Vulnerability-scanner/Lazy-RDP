@@ -1,5 +1,28 @@
 #!/bin/bash
-
+ver=1.18
+echo -e "Checking for updates..."
+	TESTINTERNETCONNECTION=$(curl -s checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//')
+	if [[ "$TESTINTERNETCONNECTION" != "" ]]
+	then
+		version=$(timeout -s SIGTERM 20 curl "https://raw.githubusercontent.com/getdrive/Lazy-RDP/master/start" | grep "ver" | cut -d= -f2 2>/dev/null)
+		if [[ "$ver" != "$version" ]]
+		then
+			clear
+			echo -e "There is an update available."
+			echo -e "Current version: $ver"
+			echo -e "Updated version: $version"
+while true; do
+		read -p "Update? [Y][N]" yn
+			case $yn in
+			[Yy]* ) wget -O src/rdp_brute.sh https://raw.githubusercontent.com/getdrive/Lazy-RDP/master/src/rdp_brute.sh && wget -O start https://raw.githubusercontent.com/getdrive/Lazy-RDP/master/start; break;;
+			[Nn]* ) exit;;
+			* ) echo "Enter answer [Y] or [N] ";;
+		esac
+	done
+		fi
+echo "It seems there is no internet connection "
+	else exit;
+fi
 if [ $(id -u) -ne 0 ]; then
 	clear
 	echo -e "                      \033[1;31m[This script must be run as ROOT]\E[0m"
@@ -9,3 +32,6 @@ if [ $(id -u) -ne 0 ]; then
 gnome-terminal --geometry=105x24 --hide-menubar -e ./src/rdp_brute.sh
 fi 
 exit 1;
+
+
+
