@@ -1,5 +1,5 @@
 #!/bin/bash
-ver=1.17
+ver=1.18
 echo -e "Checking for updates..."
 	TESTINTERNETCONNECTION=$(curl -s checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//')
 	if [[ "$TESTINTERNETCONNECTION" != "" ]]
