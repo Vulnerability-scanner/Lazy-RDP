@@ -1,6 +1,6 @@
 #!/bin/bash
 # NOTE: YOU ARE FREE TO COPY,MODIFY,REUSE THE SOURCE CODE FOR EDUCATIONAL PURPOSE ONLY.
-ver=1.18
+ver=1.19
 clear
 ##########################################COLOR######################################
 colorbase="\E[0m"
@@ -41,9 +41,10 @@ depend=$(dpkg -s masscan  | grep 'Status' | awk -F':' '/Status: / {print $2}')
 		clear 
 			
 			else
-			echo ""
+			echo -e "$aquamarine"
 		while true; do
-		read -p "Требующийся пакет MASSCAN не установлен. Установить?/The required package MASSCAN is not installed Install?[Y][N]" yn
+		echo    "Требующийся пакет MASSCAN не установлен. Установить?"
+                read -p "The required package MASSCAN is not installed Install?[Y][N]" yn
 			case $yn in
 			[Yy]* ) apt-get update -y && apt-get upgrade -y && apt-get install masscan -y; break;;
 			[Nn]* ) exit;;
@@ -60,9 +61,10 @@ depend=$(dpkg -s freerdp-x11 | grep 'Status' | awk -F':' '/Status: / {print $2}'
 	if [ "$depend" = " install ok installed" ]; then
 		clear 
 			else
-			echo ""
+			echo -e "$aquamarine"
 		while true; do
-		read -p "Требующийся пакет FreeRDP не установлен. Установить?/The required package FreeRDP is not installed Install?[Y][N]" yn
+		echo    "Требующийся пакет FreeRDP не установлен. Установить?"
+                read -p "The required package FreeRDP is not installed Install?[Y][N]" yn
 			case $yn in
 			[Yy]* ) apt-get update -y && apt-get upgrade -y && apt-get install freerdp-x11 libfreerdp-plugins-standard -y; break;;
 			[Nn]* ) exit;;
