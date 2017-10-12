@@ -2,7 +2,8 @@
 ver=$(cat src/rdp_brute.sh | awk -F'=' '/ver=/ {print $2}' 2> /dev/null)
 clear
 echo "Checking for updates..."
-	TESTINTERNETCONNECTION=$(curl -s checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//')
+
+	TESTINTERNETCONNECTION=$(curl -s ifconfig.me)
 	if [[ "$TESTINTERNETCONNECTION" != "" ]]
 	then
 		updated=$(timeout -s SIGTERM 20 curl -s "https://raw.githubusercontent.com/getdrive/Lazy-RDP/master/src/rdp_brute.sh" | awk -F'=' '/ver=/ {print $2}' 2> /dev/null)
