@@ -1,6 +1,6 @@
 #!/bin/bash
 # NOTE: YOU ARE FREE TO COPY,MODIFY,REUSE THE SOURCE CODE FOR EDUCATIONAL PURPOSE ONLY.
-ver=1.20
+ver=1.21
 clear
 ##########################################COLOR######################################
 colorbase="\E[0m"
