@@ -1,6 +1,6 @@
 #!/bin/bash
 # NOTE: YOU ARE FREE TO COPY,MODIFY,REUSE THE SOURCE CODE FOR EDUCATIONAL PURPOSE ONLY.
-ver=1.21
+ver=1.22
 clear
 ##########################################COLOR######################################
 colorbase="\E[0m"
@@ -46,7 +46,7 @@ depend=$(dpkg -s masscan  | grep 'Status' | awk -F':' '/Status: / {print $2}')
 		echo    "Требующийся пакет MASSCAN не установлен. Установить?"
                 read -p "The required package MASSCAN is not installed Install?[Y][N]" yn
 			case $yn in
-			[Yy]* ) apt-get update -y && apt-get upgrade -y && apt-get install masscan -y; break;;
+			[Yy]* ) apt-get update -y && apt-get dist-upgrade -y; aptitude install masscan -y; break;;
 			[Nn]* ) exit;;
 			* ) echo "Enter answer [Y] or [N] ";;
 		esac
@@ -66,7 +66,7 @@ depend=$(dpkg -s freerdp-x11 | grep 'Status' | awk -F':' '/Status: / {print $2}'
 		echo    "Требующийся пакет FreeRDP не установлен. Установить?"
                 read -p "The required package FreeRDP is not installed Install?[Y][N]" yn
 			case $yn in
-			[Yy]* ) apt-get update -y && apt-get upgrade -y && apt-get install freerdp-x11 libfreerdp-plugins-standard -y; break;;
+			[Yy]* ) apt-get update -y && apt-get dist-upgrade -y; aptitude install freerdp-x11 libfreerdp-plugins-standard remmina -y; break;;
 			[Nn]* ) exit;;
 			* ) echo "Enter answer [Y] or [N] ";;
 		esac
@@ -89,7 +89,7 @@ clear
 echo -e       "$grey                                 +--------------------------------------+" 
 echo -e       "$grey                                 |             Auto  Script             |"
 echo -e "$aquamarine                                 |     by GetDrive & hackers Union      |" 
-echo -e        "$red                                 |             Version 1.21             |"
+echo -e        "$red                                 |             Version 1.22             |"
 #echo -e        "$red                                 |$colorbase https://github.com/getdrive/Lazy-RDP$red |"
 echo -e        "$red                                 +--------------------------------------+ $colorbase"
 #####################################CHECKLANGUAGE####################################
