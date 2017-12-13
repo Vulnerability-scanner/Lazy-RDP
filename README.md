@@ -1,7 +1,7 @@
 # Lazy-RDP
 - Скрипт для автоматического сканирования списка адресов на наличие открытых RDP-портов, с последующим выбором метода и запуском перебора пары логин/пароль. <br/>
 
-- Скрипт  настраивался для систем Kali linux 2.0, Kali linux 2016.2 и Kali linux 2017.1. <br/>
+- Скрипт  настраивался для систем Kali linux 2.0, Kali linux 2016.2 и Kali linux 2017.1, 2017.2. <br/>
 
 - Для корректной работы скрипта требуются установленные: masscan, curl и <s>hydra by van Hauser</s> FreeRDP. <br/>
 
@@ -28,7 +28,7 @@
 
 - Script for automatic scanning of the address list for the presence of open 3389 ports, and then selecting the method and starting busting pair login / password. <br/>
 
-- The script is tuned for Kali linux 2.0, Kali linux 2016.2 и Kali linux 2017.1 systems. <br/>
+- The script is tuned for Kali linux 2.0, Kali linux 2016.2 и Kali linux 2017.1, 2017.2 systems. <br/>
 
 - To work correctly, the script requires the establishment: masscan, curl and <s>hydra by van Hauser</s> FreeRDP.<br/>
 
