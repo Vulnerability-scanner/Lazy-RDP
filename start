@@ -1,6 +1,24 @@
 #!/bin/bash
 ver=$(cat src/rdp_brute.sh | awk -F'=' '/ver=/ {print $2}' 2> /dev/null)
 clear
+
+depend=$(dpkg -s curl  | grep 'Status' | awk -F':' '/Status: / {print $2}')
+	if [ "$depend" = " install ok installed" ]; then
+		clear 
+			
+			else
+			echo -e "$aquamarine"
+		while true; do
+		echo    "Требующийся пакет Curl не установлен. Установить?"
+                read -p "The required package Curl is not installed Install?[Y][N]" yn
+			case $yn in
+			[Yy]* ) apt-get update -y && apt-get dist-upgrade -y; apt install curl -y; break;;
+			[Nn]* ) exit;;
+			* ) echo "Enter answer [Y] or [N] ";;
+		esac
+	done
+fi
+clear
 echo "Checking for updates..."
 
 	TESTINTERNETCONNECTION=$(curl -s ident.me)

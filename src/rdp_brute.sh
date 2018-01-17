@@ -1,6 +1,6 @@
 #!/bin/bash
 # NOTE: YOU ARE FREE TO COPY,MODIFY,REUSE THE SOURCE CODE FOR EDUCATIONAL PURPOSE ONLY.
-ver=1.22
+ver=1.23
 clear
 ##########################################COLOR######################################
 colorbase="\E[0m"
@@ -20,18 +20,22 @@ rm -rf Results/ paused.conf list all_results 2> /dev/null
 CHECKDISTR ()
 {
 distr=$(cat /etc/*-release | awk -F'=' '/DISTRIB_CODENAME=/ {print $2}')
+distrp=$(cat /etc/*-release | awk -F'=' '/DISTRIB_ID=/ {print $2}')
 	if [ "$distr" = "sana" ]; then
 	cat /etc/apt/sources.list > /etc/apt/sources.list_lazybak
 		echo "deb http://old.kali.org/kali sana main non-free contrib" > /etc/apt/sources.list
 	elif [ "$distr" = "kali-rolling" ]; then
 	cat /etc/apt/sources.list > /etc/apt/sources.list_lazybak
 		echo "deb http://http.kali.org/kali kali-rolling main contrib non-free" > /etc/apt/sources.list
+	elif [ "$distrp" = "Parrot" ]; then
+	cat /etc/apt/sources.list > /etc/apt/sources.list_lazybak
+		echo "deb http://archive.parrotsec.org/parrot parrot main contrib non-free" > /etc/apt/sources.list
+	
 	else
-		echo -e "$aquamarine[Скрипт тестировался только для $red[Kali Linux2]$aquamarine. Вы можете самостоятельно изменить код скрипта для своей ОС.]$colorbase"
-		echo -e "$aquamarine[The script was tested only for $red[Kali Linux2]$aquamarine. You are free to modify the code for your operating system]$colorbase"
+		echo -e "$aquamarine[Скрипт тестировался только для $red[Kali Linux2 и ParrotSec]$aquamarine. Вы можете самостоятельно изменить код скрипта для своей ОС.]$colorbase"
+		echo -e "$aquamarine[The script was tested only for $red[Kali Linux2 & ParrotSec]$aquamarine. You are free to modify the code for your operating system]$colorbase"
 	exit 1
 fi
-
 }
 ######################################################################################
 CHECKDEPEND0 ()
@@ -47,6 +51,26 @@ depend=$(dpkg -s masscan  | grep 'Status' | awk -F':' '/Status: / {print $2}')
                 read -p "The required package MASSCAN is not installed Install?[Y][N]" yn
 			case $yn in
 			[Yy]* ) apt-get update -y && apt-get dist-upgrade -y; apt install masscan -y; break;;
+			[Nn]* ) exit;;
+			* ) echo "Enter answer [Y] or [N] ";;
+		esac
+	done
+fi
+
+}
+######################################################################################
+CHECKDEPEND1 ()
+{
+depend=$(dpkg -s nmap | grep 'Status' | awk -F':' '/Status: / {print $2}')
+	if [ "$depend" = " install ok installed" ]; then
+		clear 
+			else
+			echo -e "$aquamarine"
+		while true; do
+		echo    "Требующийся пакет nmap не установлен. Установить?"
+                read -p "The required package nmap is not installed Install?[Y][N]" yn
+			case $yn in
+			[Yy]* ) apt-get update -y && apt-get dist-upgrade -y; apt install nmap -y; break;;
 			[Nn]* ) exit;;
 			* ) echo "Enter answer [Y] or [N] ";;
 		esac
@@ -80,6 +104,7 @@ fi
 CLEARALL
 CHECKDISTR
 CHECKDEPEND0
+CHECKDEPEND1
 CHECKDEPEND
 cat /etc/apt/sources.list_lazybak>/etc/apt/sources.list
 rm -rf /etc/apt/sources.list_lazybak 2> /dev/null
@@ -89,7 +114,7 @@ clear
 echo -e       "$grey                                 +--------------------------------------+" 
 echo -e       "$grey                                 |             Auto  Script             |"
 echo -e "$aquamarine                                 |     by GetDrive & hackers Union      |" 
-echo -e        "$red                                 |             Version 1.22             |"
+echo -e        "$red                                 |             Version 1.23             |"
 #echo -e        "$red                                 |$colorbase https://github.com/getdrive/Lazy-RDP$red |"
 echo -e        "$red                                 +--------------------------------------+ $colorbase"
 #####################################CHECKLANGUAGE####################################
