@@ -2,6 +2,14 @@
 ver=$(cat src/rdp_brute.sh | awk -F'=' '/ver=/ {print $2}' 2> /dev/null)
 clear
 
+if [[ $(id -u) -ne 0 ]]
+	then
+	clear
+	echo -e "                      \033[1;31m[This script must be run as ROOT]\E[0m"
+	echo ""
+	else	
+
+
 depend=$(dpkg -s curl  | grep 'Status' | awk -F':' '/Status: / {print $2}')
 	if [ "$depend" = " install ok installed" ]; then
 		clear 
@@ -45,12 +53,6 @@ else
 echo "It seems there is no internet connection "
 	 exit;
 fi
-if [[ $(id -u) -ne 0 ]]
-	then
-	clear
-	echo -e "                      \033[1;31m[This script must be run as ROOT]\E[0m"
-	echo ""
-	else	
 
 sudo gnome-terminal --geometry=105x24+200+200 --hide-menubar -e ./src/rdp_brute.sh 2> /dev/null
 fi 
