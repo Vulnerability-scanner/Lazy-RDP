@@ -9,7 +9,6 @@ if [[ $(id -u) -ne 0 ]]
 	echo ""
 	else	
 
-
 depend=$(dpkg -s curl  | grep 'Status' | awk -F':' '/Status: / {print $2}')
 	if [ "$depend" = " install ok installed" ]; then
 		clear 
