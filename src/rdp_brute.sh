@@ -15,7 +15,6 @@ CLEARALL ()
 {
 rm -rf Results/ paused.conf list all_results 2> /dev/null
 }
-
 ######################################################################################
 CHECKDISTR ()
 {
