@@ -113,7 +113,7 @@ clear
 echo -e       "$grey                                 +--------------------------------------+" 
 echo -e       "$grey                                 |             Auto  Script             |"
 echo -e "$aquamarine                                 |     by GetDrive & hackers Union      |" 
-echo -e        "$red                                 |             Version 1.25             |"
+echo -e        "$red                                 |             Version 1.25b            |"
 #echo -e        "$red                                 |$colorbase https://github.com/getdrive/Lazy-RDP$red |"
 echo -e        "$red                                 +--------------------------------------+ $colorbase"
 #####################################CHECKLANGUAGE####################################
@@ -387,7 +387,7 @@ else
 
 if [ "$menuoption" = "2" ]; then
 echo -e "$aquamarine**************************************************************************************************$green"
-read -p "*Введите путь к файлу с диапазонами IP {list.txt,list..& etc.} : " listname
+read -p "*Введите путь к файлу с диапазонами IP {listip.txt,listip..& etc.} : " listname
 
 #clear
 echo -e " $colorbase              +-----------------------------------------------------------------------+"   
