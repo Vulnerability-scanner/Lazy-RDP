@@ -1,6 +1,6 @@
 #!/bin/bash
 # NOTE: YOU ARE FREE TO COPY,MODIFY,REUSE THE SOURCE CODE FOR EDUCATIONAL PURPOSE ONLY.
-ver=1.24
+ver=1.25
 clear
 ##########################################COLOR######################################
 colorbase="\E[0m"
@@ -113,7 +113,7 @@ clear
 echo -e       "$grey                                 +--------------------------------------+" 
 echo -e       "$grey                                 |             Auto  Script             |"
 echo -e "$aquamarine                                 |     by GetDrive & hackers Union      |" 
-echo -e        "$red                                 |             Version 1.24             |"
+echo -e        "$red                                 |             Version 1.25             |"
 #echo -e        "$red                                 |$colorbase https://github.com/getdrive/Lazy-RDP$red |"
 echo -e        "$red                                 +--------------------------------------+ $colorbase"
 #####################################CHECKLANGUAGE####################################
@@ -350,7 +350,7 @@ while rate_f
 do
 	if [[ $rate -gt 119 && $rate -lt 30001 ]];
 		then
-echo -e "Значение rate установлено $rate$green"
+echo -e "Значение rate установлено $rate $green"
 echo ""
 
 break
@@ -389,12 +389,23 @@ if [ "$menuoption" = "2" ]; then
 echo -e "$aquamarine**************************************************************************************************$green"
 read -p "*Введите путь к файлу с диапазонами IP {list.txt,list..& etc.} : " listname
 
+#clear
+echo -e " $colorbase              +-----------------------------------------------------------------------+"   
+echo -e "               |   $grey                            1.$yellow Nmap$colorbase                                 |";
+echo -e "               |   $grey                            2.$yellow Masscan$colorbase                              |";
+echo -e "               +-----------------------------------------------------------------------+"
+read -p "                                            Выберите сканер : " scan
+echo -e "$red-------------------------------------------------------------------------------"
 clear
 echo -e "$red---------------------------------------------------------------------------------------------------------$colorbase"
 echo -e "$aquamarine                                          Идет поиск открытых RDP.$colorbase"
 echo -e "$red---------------------------------------------------------------------------------------------------------$colorbase"
 echo -e "$yellow*Для выхода из режима сканирования $red'CTRL+C'$colorbase"
-
+if [ "$scan" = "1" ]; then
+nmap -Pn -sS -iL $listname -p $port --open | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+trap 'echo "Выход в Главное меню"; ./src/rdp_brute.sh; exit; ./rdp_brute.sh' 2
+CHECKFILERU
+	else
 rate_f () {
 read -p "Масимальное количество запросов в секунду {120-30000} : " raten
 echo ""
@@ -404,21 +415,21 @@ while rate_f
 do
 	if [[ $rate -gt 119 && $rate -lt 30001 ]];
 		then
-echo -e "Значение rate установлено $rate$green"
+echo -e "Значение rate установлено $rate $green"
 echo ""
 
 break
 		
 		else		
-echo -e "$red                                     Значение должно быть от 120 до 30000$colorbase"
+echo -e "$red                                   Значение должно быть от 120 до 30000$colorbase"
 echo ""
 sleep 1.7
 clear
 fi
 done
 
-masscan -p $port -iL listname --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
-
+masscan -p $port -iL $listname --open-only --max-rate $rate | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > open3389
+fi
 trap 'echo "Выход в Главное меню"; ./src/rdp_brute.sh; exit; ./rdp_brute.sh' 2
 CHECKFILERU
 
